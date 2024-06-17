@@ -1,6 +1,6 @@
 {
-    "name": "mini_shooter",
-    "short_name": "mini_shooter",
+    "name": "mini_harrier",
+    "short_name": "mini_harrier",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
