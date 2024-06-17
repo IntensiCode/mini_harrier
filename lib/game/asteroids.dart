@@ -161,6 +161,9 @@ class SideAsteroid extends Component3D with HasPaint {
   @override
   render(Canvas canvas) {
     super.render(canvas);
+
+    final paint = Paint()..shader = shader;
+
     shader.setFloat(3, shaderTime);
     shader.setVec4(4, color1);
     shader.setVec4(8, color2);
