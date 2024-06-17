@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flutter/foundation.dart';
 
 import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
@@ -29,7 +30,14 @@ class Mountains extends PositionComponent with HasPaint, AutoDispose, MiniScript
   render(Canvas canvas) {
     super.render(canvas);
     shader.setFloat(2, world.camera.x / 3000);
-    canvas.drawRect(rect, paint);
+
+    if (kIsWeb) {
+      final paint = Paint();
+      paint.shader = shader;
+      canvas.drawRect(rect, paint);
+    } else {
+      canvas.drawRect(rect, paint);
+    }
   }
 
   final rect = const Rect.fromLTWH(0, 0, gameWidth, gameHeight / 4);

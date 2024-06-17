@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flutter/foundation.dart';
 
 import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
@@ -35,7 +36,13 @@ class Checkerboard extends PositionComponent with HasPaint, AutoDispose, MiniScr
     shader.setFloat(12, world.camera.x);
     shader.setFloat(13, world.camera.y);
     shader.setFloat(14, world.camera.z);
-    canvas.drawRect(rect, paint);
+    if (kIsWeb) {
+      final paint = Paint();
+      paint.shader = shader;
+      canvas.drawRect(rect, paint);
+    } else {
+      canvas.drawRect(rect, paint);
+    }
   }
 
   final rect = const Rect.fromLTWH(0, gameHeight / 2, gameWidth, gameHeight / 2);
