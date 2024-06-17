@@ -15,3 +15,5 @@ To Do
 - [ ] end "cut scene"
 
 ![Title](images/title.png)
+
+![Demo](images/demo.gif)
