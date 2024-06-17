@@ -2,7 +2,7 @@
 
 A Flutter Flame Game Demo
 
-To Do
+### To Do
 
 - [ ] player energy/health
 - [ ] missile weapon
@@ -13,6 +13,12 @@ To Do
 - [ ] stage 4 with flame enemy
 - [ ] stage 5 with worm boss?
 - [ ] end "cut scene"
+
+### Playable Web Version
+
+https://intensicode.github.io/mini_harrier/
+
+### Screenshots
 
 ![Title](images/title.png)
 
