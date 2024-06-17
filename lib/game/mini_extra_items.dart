@@ -8,7 +8,6 @@ import '../scripting/mini_script_functions.dart';
 import '../util/debug.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
-import 'mini_effects.dart';
 
 extension ScriptFunctionsExtension on MiniScriptFunctions {
   MiniExtraItems items(int level) => added(MiniExtraItems(level));

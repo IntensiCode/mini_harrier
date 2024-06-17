@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flame/components.dart';
-import 'package:mini_harrier/util/extensions.dart';
 
 import '../core/mini_3d.dart';
 import '../scripting/mini_script.dart';
+import '../util/extensions.dart';
 
 class AutoShadows extends MiniScriptComponent {
   final shadows = <Component3D, Shadow>{};

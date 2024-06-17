@@ -10,14 +10,14 @@ import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'swirl_weapon.dart';
 
-enum FloatingCaptainState {
+enum CaptainState {
   defeated,
   intro,
   playing,
 }
 
-class FloatingCaptain extends Component3D with AutoDispose, MiniScriptFunctions, KeyboardHandler, MiniGameKeys {
-  FloatingCaptain({required super.world}) {
+class Captain extends Component3D with AutoDispose, MiniScriptFunctions, KeyboardHandler, MiniGameKeys {
+  Captain({required super.world}) {
     worldPosition.x = 0;
     worldPosition.y = 50;
     worldPosition.z = 25;
@@ -25,7 +25,7 @@ class FloatingCaptain extends Component3D with AutoDispose, MiniScriptFunctions,
 
   late final weapon = SwirlWeapon(this, () => primaryFire, parent!, world);
 
-  late FloatingCaptainState state = FloatingCaptainState.intro;
+  late CaptainState state = CaptainState.intro;
 
   late final SpriteSheet _sheet;
   late final SpriteComponent _sprite;
@@ -43,7 +43,7 @@ class FloatingCaptain extends Component3D with AutoDispose, MiniScriptFunctions,
   void update(double dt) {
     super.update(dt);
     worldPosition.add(velocity * dt);
-    if (state == FloatingCaptainState.playing) _playing(dt);
+    if (state == CaptainState.playing) _playing(dt);
   }
 
   final steerAcceleration = 1000.0;

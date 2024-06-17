@@ -1,10 +1,10 @@
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
-import 'package:mini_harrier/game/harrier_stage_1.dart';
 
 import 'core/mini_common.dart';
 import 'core/mini_messaging.dart';
+import 'game/stage_1.dart';
 import 'intro_screen.dart';
 import 'title_screen.dart';
 
@@ -50,7 +50,7 @@ class MiniWorld extends World {
 
   void showStage1() {
     removeAll(children);
-    add(HarrierStage1());
+    add(Stage1());
   }
 
   void showTitle() {

@@ -7,7 +7,7 @@ import 'package:flutter/animation.dart';
 import 'components/checkerboard.dart';
 import 'core/mini_3d.dart';
 import 'core/mini_common.dart';
-import 'game/harrier_asteroids.dart';
+import 'game/asteroids.dart';
 import 'input/mini_shortcuts.dart';
 import 'scripting/mini_script.dart';
 import 'scripting/mini_script_functions.dart';
@@ -37,7 +37,7 @@ class TitleScreen extends MiniScriptComponent with HasAutoDisposeShortcuts {
     add(fadeIn(RectangleComponent(size: gameSize, paint: Paint()..color = const Color(0xFF102060))..priority = -1000));
     add(fadeIn(Checkerboard()));
     add(_CameraMovement());
-    add(HarrierAsteroids());
+    add(Asteroids());
 
     fontSelect(menuFont, scale: fontScale);
 

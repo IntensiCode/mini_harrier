@@ -5,7 +5,6 @@ import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_harrier/core/mini_3d.dart';
 import 'package:signals_core/signals_core.dart';
 
 final debug = signal(kDebugMode);
@@ -72,7 +71,7 @@ Future<SpriteAnimation> explosion32() => game.loadSpriteAnimation(
     SpriteAnimationData.sequenced(
       amount: 12,
       stepTime: 0.1,
-      textureSize: Vector2(96,96),
+      textureSize: Vector2(96, 96),
       loop: false,
     ));
 
@@ -117,49 +116,4 @@ mixin Collector {
 
 mixin Defender {
   bool onHit([int hits = 1]);
-}
-
-sealed class MiniMessage {}
-
-class ChallengeComplete extends MiniMessage {}
-
-class EnemiesDefeated extends MiniMessage {}
-
-class GetClosestEnemyPosition extends MiniMessage {
-  GetClosestEnemyPosition(this.position, this.onResult);
-
-  final Vector2 position;
-  final void Function(Vector2) onResult;
-}
-
-class NextLevel extends MiniMessage {}
-
-class PlayerDestroyed extends MiniMessage {}
-
-class ShowScreen extends MiniMessage {
-  ShowScreen(this.screen);
-
-  final Screen screen;
-}
-
-class SpawnBall extends MiniMessage {
-  SpawnBall(this.position);
-
-  final Vector2 position;
-}
-
-class SpawnEffect extends MiniMessage {
-  SpawnEffect(this.kind, this.anchor, this.delaySeconds, this.atHalfTime);
-
-  final MiniEffectKind kind;
-  final Component3D anchor;
-  final double? delaySeconds;
-  final Function()? atHalfTime;
-}
-
-class SpawnItem extends MiniMessage {
-  SpawnItem(this.position, [this.kind]);
-
-  final Vector2 position;
-  final Set<MiniItemKind>? kind;
 }

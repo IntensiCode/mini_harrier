@@ -1,6 +1,5 @@
-import 'package:mini_harrier/core/mini_common.dart';
-
 import '../core/mini_3d.dart';
+import '../core/mini_messaging.dart';
 import '../scripting/mini_script.dart';
 import 'ufo_enemy.dart';
 

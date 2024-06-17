@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
-import 'package:mini_harrier/core/mini_3d.dart';
-import 'package:mini_harrier/core/mini_common.dart';
 
+import '../core/mini_3d.dart';
+import '../core/mini_common.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
@@ -19,17 +19,17 @@ const _rotateVariance = 3.0;
 const _baseSpeed = 200;
 const _speedVariance = 8.0;
 
-HarrierAsteroids? _instance;
+Asteroids? _instance;
 
 extension ScriptFunctionsExtension on MiniScriptFunctions {
-  HarrierAsteroids sideAsteroids() {
-    _instance ??= HarrierAsteroids();
+  Asteroids asteroids() {
+    _instance ??= Asteroids();
     if (_instance?.isMounted == true) _instance?.removeFromParent();
     return added(_instance!);
   }
 }
 
-class HarrierAsteroids extends AutoDisposeComponent with MiniScriptFunctions {
+class Asteroids extends AutoDisposeComponent with MiniScriptFunctions {
   late FragmentProgram program;
   late FragmentShader shader;
 
