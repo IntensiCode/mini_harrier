@@ -36,7 +36,7 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
 
   var stateTime = 0.0;
 
-  final targetOffsetZ = 125;
+  final targetOffsetZ = 150;
 
   @override
   void update(double dt) {
