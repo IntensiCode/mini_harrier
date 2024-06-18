@@ -68,12 +68,15 @@ class SwirlProjectile extends Component3D {
 
   double _lifetime = 0;
 
+  double speed = 500;
+
   @override
   void update(double dt) {
     super.update(dt);
-    worldPosition.z -= 700 * dt;
+    worldPosition.z -= speed * dt;
+    if (speed < 1000) speed += 1000 * dt;
     _lifetime += dt;
-    if (_lifetime > 10) _recycle(this);
+    if (_lifetime > 5) _recycle(this);
 
     final check = parent?.children.whereType<MiniTarget>();
     if (check == null) return;
