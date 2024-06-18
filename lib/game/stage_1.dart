@@ -17,9 +17,11 @@ import '../util/fonts.dart';
 import 'auto_shadows.dart';
 import 'captain.dart';
 import 'captain_cam.dart';
+import 'enemy_energy_balls.dart';
 import 'hud.dart';
 import 'mini_effects.dart';
 import 'ufo_enemies.dart';
+import 'ufo_enemy.dart';
 
 class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
   @override
@@ -47,6 +49,7 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
     debugXY(() => 'Captain VX: ${captain.velocity.x}', 0, gameHeight - debugHeight, Anchor.bottomLeft);
     debugXY(() => 'Captain VY: ${captain.velocity.y}', 0, gameHeight, Anchor.bottomLeft);
     add(UfoEnemies());
+    add(EnemyEnergyBalls(this, () => children.whereType<UfoEnemy>().where((it) => it.readyToAttack)));
 
     soundboard.play(MiniSound.game_on);
 
