@@ -55,24 +55,39 @@ class Shadow extends Component3D with HasVisibility {
 
   late final CircleComponent it;
 
-  late Component3D _source;
+  Component3D? _source;
 
-  set source(Component3D value) => _source = value;
+  set source(Component3D value) {
+    removeMe = false;
+    _source = value;
+  }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    worldPosition.x = _source.worldPosition.x - _source.worldPosition.y / 2;
+    final it = _source;
+    if (it == null) return;
+
+    worldPosition.x = it.worldPosition.x - it.worldPosition.y / 2;
     worldPosition.y = 0;
-    worldPosition.z = _source.worldPosition.z;
+    worldPosition.z = it.worldPosition.z;
 
     if (position.x < -50) removeMe = true;
     if (position.x > gameWidth + 50) removeMe = true;
     if (position.y > gameHeight + 50) removeMe = true;
-    if (_source.worldPosition.z < world.camera.z - 2000) removeMe = true;
-    if (_source.worldPosition.z > world.camera.z) removeMe = true;
-    if (_source.isMounted == false) removeMe = true;
+    if (it.worldPosition.z < world.camera.z - 2000) removeMe = true;
+    if (it.worldPosition.z > world.camera.z - 30) removeMe = true;
+    if (it.isMounted == false) removeMe = true;
+    if (removeMe) _source = null;
+
+    isVisible = it.worldPosition.y > 0 && position.y > 100;
+  }
+
+  @override
+  render(Canvas canvas) {
+    if (removeMe || _source == null) return;
+    super.render(canvas);
   }
 
   bool removeMe = false;
