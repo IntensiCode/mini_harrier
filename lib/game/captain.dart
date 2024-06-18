@@ -36,7 +36,7 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
 
   @override
   onLoad() async {
-    _sheet = sheet(await image('captain_sprite.png'), 3, 3);
+    _sheet = sheet(await image('captain_sprite.png'), 3, 5);
     _sprite = spriteSXY(_sheet.getSprite(1, 1), 0, 0);
     _sprite.scale.setAll(2);
     add(fadeIn(_sprite));
@@ -54,6 +54,8 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
   final maxAcceleration = 1000.0;
   final velocity = Vector3(0, 0, -500);
   final autoDecelerate = 200;
+
+  double walk = 0;
 
   void _playing(double dt) {
     if (up && worldPosition.y < maxHeight) {
@@ -90,6 +92,14 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
     final col = 1 + (worldPosition.x ~/ 50).sign;
     final row = 1 - ((worldPosition.y - midHeight) ~/ 50).sign;
     _sprite.sprite = _sheet.getSprite(row, col);
+
+    const walkSpeed = 0.2;
+    if (worldPosition.y <= minHeight + 5) {
+      var idx = (walk * 6 / walkSpeed).toInt().clamp(0, 5);
+      _sprite.sprite = _sheet.getSprite(3 + idx ~/ 3, idx % 3);
+      walk += dt;
+      if (walk > walkSpeed) walk = 0;
+    }
 
     final opX = 0.25 + worldPosition.x.abs() / maxRight * 0.75;
     final opY = (worldPosition.y - midHeight).abs() / midHeight;
