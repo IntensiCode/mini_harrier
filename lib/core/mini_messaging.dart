@@ -35,12 +35,13 @@ class SpawnBall extends MiniMessage {
 }
 
 class SpawnEffect extends MiniMessage {
-  SpawnEffect(this.kind, this.anchor, this.delaySeconds, this.atHalfTime);
+  SpawnEffect({required this.kind, required this.anchor, this.delaySeconds, this.atHalfTime, this.velocity});
 
   final MiniEffectKind kind;
   final Component3D anchor;
   final double? delaySeconds;
   final Function()? atHalfTime;
+  final Vector3? velocity;
 }
 
 class SpawnItem extends MiniMessage {

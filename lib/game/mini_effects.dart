@@ -1,8 +1,7 @@
 import 'package:flame/components.dart';
-import 'package:mini_harrier/core/mini_3d.dart';
-import 'package:mini_harrier/util/random.dart';
 
 import '../components/delayed.dart';
+import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
 import '../core/mini_messaging.dart';
 import '../core/mini_soundboard.dart';
@@ -15,12 +14,20 @@ extension ScriptFunctionsExtension on MiniScriptFunctions {
 }
 
 extension ComponentExtensions on Component {
-  void spawnEffect(MiniEffectKind kind, Component3D anchor, {double? delaySeconds, Function()? atHalfTime}) {
-    messaging.send(SpawnEffect(kind, anchor, delaySeconds, atHalfTime));
-  }
-
-  void multiEffect(MiniEffectKind kind, Component3D anchor, {int count = 10, double timeSpan = 1.0}) {
-    10.forEach((i) => spawnEffect(kind, anchor, delaySeconds: random.nextDoubleLimit(timeSpan)));
+  void spawnEffect(
+    MiniEffectKind kind,
+    Component3D anchor, {
+    double? delaySeconds,
+    Function()? atHalfTime,
+    Vector3? velocity,
+  }) {
+    messaging.send(SpawnEffect(
+      kind: kind,
+      anchor: anchor,
+      delaySeconds: delaySeconds,
+      atHalfTime: atHalfTime,
+      velocity: velocity,
+    ));
   }
 }
 
@@ -45,7 +52,8 @@ class MiniEffects extends MiniScriptComponent {
       it.anim.animation = animations[data.kind]!;
       it.anim.scale = data.kind == MiniEffectKind.explosion ? Vector2.all(10.0) : Vector2.all(30.0);
       it.atHalfTime = data.atHalfTime;
-      it.doOnMount = () => it.worldPosition.setFrom(data.anchor.worldPosition);
+      it.velocity = data.velocity;
+      it.worldPosition.setFrom(data.anchor.worldPosition);
 
       final delay = data.delaySeconds ?? 0.0;
       add(delay == 0 ? it : Delayed(delay, it));
@@ -73,13 +81,10 @@ class MiniEffect extends Component3D {
 
   late MiniEffectKind kind;
   Function()? atHalfTime;
-
-  late Function doOnMount;
+  Vector3? velocity;
 
   @override
   void onMount() {
-    doOnMount();
-
     anim.animationTicker!.reset();
     anim.animationTicker!.onComplete = () => _recycle(this);
     if (atHalfTime != null) {
@@ -96,6 +101,10 @@ class MiniEffect extends Component3D {
   @override
   void update(double dt) {
     super.update(dt);
-    worldPosition.z -= 400 * dt;
+    if (velocity != null) {
+      worldPosition.add(velocity! * dt);
+    } else {
+      worldPosition.z -= 400 * dt;
+    }
   }
 }
