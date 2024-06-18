@@ -7,7 +7,10 @@ import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
 import '../scripting/mini_script.dart';
 import '../util/extensions.dart';
+import 'captain.dart';
+import 'enemy_energy_balls.dart';
 import 'mini_effects.dart';
+import 'swirl_weapon.dart';
 
 class AutoShadows extends MiniScriptComponent {
   final shadows = <Component3D, Shadow>{};
@@ -60,6 +63,13 @@ class Shadow extends Component3D with HasVisibility {
   set source(Component3D value) {
     removeMe = false;
     _source = value;
+    if (_source is Piece) {
+      it.scale.setValues(1, 0.5);
+    } else if (_source is EnergyBall || _source is SwirlProjectile) {
+      it.scale.setValues(3, 1.5);
+    } else {
+      it.scale.setValues(5, 2);
+    }
   }
 
   @override
