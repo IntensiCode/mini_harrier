@@ -16,7 +16,6 @@ uniform float z_off;
 out vec4 fragColor;
 
 const float merge_col = 16;
-const float fade_out = 32;
 
 float do_mod(float a, float b) {
     return a - (b * floor(a / b));
@@ -44,11 +43,6 @@ void main() {
     float merge_ = (y - resolution.y / merge_col) / resolution.y;
     if (merge_ < 0) merge_ = 0;
     col = mix(col, other, 0.5 - merge_);
-
-    float mix_ = y / resolution.y * fade_out;
-    if (y < resolution.y / fade_out) {
-        col = col * mix_;
-    }
 
     col.x *= col.a;
     col.y *= col.a;
