@@ -11,7 +11,7 @@ import '../util/extensions.dart';
 
 class Checkerboard extends PositionComponent with HasPaint, AutoDispose, MiniScriptFunctions {
   Checkerboard() {
-    priority = -1000;
+    priority = -5000;
   }
 
   late FragmentShader shader;

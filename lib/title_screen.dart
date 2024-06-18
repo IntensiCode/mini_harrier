@@ -34,7 +34,7 @@ class TitleScreen extends MiniScriptComponent with HasAutoDisposeShortcuts {
   void onLoad() async {
     super.onLoad();
 
-    add(fadeIn(RectangleComponent(size: gameSize, paint: Paint()..color = const Color(0xFF102060))..priority = -1000));
+    add(fadeIn(RectangleComponent(size: gameSize, paint: Paint()..color = const Color(0xFF102060))..priority = -10000));
     add(fadeIn(Checkerboard()));
     add(fadeIn(await spriteXY('flame.png', 0, gameHeight, Anchor.bottomLeft)));
     add(fadeIn(await spriteXY('flutter.png', gameWidth, gameHeight, Anchor.bottomRight)));
