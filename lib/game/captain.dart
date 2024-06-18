@@ -8,6 +8,9 @@ import '../core/mini_common.dart';
 import '../input/mini_game_keys.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
+import '../util/extensions.dart';
+import '../util/random.dart';
+import 'mini_effects.dart';
 import 'mini_target.dart';
 import 'swirl_weapon.dart';
 
@@ -45,6 +48,8 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
 
   @override
   void update(double dt) {
+    if (debug.value && secondaryFire) applyDamage(collision: life);
+
     super.update(dt);
     worldPosition.add(velocity * dt);
     if (state == CaptainState.playing) _playing(dt);
@@ -112,10 +117,64 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
   }
 
   @override
-  void whenDefeated() {}
+  void whenDefeated() {
+    final i = _sprite.sprite?.image;
+    if (i == null) return;
+
+    final pieces = sheet(i, 3 * 5, 5 * 5);
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+        final dx = (i - 2) * 10.0;
+        final dy = (j - 2) * 10.0;
+        parent?.add(Piece(this, pieces.getSprite(9 - j, 5 + i), dx, dy, world: world));
+      }
+    }
+  }
 
   @override
   void whenHit() => shakeTime += 0.4;
 
   double shakeTime = 0;
+}
+
+class Piece extends Component3D {
+  Piece(Captain origin, Sprite sprite, double dx, double dy, {required super.world}) {
+    add(SpriteComponent(sprite: sprite));
+    worldPosition.setFrom(origin.worldPosition);
+    worldPosition.x += dx;
+    worldPosition.y += dy + 45;
+    velocity.setFrom(origin.velocity);
+    velocity.x += random.nextDoublePM(100);
+    velocity.y += random.nextDoubleLimit(100);
+    // velocity.z += random.nextDoublePM(100);
+  }
+
+  final velocity = Vector3(0, 0, -500);
+  final target = Vector3(0, -1000, 0);
+
+  double smoke = 0.1;
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (worldPosition.y <= 0) return;
+    angle += random.nextDoubleLimit(0.05);
+    worldPosition.add(velocity * dt);
+    velocity.lerp(target, 0.001);
+
+    if (smoke <= 0) {
+      smoke = 0.1;
+      final c3d = Component3D(world: world);
+      c3d.worldPosition.setFrom(worldPosition);
+      c3d.worldPosition.y -= 45;
+      spawnEffect(MiniEffectKind.smoke, c3d, velocity: Vector3(0, 30, 0));
+    } else {
+      smoke -= dt;
+    }
+
+    if (worldPosition.y > 0) return;
+    worldPosition.y = 0;
+    velocity.setZero();
+    target.setZero();
+  }
 }
