@@ -30,7 +30,7 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
 
     // backgroundMusic('revenge_of_the_captain_coder.ogg');
 
-    add(fadeIn(RectangleComponent(size: gameSize, paint: Paint()..color = const Color(0xFFa0c0ff))..priority = -3000));
+    add(fadeIn(RectangleComponent(size: gameSize, paint: Paint()..color = const Color(0xFFa0c0ff))..priority = -10000));
     add(fadeIn(Sky()));
     add(fadeIn(Checkerboard()));
     add(fadeIn(Mountains()));
