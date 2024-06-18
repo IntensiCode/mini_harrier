@@ -14,10 +14,11 @@ import 'mini_state.dart';
 import 'mini_target.dart';
 
 class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
-  EnemyEnergyBalls(this.container, this.enemies);
+  EnemyEnergyBalls(this.container, this.enemies, this.captain);
 
   final Component container;
   final Iterable<Component3D> Function() enemies;
+  final Component3D captain;
 
   late final SpriteAnimation anim;
 
@@ -27,6 +28,8 @@ class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
   @override
   update(double dt) {
     super.update(dt);
+
+    if (captain.isMounted == false) return;
 
     if (_coolDown > 0) _coolDown -= dt;
     if (_coolDown <= 0) {

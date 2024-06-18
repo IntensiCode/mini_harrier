@@ -49,7 +49,11 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
     debugXY(() => 'Captain VX: ${captain.velocity.x}', 0, gameHeight - debugHeight, Anchor.bottomLeft);
     debugXY(() => 'Captain VY: ${captain.velocity.y}', 0, gameHeight, Anchor.bottomLeft);
     add(UfoEnemies());
-    add(EnemyEnergyBalls(this, () => children.whereType<UfoEnemy>().where((it) => it.readyToAttack)));
+    add(EnemyEnergyBalls(
+      this,
+      () => children.whereType<UfoEnemy>().where((it) => it.readyToAttack),
+      captain,
+    ));
 
     soundboard.play(MiniSound.game_on);
 
