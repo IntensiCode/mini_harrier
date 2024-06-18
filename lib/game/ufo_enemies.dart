@@ -4,7 +4,7 @@ import '../scripting/mini_script.dart';
 import 'ufo_enemy.dart';
 
 class UfoEnemies extends MiniScriptComponent {
-  UfoEnemies([this.waveSize = 8, this.spawnInterval = 4.0]);
+  UfoEnemies([this.waveSize = 5, this.spawnInterval = 4.0]);
 
   final int waveSize;
   final double spawnInterval;
