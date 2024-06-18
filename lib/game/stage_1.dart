@@ -8,6 +8,7 @@ import '../components/mountains.dart';
 import '../components/sky.dart';
 import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
+import '../core/mini_messaging.dart';
 import '../core/mini_soundboard.dart';
 import '../input/mini_shortcuts.dart';
 import '../scripting/mini_script.dart';
@@ -48,12 +49,16 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
 
     debugXY(() => 'Captain VX: ${captain.velocity.x}', 0, gameHeight - debugHeight, Anchor.bottomLeft);
     debugXY(() => 'Captain VY: ${captain.velocity.y}', 0, gameHeight, Anchor.bottomLeft);
-    add(UfoEnemies(captain));
+
     add(EnemyEnergyBalls(
       this,
       () => children.whereType<UfoEnemy>().where((it) => it.readyToAttack),
       captain,
     ));
+
+    add(UfoEnemies(captain));
+
+    onMessage<EnemiesDefeated>((_) => showScreen(Screen.title));
 
     soundboard.play(MiniSound.game_on);
 
