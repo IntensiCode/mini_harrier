@@ -20,6 +20,7 @@ enum MiniSound {
   missile,
   shot,
   strangeness,
+  warning,
 }
 
 final soundboard = MiniSoundboard();
