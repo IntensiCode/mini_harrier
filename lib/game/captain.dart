@@ -8,6 +8,7 @@ import '../core/mini_common.dart';
 import '../input/mini_game_keys.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
+import 'mini_target.dart';
 import 'swirl_weapon.dart';
 
 enum CaptainState {
@@ -16,12 +17,15 @@ enum CaptainState {
   playing,
 }
 
-class Captain extends Component3D with AutoDispose, MiniScriptFunctions, KeyboardHandler, MiniGameKeys {
+class Captain extends Component3D with AutoDispose, MiniScriptFunctions, KeyboardHandler, MiniGameKeys, MiniTarget {
   Captain({required super.world}) {
     worldPosition.x = 0;
     worldPosition.y = 50;
     worldPosition.z = 25;
+    life = maxLife;
   }
+
+  final maxLife = 25.0;
 
   late final weapon = SwirlWeapon(this, () => primaryFire, parent!, world);
 
@@ -91,4 +95,7 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
     final opY = (worldPosition.y - midHeight).abs() / midHeight;
     _sprite.opacity = max(opX, opY).clamp(0, 1);
   }
+
+  @override
+  void whenDefeated() {}
 }
