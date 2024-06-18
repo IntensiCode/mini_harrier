@@ -37,7 +37,7 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
   @override
   onLoad() async {
     _sheet = sheet(await image('captain_sprite.png'), 3, 5);
-    _sprite = spriteSXY(_sheet.getSprite(1, 1), 0, 0);
+    _sprite = spriteSXY(_sheet.getSprite(1, 1), 0, 0, Anchor.bottomCenter);
     _sprite.scale.setAll(2);
     add(fadeIn(_sprite));
     add(weapon);
