@@ -94,6 +94,7 @@ class EnergyBall extends Component3D {
     if (_lifetime > 5) {
       _recycle(this);
     } else if (worldPosition.y < 0) {
+      worldPosition.y = 0;
       final c3d = Component3D(world: world);
       c3d.worldPosition.setFrom(worldPosition);
       final v = Vector3.zero();
@@ -103,7 +104,16 @@ class EnergyBall extends Component3D {
       return;
     }
 
-    if (worldPosition.z > world.camera.z) {
+    if (position.x < -20 || position.x > gameWidth + 20) {
+      _recycle(this);
+      return;
+    }
+    if (position.y < -20 || position.y > gameHeight + 20) {
+      _recycle(this);
+      return;
+    }
+
+    if (worldPosition.z > world.camera.z - 10) {
       _recycle(this);
       return;
     }
