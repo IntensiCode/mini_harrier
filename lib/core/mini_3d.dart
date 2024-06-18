@@ -48,6 +48,7 @@ class Component3D extends PositionComponent with HasVisibility {
     scale.setAll(5 / depth);
     priority = -depth.toInt();
     if (this case OpacityProvider it) {
+      isVisible = worldPosition.z - world.camera.z < -10;
       if (worldPosition.z - world.camera.z > -20) {
         it.opacity = 0.1;
       } else {
