@@ -9,9 +9,9 @@ import 'mini_state.dart';
 import 'mini_target.dart';
 
 class SwirlWeapon extends Component with AutoDispose, MiniScriptFunctions {
-  SwirlWeapon(this.ship, this.shouldFire, this.world, this.world3d);
+  SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);
 
-  final Component3D ship;
+  final Component3D captain;
   final bool Function() shouldFire;
   final Component world;
   final World3D world3d;
@@ -31,7 +31,7 @@ class SwirlWeapon extends Component with AutoDispose, MiniScriptFunctions {
     if (_coolDown <= 0 && shouldFire()) {
       final it = _pool.isEmpty ? SwirlProjectile(_recycle, world: world3d) : _pool.removeLast();
       it.visual.animation = anim;
-      it.reset(ship.worldPosition);
+      it.reset(captain.worldPosition);
       world.add(it);
       soundboard.play(MiniSound.shot);
       _coolDown = 0.3;
