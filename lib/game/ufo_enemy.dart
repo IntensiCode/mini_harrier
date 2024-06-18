@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 
 import '../core/mini_3d.dart';
-import '../core/mini_common.dart';
 import '../scripting/mini_script.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
@@ -17,12 +17,13 @@ enum _State {
 }
 
 class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, MiniTarget {
-  //
   UfoEnemy(this.onDefeated, {required super.world});
 
   final void Function() onDefeated;
 
   _State _state = _State.incoming;
+
+  bool readyToAttack = false;
 
   @override
   onLoad() async {
@@ -31,12 +32,16 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
     worldPosition.setFrom(world.camera);
     worldPosition.z -= 1000;
     stateTime = random.nextDoubleLimit(4.0);
-    life = 5;
+    life = 10;
   }
 
   var stateTime = 0.0;
 
   final targetOffsetZ = 150;
+
+  final targetVelocity = Vector3(0, 0, 0);
+  final velocity = Vector3(0, 0, 0);
+  final relativePosition = Vector3(0, 0, 0);
 
   @override
   void update(double dt) {
@@ -44,17 +49,107 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
     if (_state == _State.incoming) {
       worldPosition.x = sin(stateTime) * 100;
       worldPosition.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
-      worldPosition.z -= 200 * dt;
+      worldPosition.z -= 300 * dt;
       stateTime += dt;
-      if (worldPosition.z >= world.camera.z - targetOffsetZ) _state = _State.floating;
+      if (worldPosition.z >= world.camera.z - targetOffsetZ) {
+        _state = _State.floating;
+        velocity.x = sin(stateTime) * 100;
+        velocity.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
+        velocity.z = worldPosition.z + 200 * dt;
+        velocity.sub(worldPosition);
+        relativePosition.setFrom(worldPosition);
+        relativePosition.sub(world.camera);
+        relativePosition.z += targetOffsetZ;
+        targetVelocity.setFrom(velocity);
+        logInfo(relativePosition);
+        logInfo(targetVelocity);
+      }
     }
     if (_state == _State.floating) {
-      worldPosition.x = sin(stateTime) * 200;
-      worldPosition.y = midHeight + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 100;
-      stateTime += dt;
-      worldPosition.z = world.camera.z - targetOffsetZ + cos(stateTime) * 20;
+      worldPosition.setFrom(world.camera);
+      worldPosition.add(relativePosition);
+      worldPosition.z -= targetOffsetZ;
+
+      readyToAttack = relativePosition.z < 0;
+
+      relativePosition.add(velocity);
+
+      const xSpeed = 4.0;
+      if (relativePosition.x < -200 && targetVelocity.x < 0) {
+        targetVelocity.x = xSpeed + random.nextDoubleLimit(xSpeed);
+      }
+      if (relativePosition.x > 200 && targetVelocity.x > 0) {
+        targetVelocity.x = -xSpeed - random.nextDoubleLimit(xSpeed);
+      }
+      if (targetVelocity.x.abs() < 0.5) {
+        targetVelocity.x = 0.5 + random.nextDoubleLimit(0.5);
+        if (random.nextBool()) targetVelocity.x *= -1;
+      }
+
+      if (relativePosition.y < 40 && targetVelocity.y < 0) {
+        targetVelocity.y = 2 + random.nextDoubleLimit(2);
+      }
+      if (relativePosition.y > 160 && targetVelocity.y > 0) {
+        targetVelocity.y = -2 - random.nextDoubleLimit(2);
+      }
+      if (targetVelocity.y.abs() < 0.5) {
+        targetVelocity.y = 0.5 + random.nextDoubleLimit(0.5);
+        if (random.nextBool()) targetVelocity.y *= -1;
+      }
+
+      if (relativePosition.z < -20 && targetVelocity.z < 0) {
+        targetVelocity.z = 2 + random.nextDoubleLimit(2);
+      }
+      if (relativePosition.z > 20 && targetVelocity.z > 0) {
+        targetVelocity.z = -2 - random.nextDoubleLimit(2);
+      }
+      if (targetVelocity.z.abs() < 0.5) {
+        targetVelocity.z = 0.5 + random.nextDoubleLimit(0.5);
+        if (random.nextBool()) targetVelocity.z *= -1;
+      }
+
+      velocity.lerp(targetVelocity, 0.01);
+
+      final buddies = parent?.children.whereType<UfoEnemy>();
+      if (buddies == null) return;
+
+      bool perceivedCollision(UfoEnemy other) {
+        if (other == this) return false;
+        // final dist2 = worldPosition.distanceToSquared(other.worldPosition);
+        // return dist2 < 3000;
+        check.setFrom(other.worldPosition);
+        check.sub(worldPosition);
+        check.absolute();
+        if (check.x > 80) return false;
+        if (check.y > 80) return false;
+        if (check.z > 20) return false;
+        return true;
+      }
+
+      for (final it in buddies) {
+        if (it == this) continue;
+        if (perceivedCollision(it)) {
+          check.setFrom(it.worldPosition);
+          check.sub(worldPosition);
+          check.normalize();
+          if (check.angleTo(velocity).abs() < pi / 4) {
+            check.negate();
+            check.sub(velocity);
+            check.normalize();
+            check.scale(velocity.length);
+            velocity.setFrom(check);
+            it.velocity.setFrom(check);
+            it.velocity.negate();
+            applyDamage(collision: 0.05);
+          }
+          // final angle = check.angleTo(velocity);
+          // logInfo(angle);
+        }
+      }
     }
   }
+
+  final check = Vector3.zero();
 
   @override
   void whenDefeated() {
