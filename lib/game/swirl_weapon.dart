@@ -61,7 +61,7 @@ class SwirlProjectile extends Component3D {
   void reset(Vector3 position) {
     worldPosition.setFrom(position);
     worldPosition.x -= 5;
-    worldPosition.y += 5;
+    worldPosition.y += 55;
     worldPosition.z -= 10;
     _lifetime = 0;
   }
@@ -82,14 +82,12 @@ class SwirlProjectile extends Component3D {
     if (check == null) return;
 
     for (final it in check) {
-      if (it case Component3D c3d) {
-        final dist = c3d.distanceSquared3D(this);
-        if (dist < 2000 && (c3d.worldPosition.z - worldPosition.z).abs() < 5) {
-          it.applyDamage(plasma: 1 + state.charge * 0.5);
-          _recycle(this);
-          break;
-        }
-      }
+      if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
+      if ((it.worldPosition.z - worldPosition.z).abs() > 5) continue;
+      if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
+      it.applyDamage(plasma: 1 + state.charge * 0.5);
+      _recycle(this);
+      break;
     }
   }
 }

@@ -54,6 +54,7 @@ class MiniEffects extends MiniScriptComponent {
       it.atHalfTime = data.atHalfTime;
       it.velocity = data.velocity;
       it.worldPosition.setFrom(data.anchor.worldPosition);
+      it.worldPosition.y += 60;
 
       final delay = data.delaySeconds ?? 0.0;
       add(delay == 0 ? it : Delayed(delay, it));

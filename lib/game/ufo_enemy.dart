@@ -17,7 +17,9 @@ enum _State {
 }
 
 class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, MiniTarget {
-  UfoEnemy(this.onDefeated, {required super.world});
+  UfoEnemy(this.onDefeated, {required super.world}) {
+    anchor = Anchor.bottomCenter;
+  }
 
   final void Function() onDefeated;
 
@@ -27,7 +29,7 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
 
   @override
   onLoad() async {
-    final it = added(await spriteXY('alien-ufo-front.png', 0, 0));
+    final it = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
     it.scale.setAll(3.0);
     worldPosition.setFrom(world.camera);
     worldPosition.z -= 1000;

@@ -72,6 +72,7 @@ class EnergyBall extends Component3D {
     this.source = source;
 
     worldPosition.setFrom(source.worldPosition);
+    worldPosition.y += 50;
     worldPosition.z += 5;
     _lifetime = 0;
 
@@ -112,14 +113,12 @@ class EnergyBall extends Component3D {
 
     for (final it in check) {
       if (it == source) continue;
-      if (it case Component3D c3d) {
-        final dist = c3d.distanceSquared3D(this);
-        if (dist < 2000 && (c3d.worldPosition.z - worldPosition.z).abs() < 5) {
-          it.applyDamage(plasma: 1 + state.charge * 0.5);
-          _recycle(this);
-          break;
-        }
-      }
+      if ((it.worldPosition.x - worldPosition.x).abs() > 30) continue;
+      if ((it.worldPosition.z - worldPosition.z).abs() > 5) continue;
+      if ((it.worldPosition.y + 25 - worldPosition.y).abs() > 40) continue;
+      it.applyDamage(plasma: 1 + state.charge * 0.5);
+      _recycle(this);
+      return;
     }
   }
 }
