@@ -11,7 +11,7 @@ import '../util/auto_dispose.dart';
 class Mountains extends PositionComponent with HasPaint, AutoDispose, MiniScriptFunctions {
   Mountains() {
     priority = -1000;
-    position.y = gameHeight / 4 + 2;
+    position.y = gameHeight / 4 + 0;
   }
 
   late FragmentShader shader;
