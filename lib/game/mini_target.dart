@@ -7,6 +7,7 @@ import 'mini_state.dart';
 
 mixin MiniTarget on Component3D {
   void whenDefeated();
+  void whenHit();
 
   double life = 3;
 
@@ -19,6 +20,7 @@ mixin MiniTarget on Component3D {
       whenDefeated();
       return true;
     } else {
+      whenHit();
       spawnEffect(MiniEffectKind.sparkle, this);
       soundboard.play(MiniSound.asteroid_clash);
       state.score++;

@@ -96,4 +96,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions
   void whenDefeated() {
     onDefeated();
   }
+
+  @override
+  void whenHit() {}
 }

@@ -157,4 +157,7 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
   void whenDefeated() {
     onDefeated();
   }
+
+  @override
+  void whenHit() {}
 }

@@ -108,4 +108,9 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
 
   @override
   void whenDefeated() {}
+
+  @override
+  void whenHit() {
+    // TODO shake screen
+  }
 }
