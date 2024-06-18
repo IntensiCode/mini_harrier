@@ -99,6 +99,12 @@ class EnergyBall extends Component3D {
       v.z = velocity.z;
       spawnEffect(MiniEffectKind.smoke, c3d, velocity: v);
       _recycle(this);
+      return;
+    }
+
+    if (worldPosition.z > world.camera.z) {
+      _recycle(this);
+      return;
     }
 
     final check = parent?.children.whereType<MiniTarget>();
