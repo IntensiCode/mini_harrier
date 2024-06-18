@@ -29,7 +29,7 @@ class Sky extends PositionComponent with HasPaint, AutoDispose, MiniScriptFuncti
   render(Canvas canvas) {
     super.render(canvas);
     shader.setFloat(2, world.camera.x);
-    shader.setFloat(3, world.camera.z / 5);
+    shader.setFloat(3, world.camera.z / 50);
 
     if (kIsWeb) {
       final paint = Paint();
@@ -40,5 +40,5 @@ class Sky extends PositionComponent with HasPaint, AutoDispose, MiniScriptFuncti
     }
   }
 
-  final rect = const Rect.fromLTWH(0, 0, gameWidth, gameHeight / 2 - 25);
+  final rect = const Rect.fromLTWH(0, 0, gameWidth, gameHeight / 2 - 10);
 }
