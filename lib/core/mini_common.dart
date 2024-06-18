@@ -75,6 +75,16 @@ Future<SpriteAnimation> explosion32() => game.loadSpriteAnimation(
       loop: false,
     ));
 
+Future<SpriteAnimation> energyBalls16() => game.loadSpriteAnimation(
+      'energy_balls_alt.png',
+      SpriteAnimationData.sequenced(
+        amount: 16,
+        amountPerRow: 8,
+        stepTime: 0.03,
+        textureSize: Vector2(16, 16),
+      ),
+    );
+
 Paint pixelPaint() => Paint()
   ..isAntiAlias = false
   ..filterQuality = FilterQuality.none;
