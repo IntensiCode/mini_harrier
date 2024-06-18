@@ -76,7 +76,7 @@ class MiniEffect extends Component3D {
     add(CircleComponent(radius: 10, anchor: Anchor.center));
   }
 
-  final anim = SpriteAnimationComponent(anchor: Anchor.center)..scale.setAll(10);
+  final anim = SpriteAnimationComponent(anchor: Anchor.center);
 
   final void Function(MiniEffect) _recycle;
 
@@ -86,6 +86,11 @@ class MiniEffect extends Component3D {
 
   @override
   void onMount() {
+    if (kind == MiniEffectKind.sparkle) {
+      anim.scale.setAll(25);
+    } else {
+      anim.scale.setAll(10);
+    }
     anim.animationTicker!.reset();
     anim.animationTicker!.onComplete = () => _recycle(this);
     if (atHalfTime != null) {
