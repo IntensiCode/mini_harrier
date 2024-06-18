@@ -38,10 +38,10 @@ class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
       final candidates = enemies().toList();
       if (candidates.isNotEmpty) {
         final enemy = candidates.random(random);
-        it.reset(enemy);
+        it.reset(enemy, captain);
         container.add(it);
         soundboard.play(MiniSound.shot);
-        _coolDown = 0.1 + random.nextDoubleLimit(0.4);
+        _coolDown = 0.4 + random.nextDoubleLimit(0.4) - candidates.length * 0.05;
       }
     }
   }
@@ -68,7 +68,7 @@ class EnergyBall extends Component3D {
 
   late Component3D source;
 
-  void reset(Component3D source) {
+  void reset(Component3D source, Component3D target) {
     this.source = source;
 
     worldPosition.setFrom(source.worldPosition);
@@ -76,11 +76,13 @@ class EnergyBall extends Component3D {
     worldPosition.z += 5;
     _lifetime = 0;
 
-    velocity.setValues(
-      -worldPosition.x * 1.5 * random.nextDouble(),
-      random.nextDoublePM(100) - 50,
-      150,
-    );
+    velocity.setFrom(target.worldPosition);
+    velocity.sub(worldPosition);
+    velocity.normalize();
+    velocity.scale(250);
+
+    velocity.x += random.nextDoublePM(10) - 5;
+    velocity.y += random.nextDoublePM(10) - 5;
   }
 
   final velocity = Vector3(0, 0, 0);
