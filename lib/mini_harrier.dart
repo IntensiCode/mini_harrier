@@ -80,7 +80,7 @@ class MiniHarrier extends FlameGame<MiniWorld>
       onKey('<C-n>', () => world.nextLevel());
       onKey('<C-p>', () => world.previousLevel());
       onKey('<C-0>', () => showScreen(Screen.title));
-      onKey('<C-1>', () => showScreen(Screen.game));
+      onKey('<C-1>', () => showScreen(Screen.stage1));
       onKey('<C-->', () => _slowDown());
       onKey('<C-=>', () => _speedUp());
       onKey('<C-S-+>', () => _speedUp());
