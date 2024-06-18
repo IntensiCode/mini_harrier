@@ -75,12 +75,11 @@ class EnergyBall extends Component3D {
     worldPosition.z += 5;
     _lifetime = 0;
 
-    var dx = random.nextDoubleLimit(50);
-    if (worldPosition.x > 0) dx *= -1;
-    var dy = 100 + random.nextDoubleLimit(100);
-    if (worldPosition.y > 100) dy *= -1;
-
-    velocity.setValues(dx, dy, -250);
+    velocity.setValues(
+      -worldPosition.x * 1.5 * random.nextDouble(),
+      -worldPosition.y,
+      -250,
+    );
   }
 
   final velocity = Vector3(0, 0, 0);
