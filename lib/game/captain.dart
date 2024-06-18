@@ -5,6 +5,7 @@ import 'package:flame/sprite.dart';
 
 import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
+import '../core/mini_soundboard.dart';
 import '../input/mini_game_keys.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
@@ -134,6 +135,7 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
         ));
       }
     }
+    soundboard.play(MiniSound.explosion, volume: 0.8);
   }
 
   @override
