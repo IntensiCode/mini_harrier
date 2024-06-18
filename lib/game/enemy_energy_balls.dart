@@ -90,7 +90,7 @@ class EnergyBall extends Component3D {
     super.update(dt);
     worldPosition.add(velocity * dt);
     _lifetime += dt;
-    if (_lifetime > 10) {
+    if (_lifetime > 5) {
       _recycle(this);
     } else if (worldPosition.y < 0) {
       final c3d = Component3D(world: world);
