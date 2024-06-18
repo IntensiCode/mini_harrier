@@ -57,7 +57,6 @@ class MiniHarrier extends FlameGame<MiniWorld>
         scale: Vector2(0.25, 0.25),
         position: Vector2(0, 8),
         anchor: Anchor.topLeft,
-        time: () => renderTime,
       );
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame/text.dart';
 
@@ -41,25 +43,35 @@ class RenderTps<T extends TextRenderer> extends TextComponent with HasVisibility
 }
 
 class RenderFps<T extends TextRenderer> extends TextComponent with HasVisibility {
-  //
-  final int Function() _time;
-
   RenderFps({
     super.position,
     super.size,
     super.scale,
     super.anchor,
     super.key,
-    required int Function() time,
-  })  : _time = time,
-        super(priority: double.maxFinite.toInt());
+  }) : super(priority: double.maxFinite.toInt());
 
   @override
   bool get isVisible => debug.value;
 
   @override
-  void update(double dt) {
-    final fps = (1000 / _time()).toStringAsFixed(0);
-    text = '$fps FPS';
+  void update(double dt) {}
+
+  static const maxSnapshots = 100;
+  final snapshots = <int>[];
+
+  int previousFrame = 0;
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    if (previousFrame > 0) {
+      final delta = DateTime.timestamp().millisecondsSinceEpoch - previousFrame;
+      if (snapshots.length == maxSnapshots) snapshots.removeAt(0);
+      snapshots.add(delta);
+      final average = snapshots.reduce((value, element) => value + element) / snapshots.length;
+      text = '${(1000 / average).toStringAsFixed(0)} FPS';
+    }
+    previousFrame = DateTime.timestamp().millisecondsSinceEpoch;
   }
 }
