@@ -110,7 +110,7 @@ class MiniEffect extends Component3D {
     if (velocity != null) {
       worldPosition.add(velocity! * dt);
     } else {
-      worldPosition.z -= 400 * dt;
+      worldPosition.z -= 40 * dt;
     }
   }
 }

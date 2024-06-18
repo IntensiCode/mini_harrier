@@ -62,7 +62,7 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
 
   final steerAcceleration = 1000.0;
   final maxAcceleration = 1000.0;
-  final velocity = Vector3(0, 0, -500);
+  final velocity = Vector3(0, 0, -50);
   final autoDecelerate = 200;
 
   double walk = 0;

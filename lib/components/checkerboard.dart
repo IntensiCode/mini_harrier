@@ -35,7 +35,7 @@ class Checkerboard extends PositionComponent with HasPaint, AutoDispose, MiniScr
     super.render(canvas);
     shader.setFloat(12, world.camera.x);
     shader.setFloat(13, world.camera.y);
-    shader.setFloat(14, world.camera.z);
+    shader.setFloat(14, world.camera.z * 8);
     if (kIsWeb) {
       final paint = Paint();
       paint.shader = shader;

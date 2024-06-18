@@ -11,7 +11,7 @@ class CaptainCam extends Component {
 
   final currentPosition = Vector3(0, 10, 50);
 
-  double slowDownSpeed = 400;
+  double slowDownSpeed = 40;
 
   @override
   void update(double dt) {

@@ -78,8 +78,8 @@ class EnergyBall extends Component3D {
 
     velocity.setValues(
       -worldPosition.x * 1.5 * random.nextDouble(),
-      -worldPosition.y,
-      -250,
+      random.nextDoublePM(100) - 50,
+      150,
     );
   }
 

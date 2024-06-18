@@ -35,7 +35,7 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
     final it = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
     it.scale.setAll(3.0);
     worldPosition.setFrom(world.camera);
-    worldPosition.z -= 1000;
+    worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
     life = 10;
   }
@@ -46,25 +46,32 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
 
   final targetVelocity = Vector3(0, 0, 0);
   final velocity = Vector3(0, 0, 0);
-  final relativePosition = Vector3(0, 0, 0);
+  final relativePosition = Vector3(0, 0, -5000);
+  var incomingSpeed = 2500.0;
 
   @override
   void update(double dt) {
     super.update(dt);
     if (_state == _State.incoming) {
-      worldPosition.x = sin(stateTime) * 100;
-      worldPosition.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
-      worldPosition.z -= 300 * dt;
+
+      worldPosition.setFrom(world.camera);
+      worldPosition.add(relativePosition);
+      worldPosition.z -= targetOffsetZ;
+
+      relativePosition.x = sin(stateTime) * 100;
+      relativePosition.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
+      relativePosition.z += incomingSpeed * dt;
+      incomingSpeed = relativePosition.z.abs().clamp(300, 2500);
+
       stateTime += dt;
+
       if (worldPosition.z >= world.camera.z - targetOffsetZ) {
         _state = _State.floating;
         velocity.x = sin(stateTime) * 100;
         velocity.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
-        velocity.z = worldPosition.z + 200 * dt;
-        velocity.sub(worldPosition);
-        relativePosition.setFrom(worldPosition);
-        relativePosition.sub(world.camera);
-        relativePosition.z += targetOffsetZ;
+        velocity.z = 250 * dt;
+        velocity.sub(relativePosition);
+        velocity.z = -velocity.z;
         targetVelocity.setFrom(velocity);
         logInfo(relativePosition);
         logInfo(targetVelocity);
@@ -80,7 +87,7 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
       readyToAttack = false;
 
       relativePosition.add(velocity);
-      relativePosition.z -= 200 * dt;
+      relativePosition.z -= 20 * dt;
 
       velocity.lerp(targetVelocity, 0.01);
 
