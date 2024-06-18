@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
+import 'package:mini_harrier/game/fragment.dart';
 
 import '../core/mini_3d.dart';
 import '../scripting/mini_script.dart';
@@ -30,10 +31,12 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
 
   flyOff() => _state = _State.fly_off;
 
+  late final SpriteComponent _sprite;
+
   @override
   onLoad() async {
-    final it = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
-    it.scale.setAll(3.0);
+    _sprite = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
+    _sprite.scale.setAll(3.0);
     worldPosition.setFrom(world.camera);
     worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
@@ -53,7 +56,6 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
   void update(double dt) {
     super.update(dt);
     if (_state == _State.incoming) {
-
       worldPosition.setFrom(world.camera);
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
@@ -183,6 +185,26 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
   @override
   void whenDefeated() {
     onDefeated();
+
+    final i = _sprite.sprite?.image;
+    if (i == null) return;
+
+    final pieces = sheet(i, 5, 5);
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+        final dx = (i - 2) * 10.0;
+        final dy = (j - 2) * 10.0;
+        velocity.setValues(0, 0, -5);
+        parent?.add(Fragment(
+          worldPosition,
+          velocity,
+          pieces.getSprite(4 - j, i),
+          dx,
+          dy,
+          world: world,
+        ));
+      }
+    }
   }
 
   @override
