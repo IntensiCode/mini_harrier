@@ -48,6 +48,11 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
     super.update(dt);
     worldPosition.add(velocity * dt);
     if (state == CaptainState.playing) _playing(dt);
+    if (shakeTime > 0) {
+      shakeTime -= dt;
+    } else {
+      shakeTime = 0;
+    }
   }
 
   final steerAcceleration = 1000.0;
@@ -110,7 +115,7 @@ class Captain extends Component3D with AutoDispose, MiniScriptFunctions, Keyboar
   void whenDefeated() {}
 
   @override
-  void whenHit() {
-    // TODO shake screen
-  }
+  void whenHit() => shakeTime += 0.4;
+
+  double shakeTime = 0;
 }

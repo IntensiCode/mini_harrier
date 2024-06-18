@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 
 import '../core/mini_3d.dart';
@@ -9,6 +11,8 @@ class CaptainCam extends Component {
 
   final currentPosition = Vector3(0, 10, 50);
 
+  double slowDownSpeed = 400;
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -19,8 +23,18 @@ class CaptainCam extends Component {
     final f = follow;
     if (f == null) return;
 
-    currentPosition.setFrom(f.worldPosition);
-    currentPosition.x = currentPosition.x / 3;
-    currentPosition.y = (currentPosition.y - midHeight) / 4 + midHeight;
+    if (f.isMounted) {
+      currentPosition.setFrom(f.worldPosition);
+      currentPosition.x = currentPosition.x / 3;
+      currentPosition.y = (currentPosition.y - midHeight) / 4 + midHeight;
+      if (f.shakeTime > 0) {
+        currentPosition.x += sin(f.shakeTime * 30) * 3;
+        currentPosition.y += cos(f.shakeTime * 23) * 3;
+      }
+    } else {
+      currentPosition.z -= slowDownSpeed * dt;
+      slowDownSpeed -= slowDownSpeed * 0.9 * dt;
+      if (slowDownSpeed < 10) removeFromParent();
+    }
   }
 }
