@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../components/checkerboard.dart';
@@ -17,6 +16,7 @@ import '../util/extensions.dart';
 import '../util/fonts.dart';
 import 'auto_shadows.dart';
 import 'captain.dart';
+import 'captain_cam.dart';
 import 'mini_effects.dart';
 import 'ufo_enemies.dart';
 
@@ -39,7 +39,7 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
 
     add(fadeIn(captain));
 
-    final camera = added(_CameraMovement());
+    final camera = added(CaptainCam());
     camera.follow = captain;
 
     debugXY(() => 'Captain VX: ${captain.velocity.x}', 0, gameHeight - debugHeight, Anchor.bottomLeft);
@@ -53,26 +53,5 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
     at(0.0, () => fadeIn(textXY('Did I sign up for THIS?', xCenter, yCenter + lineHeight, scale: 1)));
     at(2.0, () => fadeOutByType<BitmapText>());
     at(0.0, () => captain.state = CaptainState.playing);
-  }
-}
-
-class _CameraMovement extends Component {
-  Captain? follow;
-
-  final currentPosition = Vector3(0, 10, 50);
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-
-    world.camera.setFrom(currentPosition);
-    world.camera.z += 25;
-
-    final f = follow;
-    if (f == null) return;
-
-    currentPosition.setFrom(f.worldPosition);
-    currentPosition.x = currentPosition.x / 3;
-    currentPosition.y = (currentPosition.y - midHeight) / 4 + midHeight;
   }
 }
