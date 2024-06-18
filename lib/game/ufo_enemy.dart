@@ -14,6 +14,7 @@ import 'mini_target.dart';
 enum _State {
   incoming,
   floating,
+  fly_off,
 }
 
 class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, MiniTarget {
@@ -26,6 +27,8 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
   _State _state = _State.incoming;
 
   bool readyToAttack = false;
+
+  flyOff() => _state = _State.fly_off;
 
   @override
   onLoad() async {
@@ -66,6 +69,23 @@ class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniSc
         logInfo(relativePosition);
         logInfo(targetVelocity);
       }
+    }
+    if (_state == _State.fly_off) {
+      targetVelocity.setValues(0, 20, 0);
+
+      worldPosition.setFrom(world.camera);
+      worldPosition.add(relativePosition);
+      worldPosition.z -= targetOffsetZ;
+
+      readyToAttack = false;
+
+      relativePosition.add(velocity);
+      relativePosition.z -= 200 * dt;
+
+      velocity.lerp(targetVelocity, 0.01);
+
+      if (relativePosition.y > 10000) removeFromParent();
+      if (position.y < -50) removeFromParent();
     }
     if (_state == _State.floating) {
       worldPosition.setFrom(world.camera);

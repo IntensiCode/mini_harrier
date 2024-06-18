@@ -4,8 +4,9 @@ import '../scripting/mini_script.dart';
 import 'ufo_enemy.dart';
 
 class UfoEnemies extends MiniScriptComponent {
-  UfoEnemies([this.waveSize = 5, this.spawnInterval = 4.0]);
+  UfoEnemies(this.captain, [this.waveSize = 5, this.spawnInterval = 4.0]);
 
+  final Component3D captain;
   final int waveSize;
   final double spawnInterval;
 
@@ -15,6 +16,11 @@ class UfoEnemies extends MiniScriptComponent {
   @override
   void update(double dt) {
     super.update(dt);
+    if (captain.isMounted == false) {
+      parent?.children.whereType<UfoEnemy>().forEach((it) => it.flyOff());
+      removeFromParent();
+      return;
+    }
     if (remainingEnemies == 0) {
       return;
     } else if (nextSpawnTime <= 0) {
