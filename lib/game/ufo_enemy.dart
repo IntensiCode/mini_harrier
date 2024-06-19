@@ -107,7 +107,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
 
       relativePosition.add(velocity);
 
-      const xSpeed = 4.0;
+      const xSpeed = 3.0;
       if (relativePosition.x < -200 && targetVelocity.x < 0) {
         targetVelocity.x = xSpeed + random.nextDoubleLimit(xSpeed);
       }
@@ -133,7 +133,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
       if (relativePosition.z < -20 && targetVelocity.z < 0) {
         targetVelocity.z = 2 + random.nextDoubleLimit(2);
       }
-      if (relativePosition.z > 20 && targetVelocity.z > 0) {
+      if (relativePosition.z > 10 && targetVelocity.z > 0) {
         targetVelocity.z = -2 - random.nextDoubleLimit(2);
       }
       if (targetVelocity.z.abs() < 0.5) {
@@ -141,7 +141,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
         if (random.nextBool()) targetVelocity.z *= -1;
       }
 
-      velocity.lerp(targetVelocity, 1 / tps);
+      velocity.lerp(targetVelocity, 0.75 / tps);
 
       final buddies = parent?.children.whereType<UfoEnemy>();
       if (buddies == null) return;
