@@ -1,4 +1,4 @@
-import 'package:mini_harrier/core/mini_soundboard.dart';
+import 'package:mini_harrier/core/soundboard.dart';
 
 import 'core/common.dart';
 import 'input/mini_shortcuts.dart';

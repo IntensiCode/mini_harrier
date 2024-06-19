@@ -4,7 +4,7 @@ import 'package:flame_audio/flame_audio.dart';
 
 import 'common.dart';
 
-enum MiniSound {
+enum Sound {
   asteroid_clash,
   block,
   challenge,
@@ -23,11 +23,11 @@ enum MiniSound {
   warning,
 }
 
-final soundboard = MiniSoundboard();
+final soundboard = Soundboard();
 
 double get musicVolume => soundboard.music * soundboard.master;
 
-class MiniSoundboard {
+class Soundboard {
   double master = 0.3;
   double music = 0.5;
   double voice = 0.8;
@@ -45,7 +45,7 @@ class MiniSoundboard {
   }
 
   preload() async {
-    for (final it in MiniSound.values) {
+    for (final it in Sound.values) {
       logVerbose('cache $it');
       await FlameAudio.audioCache.load('effect/${it.name}.ogg');
     }
@@ -53,7 +53,7 @@ class MiniSoundboard {
 
   int _activeSounds = 0;
 
-  play(MiniSound sound, {double? volume}) {
+  play(Sound sound, {double? volume}) {
     if (muted) return;
 
     volume ??= soundboard.sound;
@@ -66,7 +66,7 @@ class MiniSoundboard {
     _playPooled(sound, volume);
   }
 
-  _playPooled(MiniSound sound, double volume) async {
+  _playPooled(Sound sound, double volume) async {
     final reuse = _pooledPlayers.indexWhere((it) {
       if (it.$1 != sound) return false;
       if (it.$2.state == PlayerState.playing) return false;
@@ -103,7 +103,7 @@ class MiniSoundboard {
     }
   }
 
-  final _pooledPlayers = <(MiniSound, AudioPlayer)>[];
+  final _pooledPlayers = <(Sound, AudioPlayer)>[];
 
   static const _maxActive = 10;
   static const _maxPooled = 50;

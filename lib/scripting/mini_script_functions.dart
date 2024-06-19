@@ -12,7 +12,7 @@ import 'package:signals_core/signals_core.dart';
 import '../components/press_fire_to_start.dart';
 import '../core/common.dart';
 import '../core/messaging.dart';
-import '../core/mini_soundboard.dart';
+import '../core/soundboard.dart';
 import '../util/auto_dispose.dart';
 import '../util/bitmap_button.dart';
 import '../util/bitmap_font.dart';

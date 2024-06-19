@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:mini_harrier/core/common.dart';
 
-import '../core/mini_soundboard.dart';
+import '../core/soundboard.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'captain.dart';
@@ -56,7 +56,7 @@ class VShmupHudMeter extends SpriteComponent with HasVisibility {
       warnTime += dt;
       if (warnTime > 1) {
         warnTime -= 1;
-        soundboard.play(MiniSound.warning);
+        soundboard.play(Sound.warning);
       }
     }
   }

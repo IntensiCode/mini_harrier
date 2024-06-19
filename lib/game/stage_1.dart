@@ -9,7 +9,7 @@ import '../components/sky.dart';
 import '../core/common.dart';
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_soundboard.dart';
+import '../core/soundboard.dart';
 import '../input/mini_shortcuts.dart';
 import '../scripting/mini_script.dart';
 import '../util/bitmap_text.dart';
@@ -60,7 +60,7 @@ class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
 
     onMessage<EnemiesDefeated>((_) => showScreen(Screen.title));
 
-    soundboard.play(MiniSound.game_on);
+    soundboard.play(Sound.game_on);
 
     fontSelect(fancyFont, scale: 1.0);
     at(0.0, () => fadeIn(textXY('STAGE 1', xCenter, yCenter - lineHeight, scale: 2)));

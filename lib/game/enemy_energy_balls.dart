@@ -4,7 +4,7 @@ import 'package:flame/extensions.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_soundboard.dart';
+import '../core/soundboard.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
@@ -40,7 +40,7 @@ class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
         final enemy = candidates.random(random);
         it.reset(enemy, captain);
         container.add(it);
-        soundboard.play(MiniSound.shot);
+        soundboard.play(Sound.shot);
         _coolDown = 0.4 + random.nextDoubleLimit(0.4) - candidates.length * 0.05;
       }
     }

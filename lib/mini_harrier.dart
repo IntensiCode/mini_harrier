@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'components/web_play_screen.dart';
 import 'core/common.dart';
 import 'core/messaging.dart';
-import 'core/mini_soundboard.dart';
+import 'core/soundboard.dart';
 import 'input/mini_shortcuts.dart';
 import 'mini_world.dart';
 import 'util/extensions.dart';

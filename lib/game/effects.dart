@@ -4,7 +4,7 @@ import '../components/delayed.dart';
 import '../core/common.dart';
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_soundboard.dart';
+import '../core/soundboard.dart';
 import '../scripting/mini_script.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/extensions.dart';
@@ -101,7 +101,7 @@ class Effect extends Component3D {
         }
       };
     }
-    if (kind == EffectKind.explosion) soundboard.play(MiniSound.explosion);
+    if (kind == EffectKind.explosion) soundboard.play(Sound.explosion);
   }
 
   @override

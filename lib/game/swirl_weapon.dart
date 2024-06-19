@@ -2,7 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '../core/mini_3d.dart';
-import '../core/mini_soundboard.dart';
+import '../core/soundboard.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
@@ -33,7 +33,7 @@ class SwirlWeapon extends Component with AutoDispose, MiniScriptFunctions {
       it.visual.animation = anim;
       it.reset(captain.worldPosition);
       world.add(it);
-      soundboard.play(MiniSound.shot);
+      soundboard.play(Sound.shot);
       _coolDown = 0.3;
     }
   }
