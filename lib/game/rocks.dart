@@ -10,6 +10,8 @@ import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
+import 'damage_target.dart';
+import 'fragment.dart';
 
 Rocks? _instance;
 
@@ -73,24 +75,24 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
 
 final shadow = Paint()..color = const Color(0x80000000);
 
-class Rock extends Component3D with HasPaint {
-  Rock(this.bush, this._onReset, {required super.world}) {
+class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScriptFunctions {
+  Rock(Sprite sprite, this._onReset, {required super.world}) {
     anchor = Anchor.bottomCenter;
-    sprite = added(SpriteComponent(sprite: bush, paint: paint, anchor: Anchor.bottomCenter));
+    _sprite = added(SpriteComponent(sprite: sprite, paint: paint, anchor: Anchor.bottomCenter));
     add(CircleComponent(
       radius: 100.0,
       paint: shadow,
       anchor: Anchor.centerRight,
     )..scale.setValues(20, 0.75));
     reset();
+    life = 100;
   }
 
-  final Sprite bush;
   final void Function(Rock) _onReset;
-  late final SpriteComponent sprite;
+  late final SpriteComponent _sprite;
 
   _pickScale() {
-    sprite.scale.setAll(7 + random.nextDoubleLimit(7));
+    _sprite.scale.setAll(7 + random.nextDoubleLimit(7));
   }
 
   static double lastX = 0;
@@ -124,12 +126,12 @@ class Rock extends Component3D with HasPaint {
     super.update(dt);
 
     if (fadeInTime < 1.0) {
-      sprite.opacity = fadeInTime.clamp(0.0, 1.0);
+      _sprite.opacity = fadeInTime.clamp(0.0, 1.0);
       fadeInTime += dt;
     } else if (worldPosition.z > world.camera.z - 150) {
-      sprite.opacity = ((world.camera.z - worldPosition.z) / 150).clamp(0.0, 1.0);
+      _sprite.opacity = ((world.camera.z - worldPosition.z) / 150).clamp(0.0, 1.0);
     } else {
-      sprite.opacity = 1;
+      _sprite.opacity = 1;
     }
 
     bool remove = false;
@@ -138,5 +140,32 @@ class Rock extends Component3D with HasPaint {
     if (position.x > gameWidth + 40) remove = true;
     if (position.y > gameHeight + 100) remove = true;
     if (remove) _onReset(this);
+  }
+
+  @override
+  void whenHit() {}
+
+  @override
+  void whenDefeated() {
+    _onReset(this);
+
+    final i = _sprite.sprite?.image;
+    if (i == null) return;
+
+    final pieces = sheet(i, 5, 5);
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+        final dx = (i - 2) * 10.0;
+        final dy = (j - 2) * 10.0;
+        parent?.add(Fragment(
+          worldPosition,
+          Vector3.zero(),
+          pieces.getSprite(4 - j, i),
+          dx,
+          dy,
+          world: world,
+        ));
+      }
+    }
   }
 }
