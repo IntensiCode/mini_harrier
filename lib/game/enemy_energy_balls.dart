@@ -78,7 +78,8 @@ class EnergyBall extends Component3D {
     velocity.setFrom(target.worldPosition);
     velocity.sub(worldPosition);
     velocity.normalize();
-    velocity.scale(250);
+    velocity.scale(-baseSpeed);
+    velocity.z += baseSpeed;
 
     velocity.x += random.nextDoublePM(10) - 5;
     velocity.y += random.nextDoublePM(10) - 5;
