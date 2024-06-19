@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
+import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
@@ -23,6 +24,12 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   double lastEmission = 0;
 
   late final Sprite bush;
+
+  @override
+  void onMount() {
+    super.onMount();
+    soundboard.play(Sound.warning_obstacles);
+  }
 
   @override
   void onLoad() async => bush = await game.loadSprite('rock.png');
