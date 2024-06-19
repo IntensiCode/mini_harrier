@@ -13,8 +13,9 @@ const double gameWidth = 320;
 const double gameHeight = 256;
 final Vector2 gameSize = Vector2(gameWidth, gameHeight);
 
+const baseSpeed = -500.0;
 const minHeight = 0.0;
-const maxHeight = 250.0;
+const maxHeight = 500.0;
 const midHeight = minHeight + (maxHeight - minHeight) / 2;
 const maxLeft = -200.0;
 const maxRight = 200.0;
