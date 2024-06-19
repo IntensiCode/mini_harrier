@@ -8,7 +8,7 @@ import 'effects.dart';
 
 class Fragment extends Component3D {
   Fragment(Vector3 origin, Vector3 velocity, Sprite sprite, double dx, double dy, {required super.world}) {
-    add(SpriteComponent(sprite: sprite));
+    add(_sprite = SpriteComponent(sprite: sprite));
     worldPosition.setFrom(origin);
     worldPosition.x += dx;
     worldPosition.y += dy + 45;
@@ -18,10 +18,15 @@ class Fragment extends Component3D {
     this.velocity.z -= random.nextDoubleLimit(100) - 30;
   }
 
+  late final SpriteComponent _sprite;
+
   final velocity = Vector3(0, 0, -500);
   final target = Vector3(0, -1000, 0);
 
   double smoke = 0.1;
+
+  static const maxLifetime = 3.0;
+  double lifetime = maxLifetime;
 
   @override
   void update(double dt) {
@@ -34,6 +39,14 @@ class Fragment extends Component3D {
     if (remove) {
       removeFromParent();
       return;
+    }
+
+    lifetime -= dt;
+    if (lifetime <= 0) {
+      removeFromParent();
+      return;
+    } else {
+      _sprite.opacity = lifetime.clamp(0, maxLifetime) / maxLifetime;
     }
 
     if (worldPosition.y <= 0) return;
