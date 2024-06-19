@@ -46,7 +46,7 @@ class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
       it.reset(captain.worldPosition, firePower);
       world.add(it);
       soundboard.play(Sound.shot);
-      _coolDown = 0.3;
+      _coolDown = 0.4 - (firePower / maxFirePower) * 0.3;
     }
   }
 
@@ -92,7 +92,7 @@ class SwirlProjectile extends Component3D {
     worldPosition.z -= speed * dt;
     if (speed < 1000) speed += 1000 * dt;
     _lifetime += dt;
-    if (_lifetime > 5) _recycle(this);
+    if (_lifetime > 3) _recycle(this);
 
     final check = parent?.children.whereType<DamageTarget>();
     if (check == null) return;

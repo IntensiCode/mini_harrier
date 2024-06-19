@@ -63,8 +63,8 @@ enum EffectKind {
 
 enum ExtraKind {
   energy(1),
-  laserCharge(1),
-  missile(1),
+  firePower(1),
+  missile(0.2),
   ;
 
   final double probability;

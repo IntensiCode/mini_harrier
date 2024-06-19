@@ -33,7 +33,7 @@ class Extras extends GameScriptComponent {
     final sheet = await sheetIWH('extras_alt.png', 32, 16);
     const stepTime = 0.05;
     animations[ExtraKind.energy] = sheet.createAnimation(row: 0, stepTime: stepTime);
-    animations[ExtraKind.laserCharge] = sheet.createAnimation(row: 1, stepTime: stepTime);
+    animations[ExtraKind.firePower] = sheet.createAnimation(row: 1, stepTime: stepTime);
     animations[ExtraKind.missile] = sheet.createAnimation(row: 2, stepTime: stepTime);
   }
 
@@ -166,7 +166,7 @@ class SpawnedExtra extends Component3D {
       case ExtraKind.energy:
         messaging.send(ReplenishEnergy());
         soundboard.play(Sound.energy_boost, volume: 1);
-      case ExtraKind.laserCharge:
+      case ExtraKind.firePower:
         messaging.send(IncreaseFirePower());
         soundboard.play(Sound.increased_fire_power, volume: 1);
       case ExtraKind.missile:
