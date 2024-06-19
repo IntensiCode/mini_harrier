@@ -50,7 +50,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
 
   final targetVelocity = Vector3(0, 0, 0);
   final velocity = Vector3(0, 0, 0);
-  final relativePosition = Vector3(0, 0, -5000);
+  final relativePosition = Vector3(0, 0, -3000);
   var incomingSpeed = 2500.0;
 
   @override

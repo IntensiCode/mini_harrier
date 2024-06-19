@@ -10,6 +10,7 @@ enum Sound {
   challenge,
   death,
   drop,
+  enemy_wave_incoming,
   energy_boost,
   explosion,
   game_on,

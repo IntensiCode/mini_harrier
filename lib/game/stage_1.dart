@@ -56,8 +56,6 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
       captain,
     ));
 
-    add(UfoEnemies(captain));
-
     soundboard.play(Sound.game_on);
 
     fontSelect(fancyFont, scale: 1.0);
@@ -65,5 +63,6 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     at(0.0, () => fadeIn(textXY('Did I sign up for THIS?', xCenter, yCenter + lineHeight, scale: 1)));
     at(2.0, () => fadeOutByType<BitmapText>());
     at(0.0, () => captain.state = CaptainState.playing);
+    at(0.0, () => add(UfoEnemies(captain)));
   }
 }
