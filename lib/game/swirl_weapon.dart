@@ -5,8 +5,8 @@ import '../core/mini_3d.dart';
 import '../core/mini_soundboard.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
+import 'damage_target.dart';
 import 'mini_state.dart';
-import 'mini_target.dart';
 
 class SwirlWeapon extends Component with AutoDispose, MiniScriptFunctions {
   SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);
@@ -78,7 +78,7 @@ class SwirlProjectile extends Component3D {
     _lifetime += dt;
     if (_lifetime > 5) _recycle(this);
 
-    final check = parent?.children.whereType<MiniTarget>();
+    final check = parent?.children.whereType<DamageTarget>();
     if (check == null) return;
 
     for (final it in check) {

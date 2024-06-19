@@ -10,7 +10,7 @@ import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
-import 'mini_target.dart';
+import 'damage_target.dart';
 
 enum _State {
   incoming,
@@ -18,7 +18,7 @@ enum _State {
   fly_off,
 }
 
-class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, MiniTarget {
+class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, DamageTarget {
   UfoEnemy(this.onDefeated, {required super.world}) {
     anchor = Anchor.bottomCenter;
   }

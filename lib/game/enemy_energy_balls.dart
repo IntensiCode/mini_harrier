@@ -9,9 +9,9 @@ import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
+import 'damage_target.dart';
 import 'effects.dart';
 import 'mini_state.dart';
-import 'mini_target.dart';
 
 class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
   EnemyEnergyBalls(this.container, this.enemies, this.captain);
@@ -120,7 +120,7 @@ class EnergyBall extends Component3D {
       return;
     }
 
-    final check = parent?.children.whereType<MiniTarget>();
+    final check = parent?.children.whereType<DamageTarget>();
     if (check == null) return;
 
     for (final it in check) {

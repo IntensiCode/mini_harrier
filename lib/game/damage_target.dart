@@ -5,7 +5,7 @@ import '../core/mini_soundboard.dart';
 import 'effects.dart';
 import 'mini_state.dart';
 
-mixin MiniTarget on Component3D {
+mixin DamageTarget on Component3D {
   void whenDefeated();
 
   void whenHit();
