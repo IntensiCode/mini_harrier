@@ -10,7 +10,7 @@ import '../util/auto_dispose.dart';
 
 class Mountains extends PositionComponent with HasPaint, AutoDispose, GameScriptFunctions {
   Mountains() {
-    priority = -1000;
+    priority = -6000;
     position.y = gameHeight / 4 + 0;
   }
 
