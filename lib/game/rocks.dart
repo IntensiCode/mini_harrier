@@ -2,14 +2,14 @@ import 'package:flame/components.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
 
 Rocks? _instance;
 
-extension ScriptFunctionsExtension on MiniScriptFunctions {
+extension ScriptFunctionsExtension on GameScriptFunctions {
   Rocks rocks() {
     _instance ??= Rocks();
     if (_instance?.isMounted == true) _instance?.removeFromParent();
@@ -17,7 +17,7 @@ extension ScriptFunctionsExtension on MiniScriptFunctions {
   }
 }
 
-class Rocks extends AutoDisposeComponent with MiniScriptFunctions {
+class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   int maxBushes = 16;
 
   double lastEmission = 0;

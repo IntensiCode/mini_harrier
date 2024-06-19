@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 
-class Sky extends PositionComponent with HasPaint, AutoDispose, MiniScriptFunctions {
+class Sky extends PositionComponent with HasPaint, AutoDispose, GameScriptFunctions {
   Sky() {
     priority = -2000;
   }

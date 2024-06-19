@@ -1,10 +1,10 @@
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script.dart';
+import '../scripting/game_script.dart';
 import 'kamikaze_ufo_enemy.dart';
 import 'ufo_enemy.dart';
 
-class KamikazeUfoEnemies extends MiniScriptComponent {
+class KamikazeUfoEnemies extends GameScriptComponent {
   KamikazeUfoEnemies(this.captain, [this.waveSize = 10, this.spawnInterval = 2.0]);
 
   final Component3D captain;

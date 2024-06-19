@@ -2,12 +2,12 @@ import 'package:mini_harrier/core/soundboard.dart';
 
 import 'core/common.dart';
 import 'input/mini_shortcuts.dart';
-import 'scripting/mini_script.dart';
+import 'scripting/game_script.dart';
 import 'scripting/subtitles_component.dart';
 import 'util/extensions.dart';
 import 'util/fonts.dart';
 
-class IntroScreen extends MiniScriptComponent with HasAutoDisposeShortcuts {
+class IntroScreen extends GameScriptComponent with HasAutoDisposeShortcuts {
   IntroScreen([this.nextScreen = Screen.stage1]);
 
   final Screen nextScreen;

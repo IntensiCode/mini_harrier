@@ -5,11 +5,11 @@ import 'package:flame/sprite.dart';
 import 'package:mini_harrier/core/common.dart';
 
 import '../core/soundboard.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'captain.dart';
 
-class Hud extends PositionComponent with AutoDispose, MiniScriptFunctions {
+class Hud extends PositionComponent with AutoDispose, GameScriptFunctions {
   Hud(this.player);
 
   final Captain player;

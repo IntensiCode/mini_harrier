@@ -9,14 +9,14 @@ import 'core/common.dart';
 import 'core/mini_3d.dart';
 import 'game/asteroids.dart';
 import 'input/mini_shortcuts.dart';
-import 'scripting/mini_script.dart';
-import 'scripting/mini_script_functions.dart';
+import 'scripting/game_script.dart';
+import 'scripting/game_script_functions.dart';
 import 'util/auto_dispose.dart';
 import 'util/bitmap_text.dart';
 import 'util/extensions.dart';
 import 'util/fonts.dart';
 
-class TitleScreen extends MiniScriptComponent with HasAutoDisposeShortcuts {
+class TitleScreen extends GameScriptComponent with HasAutoDisposeShortcuts {
   @override
   void onMount() {
     super.onMount();
@@ -97,7 +97,7 @@ class _CameraMovement extends Component {
   }
 }
 
-class _FloatingCaptain extends Component3D with AutoDispose, MiniScriptFunctions {
+class _FloatingCaptain extends Component3D with AutoDispose, GameScriptFunctions {
   _FloatingCaptain({required super.world}) {
     worldPosition.x = -100;
     worldPosition.y = 50;

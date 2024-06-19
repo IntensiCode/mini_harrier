@@ -5,14 +5,14 @@ import 'package:flame/components.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script.dart';
+import '../scripting/game_script.dart';
 import '../util/extensions.dart';
 import 'effects.dart';
 import 'enemy_energy_balls.dart';
 import 'fragment.dart';
 import 'swirl_weapon.dart';
 
-class AutoShadows extends MiniScriptComponent {
+class AutoShadows extends GameScriptComponent {
   final shadows = <Component3D, Shadow>{};
 
   @override

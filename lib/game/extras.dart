@@ -3,13 +3,13 @@ import 'package:flame/components.dart';
 
 import '../core/common.dart';
 import '../core/messaging.dart';
-import '../scripting/mini_script.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/debug.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
 
-extension ScriptFunctionsExtension on MiniScriptFunctions {
+extension ScriptFunctionsExtension on GameScriptFunctions {
   Extras extras(int level) => added(Extras(level));
 }
 
@@ -17,7 +17,7 @@ extension ComponentExtensions on Component {
   void spawnExtra(Vector2 position, [Set<ExtraKind>? which]) => messaging.send(SpawnExtra(position, which));
 }
 
-class Extras extends MiniScriptComponent {
+class Extras extends GameScriptComponent {
   Extras(this.level);
 
   final int level;

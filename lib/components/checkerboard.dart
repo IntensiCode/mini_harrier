@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 
-class Checkerboard extends PositionComponent with HasPaint, AutoDispose, MiniScriptFunctions {
+class Checkerboard extends PositionComponent with HasPaint, AutoDispose, GameScriptFunctions {
   Checkerboard() {
     priority = -5000;
   }

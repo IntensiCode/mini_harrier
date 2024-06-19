@@ -5,7 +5,7 @@ import 'package:flame/extensions.dart';
 import '../core/common.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
@@ -13,7 +13,7 @@ import 'damage_target.dart';
 import 'effects.dart';
 import 'game_state.dart';
 
-class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
+class EnemyEnergyBalls extends Component with AutoDispose, GameScriptFunctions {
   EnemyEnergyBalls(this.container, this.enemies, this.captain);
 
   final Component container;

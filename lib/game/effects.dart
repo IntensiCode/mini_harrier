@@ -5,11 +5,11 @@ import '../core/common.dart';
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
-import '../scripting/mini_script.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/extensions.dart';
 
-extension ScriptFunctionsExtension on MiniScriptFunctions {
+extension ScriptFunctionsExtension on GameScriptFunctions {
   Effects effects() => added(Effects());
 }
 
@@ -31,7 +31,7 @@ extension ComponentExtensions on Component {
   }
 }
 
-class Effects extends MiniScriptComponent {
+class Effects extends GameScriptComponent {
   late final animations = <EffectKind, SpriteAnimation>{};
 
   @override

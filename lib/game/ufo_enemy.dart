@@ -5,8 +5,8 @@ import 'package:flame/components.dart';
 import 'package:mini_harrier/game/fragment.dart';
 
 import '../core/mini_3d.dart';
-import '../scripting/mini_script.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
@@ -18,7 +18,7 @@ enum _State {
   fly_off,
 }
 
-class UfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, DamageTarget {
+class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameScript, DamageTarget {
   UfoEnemy(this.onDefeated, {required super.world}) {
     anchor = Anchor.bottomCenter;
   }

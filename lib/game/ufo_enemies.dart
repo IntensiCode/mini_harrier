@@ -1,9 +1,9 @@
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script.dart';
+import '../scripting/game_script.dart';
 import 'ufo_enemy.dart';
 
-class UfoEnemies extends MiniScriptComponent {
+class UfoEnemies extends GameScriptComponent {
   UfoEnemies(this.captain, [this.waveSize = 5, this.spawnInterval = 4.0]);
 
   final Component3D captain;

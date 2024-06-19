@@ -25,7 +25,7 @@ import '../util/fonts.dart';
 // is a mess. but the mess works for the case of this demo game. all of this
 // should be replaced by what you need for your game.
 
-mixin MiniScriptFunctions on Component, AutoDispose {
+mixin GameScriptFunctions on Component, AutoDispose {
   int _autoDisposeCount = 0;
 
   @override

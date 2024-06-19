@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../util/auto_dispose.dart';
-import 'mini_script_functions.dart';
+import 'game_script_functions.dart';
 
-class MiniScriptComponent extends AutoDisposeComponent with MiniScriptFunctions, MiniScript {}
+class GameScriptComponent extends AutoDisposeComponent with GameScriptFunctions, GameScript {}
 
-mixin MiniScript on AutoDispose, MiniScriptFunctions {
+mixin GameScript on AutoDispose, GameScriptFunctions {
   var script = <Future Function()>[];
 
   StreamSubscription? active;

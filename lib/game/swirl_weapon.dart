@@ -3,12 +3,12 @@ import 'package:flame/components.dart';
 
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
 import 'game_state.dart';
 
-class SwirlWeapon extends Component with AutoDispose, MiniScriptFunctions {
+class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
   SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);
 
   final Component3D captain;

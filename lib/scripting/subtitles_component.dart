@@ -5,14 +5,14 @@ import 'package:flame/effects.dart';
 import 'package:list_operators/list_operators.dart';
 
 import '../core/common.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/bitmap_font.dart';
 import '../util/bitmap_text.dart';
 import '../util/extensions.dart';
 import '../util/fonts.dart';
 
-class SubtitlesComponent extends PositionComponent with HasPaint, AutoDispose, MiniScriptFunctions {
+class SubtitlesComponent extends PositionComponent with HasPaint, AutoDispose, GameScriptFunctions {
   static const _fontScale = 0.5;
 
   final String _text;

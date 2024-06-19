@@ -6,7 +6,7 @@ import 'package:flame/extensions.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
@@ -21,7 +21,7 @@ const _speedVariance = 8.0;
 
 Asteroids? _instance;
 
-extension ScriptFunctionsExtension on MiniScriptFunctions {
+extension ScriptFunctionsExtension on GameScriptFunctions {
   Asteroids asteroids() {
     _instance ??= Asteroids();
     if (_instance?.isMounted == true) _instance?.removeFromParent();
@@ -29,7 +29,7 @@ extension ScriptFunctionsExtension on MiniScriptFunctions {
   }
 }
 
-class Asteroids extends AutoDisposeComponent with MiniScriptFunctions {
+class Asteroids extends AutoDisposeComponent with GameScriptFunctions {
   late FragmentProgram program;
   late FragmentShader shader;
 

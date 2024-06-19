@@ -5,8 +5,8 @@ import 'package:flame/components.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../scripting/mini_script.dart';
-import '../scripting/mini_script_functions.dart';
+import '../scripting/game_script.dart';
+import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
@@ -19,7 +19,7 @@ enum _State {
   fly_off,
 }
 
-class KamikazeUfoEnemy extends Component3D with AutoDispose, MiniScriptFunctions, MiniScript, DamageTarget {
+class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameScript, DamageTarget {
   KamikazeUfoEnemy(this.onDefeated, {required super.world}) {
     anchor = Anchor.bottomCenter;
   }

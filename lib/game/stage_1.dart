@@ -11,7 +11,7 @@ import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
 import '../input/mini_shortcuts.dart';
-import '../scripting/mini_script.dart';
+import '../scripting/game_script.dart';
 import '../util/bitmap_text.dart';
 import '../util/extensions.dart';
 import '../util/fonts.dart';
@@ -24,7 +24,7 @@ import 'hud.dart';
 import 'ufo_enemies.dart';
 import 'ufo_enemy.dart';
 
-class Stage1 extends MiniScriptComponent with HasAutoDisposeShortcuts {
+class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
   @override
   void onLoad() async {
     super.onLoad();
