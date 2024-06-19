@@ -7,9 +7,9 @@ import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
 import '../scripting/mini_script.dart';
 import '../util/extensions.dart';
+import 'effects.dart';
 import 'enemy_energy_balls.dart';
 import 'fragment.dart';
-import 'mini_effects.dart';
 import 'swirl_weapon.dart';
 
 class AutoShadows extends MiniScriptComponent {
@@ -22,7 +22,7 @@ class AutoShadows extends MiniScriptComponent {
     final active = parent?.children
         .whereType<Component3D>() //
         .whereNot((it) => it is Shadow) //
-        .whereNot((it) => it is MiniEffect)
+        .whereNot((it) => it is Effect)
         .toList();
 
     if (active == null) return;

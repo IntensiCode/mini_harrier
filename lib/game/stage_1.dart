@@ -20,7 +20,7 @@ import 'captain.dart';
 import 'captain_cam.dart';
 import 'enemy_energy_balls.dart';
 import 'hud.dart';
-import 'mini_effects.dart';
+import 'effects.dart';
 import 'ufo_enemies.dart';
 import 'ufo_enemy.dart';
 

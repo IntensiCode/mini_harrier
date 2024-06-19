@@ -9,7 +9,7 @@ import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
-import 'mini_effects.dart';
+import 'effects.dart';
 import 'mini_state.dart';
 import 'mini_target.dart';
 
@@ -101,7 +101,7 @@ class EnergyBall extends Component3D {
       c3d.worldPosition.setFrom(worldPosition);
       final v = Vector3.zero();
       v.z = velocity.z;
-      spawnEffect(MiniEffectKind.smoke, c3d, velocity: v);
+      spawnEffect(EffectKind.smoke, c3d, velocity: v);
       _recycle(this);
       return;
     }

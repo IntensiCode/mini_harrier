@@ -37,7 +37,7 @@ class SpawnBall extends MiniMessage {
 class SpawnEffect extends MiniMessage {
   SpawnEffect({required this.kind, required this.anchor, this.delaySeconds, this.atHalfTime, this.velocity});
 
-  final MiniEffectKind kind;
+  final EffectKind kind;
   final Component3D anchor;
   final double? delaySeconds;
   final Function()? atHalfTime;

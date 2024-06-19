@@ -4,7 +4,7 @@ import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
-import 'mini_effects.dart';
+import 'effects.dart';
 
 class Fragment extends Component3D {
   Fragment(Vector3 origin, Vector3 velocity, Sprite sprite, double dx, double dy, {required super.world}) {
@@ -47,7 +47,7 @@ class Fragment extends Component3D {
       final c3d = Component3D(world: world);
       c3d.worldPosition.setFrom(worldPosition);
       c3d.worldPosition.y -= 45;
-      spawnEffect(MiniEffectKind.smoke, c3d, velocity: Vector3(0, 30, 0));
+      spawnEffect(EffectKind.smoke, c3d, velocity: Vector3(0, 30, 0));
     } else {
       smoke -= dt;
     }

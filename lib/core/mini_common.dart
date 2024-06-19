@@ -96,7 +96,7 @@ enum Screen {
   title,
 }
 
-enum MiniEffectKind {
+enum EffectKind {
   appear,
   explosion,
   hit,

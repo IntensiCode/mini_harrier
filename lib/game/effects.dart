@@ -10,12 +10,12 @@ import '../scripting/mini_script_functions.dart';
 import '../util/extensions.dart';
 
 extension ScriptFunctionsExtension on MiniScriptFunctions {
-  MiniEffects effects() => added(MiniEffects());
+  Effects effects() => added(Effects());
 }
 
 extension ComponentExtensions on Component {
   void spawnEffect(
-    MiniEffectKind kind,
+    EffectKind kind,
     Component3D anchor, {
     double? delaySeconds,
     Function()? atHalfTime,
@@ -31,26 +31,26 @@ extension ComponentExtensions on Component {
   }
 }
 
-class MiniEffects extends MiniScriptComponent {
-  late final animations = <MiniEffectKind, SpriteAnimation>{};
+class Effects extends MiniScriptComponent {
+  late final animations = <EffectKind, SpriteAnimation>{};
 
   @override
   void onLoad() async {
-    animations[MiniEffectKind.appear] = appear();
-    animations[MiniEffectKind.explosion] = await explosion32();
-    animations[MiniEffectKind.hit] = hit();
-    animations[MiniEffectKind.smoke] = smoke();
-    animations[MiniEffectKind.sparkle] = sparkle();
+    animations[EffectKind.appear] = appear();
+    animations[EffectKind.explosion] = await explosion32();
+    animations[EffectKind.hit] = hit();
+    animations[EffectKind.smoke] = smoke();
+    animations[EffectKind.sparkle] = sparkle();
   }
 
   @override
   void onMount() {
     super.onMount();
     onMessage<SpawnEffect>((data) {
-      final it = _pool.removeLastOrNull() ?? MiniEffect(_recycle, world: world);
+      final it = _pool.removeLastOrNull() ?? Effect(_recycle, world: world);
       it.kind = data.kind;
       it.anim.animation = animations[data.kind]!;
-      it.anim.scale = data.kind == MiniEffectKind.explosion ? Vector2.all(10.0) : Vector2.all(30.0);
+      it.anim.scale = data.kind == EffectKind.explosion ? Vector2.all(10.0) : Vector2.all(30.0);
       it.atHalfTime = data.atHalfTime;
       it.velocity = data.velocity;
       it.worldPosition.setFrom(data.anchor.worldPosition);
@@ -61,16 +61,16 @@ class MiniEffects extends MiniScriptComponent {
     });
   }
 
-  void _recycle(MiniEffect it) {
+  void _recycle(Effect it) {
     it.removeFromParent();
     _pool.add(it);
   }
 
-  final _pool = <MiniEffect>[];
+  final _pool = <Effect>[];
 }
 
-class MiniEffect extends Component3D {
-  MiniEffect(this._recycle, {required super.world}) {
+class Effect extends Component3D {
+  Effect(this._recycle, {required super.world}) {
     anchor = Anchor.center;
     add(anim);
     add(CircleComponent(radius: 10, anchor: Anchor.center));
@@ -78,15 +78,15 @@ class MiniEffect extends Component3D {
 
   final anim = SpriteAnimationComponent(anchor: Anchor.center);
 
-  final void Function(MiniEffect) _recycle;
+  final void Function(Effect) _recycle;
 
-  late MiniEffectKind kind;
+  late EffectKind kind;
   Function()? atHalfTime;
   Vector3? velocity;
 
   @override
   void onMount() {
-    if (kind == MiniEffectKind.sparkle) {
+    if (kind == EffectKind.sparkle) {
       anim.scale.setAll(25);
     } else {
       anim.scale.setAll(10);
@@ -101,7 +101,7 @@ class MiniEffect extends Component3D {
         }
       };
     }
-    if (kind == MiniEffectKind.explosion) soundboard.play(MiniSound.explosion);
+    if (kind == EffectKind.explosion) soundboard.play(MiniSound.explosion);
   }
 
   @override
