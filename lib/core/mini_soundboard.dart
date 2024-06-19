@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame_audio/flame_audio.dart';
 
-import 'mini_common.dart';
+import 'common.dart';
 
 enum MiniSound {
   asteroid_clash,

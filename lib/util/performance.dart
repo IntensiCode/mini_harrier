@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/text.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 
 class Ticker {
   Ticker({int ticks = 60}) : _step = 1 / ticks;

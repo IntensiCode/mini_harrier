@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 
 Color? debugHitboxColor = const Color(0x80ff0000);
 

@@ -1,5 +1,3 @@
-
-
 class InputAcceleration {
   InputAcceleration({
     required bool Function() goNegative,

@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 
+import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_common.dart';
 import 'captain.dart';
 
 class CaptainCam extends Component {

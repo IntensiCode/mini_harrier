@@ -5,7 +5,7 @@ import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:list_operators/list_operators.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 
 extension BitmapFontExtensions on BitmapFont {
   void tint(Color color) {

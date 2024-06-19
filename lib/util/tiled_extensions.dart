@@ -5,8 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 extension ObjectGroupExtensions on ObjectGroup {
-  TiledObject objectByName(String name) =>
-      objects.firstWhere((it) => it.name == name);
+  TiledObject objectByName(String name) => objects.firstWhere((it) => it.name == name);
 }
 
 extension RenderableTiledMapExtensions on RenderableTiledMap {
@@ -73,17 +72,13 @@ extension TiledMapExtensions on TiledMap {
     return null;
   }
 
-  int intProperty(String name) =>
-      properties.firstWhere((it) => it.name == name).value as int;
+  int intProperty(String name) => properties.firstWhere((it) => it.name == name).value as int;
 
-  String stringProperty(String name) =>
-      properties.firstWhere((it) => it.name == name).value.toString();
+  String stringProperty(String name) => properties.firstWhere((it) => it.name == name).value.toString();
 }
 
 extension TiledObjectExtensions on TiledObject {
-  double? get spawnAt =>
-      properties.firstWhereOrNull((it) => it.name == 'SpawnAt')?.value as double?;
+  double? get spawnAt => properties.firstWhereOrNull((it) => it.name == 'SpawnAt')?.value as double?;
 
-  String get spawnSpec =>
-      properties.firstWhere((it) => it.name == 'SpawnSpec').value.toString();
+  String get spawnSpec => properties.firstWhere((it) => it.name == 'SpawnSpec').value.toString();
 }

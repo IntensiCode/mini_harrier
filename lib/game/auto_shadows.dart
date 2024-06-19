@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flame/components.dart';
 
+import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_common.dart';
 import '../scripting/mini_script.dart';
 import '../util/extensions.dart';
 import 'effects.dart';

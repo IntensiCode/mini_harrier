@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:mini_harrier/core/mini_common.dart';
+import 'package:mini_harrier/core/common.dart';
 
 import '../core/mini_soundboard.dart';
 import '../scripting/mini_script_functions.dart';

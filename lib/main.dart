@@ -3,7 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/widgets.dart';
 
-import 'core/mini_common.dart';
+import 'core/common.dart';
 import 'mini_harrier.dart';
 
 void main() {

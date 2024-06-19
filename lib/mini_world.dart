@@ -2,8 +2,8 @@ import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 
+import 'core/common.dart';
 import 'core/messaging.dart';
-import 'core/mini_common.dart';
 import 'game/stage_1.dart';
 import 'intro_screen.dart';
 import 'title_screen.dart';

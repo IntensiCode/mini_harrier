@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 import '../util/bitmap_text.dart';
 import '../util/fonts.dart';
 

@@ -1,7 +1,7 @@
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 import '../util/auto_dispose.dart';
 import 'mini_3d.dart';
 

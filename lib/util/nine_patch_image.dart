@@ -4,7 +4,7 @@ import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 
 class NinePatchComponent extends PositionComponent {
   final Image image;

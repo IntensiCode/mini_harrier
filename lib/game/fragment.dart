@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 
+import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_common.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
 import 'effects.dart';

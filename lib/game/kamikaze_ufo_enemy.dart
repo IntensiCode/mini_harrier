@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 
+import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_common.dart';
 import '../scripting/mini_script.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';

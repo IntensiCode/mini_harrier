@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/cache.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 import 'bitmap_font.dart';
 
 const textColor = Color(0xFFffcc80);

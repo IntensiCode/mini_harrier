@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 import '../core/messaging.dart';
 import '../scripting/mini_script.dart';
 import '../scripting/mini_script_functions.dart';

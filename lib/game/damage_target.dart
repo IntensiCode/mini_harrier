@@ -1,6 +1,6 @@
 import 'package:mini_harrier/core/mini_3d.dart';
 
-import '../core/mini_common.dart';
+import '../core/common.dart';
 import '../core/mini_soundboard.dart';
 import 'effects.dart';
 import 'game_state.dart';

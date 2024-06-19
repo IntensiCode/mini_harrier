@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 
+import '../core/common.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_common.dart';
 import '../core/mini_soundboard.dart';
 import '../input/mini_game_keys.dart';
 import '../scripting/mini_script_functions.dart';

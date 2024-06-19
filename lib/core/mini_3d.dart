@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
-import 'mini_common.dart';
+import 'common.dart';
 
 final world = World3D();
 

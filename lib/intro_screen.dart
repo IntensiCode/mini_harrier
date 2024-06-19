@@ -1,6 +1,6 @@
 import 'package:mini_harrier/core/mini_soundboard.dart';
 
-import 'core/mini_common.dart';
+import 'core/common.dart';
 import 'input/mini_shortcuts.dart';
 import 'scripting/mini_script.dart';
 import 'scripting/subtitles_component.dart';

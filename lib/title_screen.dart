@@ -5,8 +5,8 @@ import 'package:flame/components.dart';
 import 'package:flutter/animation.dart';
 
 import 'components/checkerboard.dart';
+import 'core/common.dart';
 import 'core/mini_3d.dart';
-import 'core/mini_common.dart';
 import 'game/asteroids.dart';
 import 'input/mini_shortcuts.dart';
 import 'scripting/mini_script.dart';
