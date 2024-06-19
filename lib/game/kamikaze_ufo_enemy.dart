@@ -70,7 +70,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
         _state = _State.attacking;
         velocity.x = sin(stateTime) * 100;
         velocity.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
-        velocity.z = 250 * dt;
+        velocity.z = -incomingSpeed;
         velocity.sub(relativePosition);
         velocity.z = -velocity.z;
         targetVelocity.setFrom(velocity);
