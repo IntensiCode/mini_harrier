@@ -62,19 +62,14 @@ enum EffectKind {
 }
 
 enum ExtraKind {
-  laserCharge(0, 1),
-  shield(1, 1),
-  missile(2, 1),
-  score1(3, 1),
-  score2(4, 0.8),
-  score3(5, 0.5),
-  extraLife(6, 0.01),
+  energy(1),
+  laserCharge(1),
+  missile(1),
   ;
 
-  final int column;
   final double probability;
 
-  const ExtraKind(this.column, this.probability);
+  const ExtraKind(this.probability);
 }
 
 mixin Collector {

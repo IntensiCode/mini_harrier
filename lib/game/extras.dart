@@ -1,17 +1,16 @@
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:mini_harrier/core/mini_3d.dart';
+import 'package:mini_harrier/game/effects.dart';
 
 import '../core/common.dart';
 import '../core/messaging.dart';
 import '../scripting/game_script.dart';
 import '../scripting/game_script_functions.dart';
-import '../util/debug.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
 
 extension ScriptFunctionsExtension on GameScriptFunctions {
-  Extras extras(int level) => added(Extras(level));
+  Extras extras() => added(Extras());
 }
 
 extension ComponentExtensions on Component {
@@ -19,11 +18,18 @@ extension ComponentExtensions on Component {
 }
 
 class Extras extends GameScriptComponent {
-  Extras(this.level);
-
-  final int level;
-
   bool get hasActiveItems => children.isNotEmpty;
+
+  late final animations = <ExtraKind, SpriteAnimation>{};
+
+  @override
+  void onLoad() async {
+    final sheet = await sheetIWH('extras_alt.png', 32, 16);
+    const stepTime = 0.05;
+    animations[ExtraKind.energy] = sheet.createAnimation(row: 0, stepTime: stepTime);
+    animations[ExtraKind.laserCharge] = sheet.createAnimation(row: 1, stepTime: stepTime);
+    animations[ExtraKind.missile] = sheet.createAnimation(row: 2, stepTime: stepTime);
+  }
 
   @override
   void onMount() {
@@ -43,11 +49,11 @@ class Extras extends GameScriptComponent {
 
   void _spawn(Vector3 position, ExtraKind kind) {
     final it = _pool.removeLastOrNull() ?? SpawnedExtra(_recycle, world: world);
-    // it.anim.sprite = sprites.getSprite(5, 3 + kind.column);
+    it.anim.animation = animations[kind]!;
     it.kind = kind;
-    it.speed = (50 + level * 0.25).clamp(50.0, 100.0);
     it.worldPosition.setFrom(position);
-    add(it);
+    it.reset();
+    parent?.add(it);
   }
 
   void _recycle(SpawnedExtra it) {
@@ -62,28 +68,57 @@ class SpawnedExtra extends Component3D {
   SpawnedExtra(this._recycle, {required super.world}) {
     anchor = Anchor.center;
     add(anim = SpriteAnimationComponent(anchor: Anchor.center));
+    anim.scale.setAll(10);
+  }
+
+  reset() {
+    lifetime = 10;
+    velocity.setZero();
   }
 
   final void Function(SpawnedExtra it) _recycle;
 
   late SpriteAnimationComponent anim;
-  late DebugCircleHitbox debug;
-  late CircleHitbox hitbox;
   late ExtraKind kind;
-  late double speed;
 
-  @override
-  void onMount() {
-    super.onMount();
-    final radius = kind.name.startsWith('score') ? 4.0 : 6.0;
-    hitbox.radius = radius;
-    debug.radius = radius;
-  }
+  double lifetime = 10;
+
+  final velocity = Vector3.zero();
 
   @override
   void update(double dt) {
     super.update(dt);
-    position.y += speed * dt;
-    if (position.y > gameHeight + size.y) _recycle(this);
+    lifetime -= dt;
+    if (lifetime <= 0) {
+      _expire();
+      return;
+    }
+    worldPosition.z += 10 * dt;
+    if (worldPosition.y > 5) {
+      velocity.y -= 1000 * dt;
+    }
+    worldPosition.add(velocity * dt);
+    if (worldPosition.y <= 5) {
+      worldPosition.y = 5;
+      velocity.y = -velocity.y * 0.5;
+    }
+
+    if (position.x < -20 || position.x > gameWidth + 20) {
+      _expire();
+      return;
+    }
+    if (position.y < -20 || position.y > gameHeight + 20) {
+      _expire();
+      return;
+    }
+    if (worldPosition.z > world.camera.z - 10) {
+      _expire();
+      return;
+    }
+  }
+
+  void _expire() {
+    spawnEffect(EffectKind.smoke, this);
+    _recycle(this);
   }
 }
