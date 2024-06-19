@@ -86,7 +86,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
-      relativePosition.add(velocity);
+      relativePosition.add(velocity * dt);
 
       bool remove = false;
       if (position.x < -20 || position.x > gameWidth + 20) remove = true;
