@@ -98,7 +98,7 @@ class SpawnedExtra extends Component3D {
 
   double lifetime = 30;
 
-  final velocity = Vector3.zero();
+  final velocity = Vector3(0, 0, baseSpeed);
 
   _State _state = _State.dropping;
 
@@ -123,7 +123,6 @@ class SpawnedExtra extends Component3D {
       _expire();
       return;
     }
-    worldPosition.z += 10 * dt;
     if (worldPosition.y > 5) {
       velocity.y -= 1000 * dt;
     }
