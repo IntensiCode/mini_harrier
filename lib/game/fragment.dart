@@ -8,10 +8,10 @@ import 'effects.dart';
 
 class Fragment extends Component3D {
   Fragment(Vector3 origin, Vector3 velocity, Sprite sprite, double dx, double dy, {required super.world}) {
-    add(_sprite = SpriteComponent(sprite: sprite));
+    add(_sprite = SpriteComponent(sprite: sprite)..scale.setAll(2));
     worldPosition.setFrom(origin);
-    worldPosition.x += dx;
-    worldPosition.y += dy + 45;
+    worldPosition.x += dx * 2;
+    worldPosition.y += dy * 2 + 45;
     this.velocity.setFrom(velocity);
     this.velocity.x += random.nextDoublePM(100);
     this.velocity.y += random.nextDoubleLimit(100);
