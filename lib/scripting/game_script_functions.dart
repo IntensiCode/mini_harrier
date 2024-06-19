@@ -82,6 +82,16 @@ mixin GameScriptFunctions on Component, AutoDispose {
 
   Future<Image> image(String filename) => images.load(filename);
 
+  Future<SpriteSheet> sheetIWH(String filename, int frameWidth, int frameHeight) async {
+    var img = await image(filename);
+    final columns = img.width ~/ frameWidth;
+    final rows = img.height ~/ frameHeight;
+    return SpriteSheet.fromColumnsAndRows(image: img, columns: columns, rows: rows);
+  }
+
+  Future<SpriteSheet> sheetI(String filename, int columns, int rows) async =>
+      SpriteSheet.fromColumnsAndRows(image: await image(filename), columns: columns, rows: rows);
+
   SpriteSheet sheet(Image image, int columns, int rows) =>
       SpriteSheet.fromColumnsAndRows(image: image, columns: columns, rows: rows);
 
