@@ -41,7 +41,7 @@ class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
 
     if (_coolDown > 0) _coolDown -= dt;
     if (_coolDown <= 0 && shouldFire()) {
-      final it = _pool.isEmpty ? SwirlProjectile(_recycle, world: world3d) : _pool.removeLast();
+      final it = _pool.isEmpty ? SwirlProjectile(_recycle, captain, world: world3d) : _pool.removeLast();
       it.visual.animation = anim;
       it.reset(captain.worldPosition, firePower);
       world.add(it);
@@ -61,10 +61,12 @@ class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
 }
 
 class SwirlProjectile extends Component3D {
-  SwirlProjectile(this._recycle, {required super.world}) {
+  SwirlProjectile(this._recycle, this.origin, {required super.world}) {
     add(RectangleHitbox(position: Vector2.zero(), size: Vector2.all(10), anchor: Anchor.center));
     add(visual = SpriteAnimationComponent(anchor: Anchor.center)..scale.setAll(10));
   }
+
+  final Component3D origin;
 
   final void Function(SwirlProjectile) _recycle;
 
@@ -98,8 +100,9 @@ class SwirlProjectile extends Component3D {
     if (check == null) return;
 
     for (final it in check) {
+      if (it == origin) continue;
       if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
-      if ((it.worldPosition.z - worldPosition.z).abs() > 5) continue;
+      if ((it.worldPosition.z - worldPosition.z).abs() > 25) continue;
       if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
       it.applyDamage(plasma: _firePower);
       _recycle(this);
