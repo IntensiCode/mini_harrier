@@ -147,25 +147,29 @@ class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScr
 
   @override
   void whenDefeated() {
-    _onReset(this);
-
     final i = _sprite.sprite?.image;
     if (i == null) return;
 
-    final pieces = sheet(i, 5, 5);
-    for (var i = 0; i < 5; i++) {
-      for (var j = 0; j < 5; j++) {
-        final dx = (i - 2) * 10.0;
-        final dy = (j - 2) * 10.0;
+    const cols = 5;
+    const rows = 10;
+    final pos = Vector3.copy(worldPosition);
+    pos.y += 600;
+    final pieces = sheet(i, cols, rows);
+    for (var i = 0; i < cols; i++) {
+      for (var j = 0; j < rows; j++) {
+        final dx = (i - cols / 2) * 200 / cols;
+        final dy = (j - rows / 2) * 600 / rows;
         parent?.add(Fragment(
-          worldPosition,
+          pos,
           Vector3.zero(),
           pieces.getSprite(4 - j, i),
-          dx,
-          dy,
+          dx + random.nextDoublePM(200 / cols),
+          dy + random.nextDoublePM(400 / rows),
           world: world,
         ));
       }
     }
+
+    _onReset(this);
   }
 }
