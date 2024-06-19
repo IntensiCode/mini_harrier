@@ -31,10 +31,10 @@ class Extras extends GameScriptComponent {
   @override
   void onLoad() async {
     final sheet = await sheetIWH('extras_alt.png', 32, 16);
-    const stepTime = 0.05;
-    animations[ExtraKind.energy] = sheet.createAnimation(row: 0, stepTime: stepTime);
-    animations[ExtraKind.firePower] = sheet.createAnimation(row: 1, stepTime: stepTime);
-    animations[ExtraKind.missile] = sheet.createAnimation(row: 2, stepTime: stepTime);
+    const stepTime = 0.02;
+    animations[ExtraKind.energy] = sheet.createAnimation(row: 0, stepTime: stepTime).reversed();
+    animations[ExtraKind.firePower] = sheet.createAnimation(row: 1, stepTime: stepTime).reversed();
+    animations[ExtraKind.missile] = sheet.createAnimation(row: 2, stepTime: stepTime).reversed();
   }
 
   @override
@@ -86,7 +86,7 @@ class SpawnedExtra extends Component3D {
 
   reset() {
     lifetime = 10;
-    velocity.setZero();
+    velocity.setValues(0, 0, baseSpeed);
     _state = _State.dropping;
     anim.opacity = 1;
   }
@@ -130,6 +130,9 @@ class SpawnedExtra extends Component3D {
     if (worldPosition.y <= 5) {
       worldPosition.y = 5;
       velocity.y = -velocity.y * 0.5;
+    }
+    if (velocity.z < baseSpeed / 2) {
+      velocity.z -= velocity.z * 0.9 * dt;
     }
 
     if (position.x < -20 || position.x > gameWidth + 20) {
