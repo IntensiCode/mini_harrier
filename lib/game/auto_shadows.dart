@@ -9,6 +9,7 @@ import '../scripting/game_script.dart';
 import '../util/extensions.dart';
 import 'effects.dart';
 import 'enemy_energy_balls.dart';
+import 'extras.dart';
 import 'fragment.dart';
 import 'swirl_weapon.dart';
 
@@ -69,7 +70,7 @@ class Shadow extends Component3D with HasVisibility {
     _source = value;
     if (_source is Fragment) {
       it.scale.setValues(1, 0.5);
-    } else if (_source is EnergyBall || _source is SwirlProjectile) {
+    } else if (_source is EnergyBall || _source is SwirlProjectile || _source is SpawnedExtra) {
       it.scale.setValues(3, 1.5);
     } else {
       it.scale.setValues(10, 4);
