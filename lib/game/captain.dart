@@ -6,7 +6,7 @@ import 'package:flame/sprite.dart';
 import '../core/common.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
-import '../input/mini_game_keys.dart';
+import '../input/game_keys.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
@@ -19,7 +19,7 @@ enum CaptainState {
   playing,
 }
 
-class Captain extends Component3D with AutoDispose, MiniScriptFunctions, KeyboardHandler, MiniGameKeys, DamageTarget {
+class Captain extends Component3D with AutoDispose, MiniScriptFunctions, KeyboardHandler, GameKeys, DamageTarget {
   Captain({required super.world}) {
     worldPosition.x = 0;
     worldPosition.y = 50;

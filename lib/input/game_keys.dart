@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 
-enum MiniGameKey {
+enum GameKey {
   left,
   right,
   up,
@@ -12,7 +12,7 @@ enum MiniGameKey {
   useOrExecute,
 }
 
-mixin MiniGameKeys on KeyboardHandler {
+mixin GameKeys on KeyboardHandler {
   // just guessing for now what i may need... doesn't matter.. just to have something for now..
 
   late final keyboard = HardwareKeyboard.instance;
@@ -27,14 +27,14 @@ mixin MiniGameKeys on KeyboardHandler {
   static final useOrExecuteKeys = ['End', 'U'];
 
   static final mapping = {
-    MiniGameKey.left: leftKeys,
-    MiniGameKey.right: rightKeys,
-    MiniGameKey.up: upKeys,
-    MiniGameKey.down: downKeys,
-    MiniGameKey.primaryFire: primaryFireKeys,
-    MiniGameKey.secondaryFire: secondaryFireKeys,
-    MiniGameKey.inventory: inventoryKeys,
-    MiniGameKey.useOrExecute: useOrExecuteKeys,
+    GameKey.left: leftKeys,
+    GameKey.right: rightKeys,
+    GameKey.up: upKeys,
+    GameKey.down: downKeys,
+    GameKey.primaryFire: primaryFireKeys,
+    GameKey.secondaryFire: secondaryFireKeys,
+    GameKey.inventory: inventoryKeys,
+    GameKey.useOrExecute: useOrExecuteKeys,
   };
 
   // held states
@@ -47,21 +47,21 @@ mixin MiniGameKeys on KeyboardHandler {
 
   bool get shift => keyboard.isShiftPressed;
 
-  final held = <MiniGameKey, bool>{}..addEntries(MiniGameKey.values.map((it) => MapEntry(it, false)));
+  final held = <GameKey, bool>{}..addEntries(GameKey.values.map((it) => MapEntry(it, false)));
 
-  bool get left => held[MiniGameKey.left] == true;
+  bool get left => held[GameKey.left] == true;
 
-  bool get right => held[MiniGameKey.right] == true;
+  bool get right => held[GameKey.right] == true;
 
-  bool get up => held[MiniGameKey.up] == true;
+  bool get up => held[GameKey.up] == true;
 
-  bool get down => held[MiniGameKey.down] == true;
+  bool get down => held[GameKey.down] == true;
 
-  bool get primaryFire => held[MiniGameKey.primaryFire] == true;
+  bool get primaryFire => held[GameKey.primaryFire] == true;
 
-  bool get secondaryFire => held[MiniGameKey.secondaryFire] == true;
+  bool get secondaryFire => held[GameKey.secondaryFire] == true;
 
-  bool isHeld(MiniGameKey key) => held[key] == true;
+  bool isHeld(GameKey key) => held[key] == true;
 
   String label(LogicalKeyboardKey key) {
     final s = key.synonyms.singleOrNull;
