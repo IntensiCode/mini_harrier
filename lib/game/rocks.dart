@@ -37,7 +37,7 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   @override
   void onLoad() async => bush = await game.loadSprite('rock.png');
 
-  int remaining = 80;
+  int remaining = 50;
 
   @override
   void update(double dt) {
@@ -71,7 +71,7 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   }
 }
 
-final shadow = Paint()..color = const Color(0x40000000);
+final shadow = Paint()..color = const Color(0x80000000);
 
 class Rock extends Component3D with HasPaint {
   Rock(this.bush, this._onReset, {required super.world}) {
@@ -81,7 +81,7 @@ class Rock extends Component3D with HasPaint {
       radius: 100.0,
       paint: shadow,
       anchor: Anchor.centerRight,
-    )..scale.setValues(20, 0.5));
+    )..scale.setValues(20, 0.75));
     reset();
   }
 
@@ -90,7 +90,7 @@ class Rock extends Component3D with HasPaint {
   late final SpriteComponent sprite;
 
   _pickScale() {
-    sprite.scale.setAll(5 + random.nextDoubleLimit(5));
+    sprite.scale.setAll(7 + random.nextDoubleLimit(7));
   }
 
   static double lastX = 0;
@@ -126,6 +126,8 @@ class Rock extends Component3D with HasPaint {
     if (fadeInTime < 1.0) {
       sprite.opacity = fadeInTime.clamp(0.0, 1.0);
       fadeInTime += dt;
+    } else if (worldPosition.z > world.camera.z - 150) {
+      sprite.opacity = ((world.camera.z - worldPosition.z) / 150).clamp(0.0, 1.0);
     } else {
       sprite.opacity = 1;
     }

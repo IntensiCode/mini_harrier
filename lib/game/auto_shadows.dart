@@ -72,7 +72,7 @@ class Shadow extends Component3D with HasVisibility {
     } else if (_source is EnergyBall || _source is SwirlProjectile) {
       it.scale.setValues(3, 1.5);
     } else {
-      it.scale.setValues(5, 2);
+      it.scale.setValues(10, 4);
     }
   }
 
@@ -85,7 +85,7 @@ class Shadow extends Component3D with HasVisibility {
 
     worldPosition.x = it.worldPosition.x - it.worldPosition.y / 2;
     worldPosition.y = 0;
-    worldPosition.z = it.worldPosition.z;
+    worldPosition.z = it.worldPosition.z - it.worldPosition.y / 8;
 
     if (position.x < -50) removeMe = true;
     if (position.x > gameWidth + 50) removeMe = true;

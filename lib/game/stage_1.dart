@@ -7,6 +7,7 @@ import '../components/checkerboard.dart';
 import '../components/mountains.dart';
 import '../components/sky.dart';
 import '../core/common.dart';
+import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
 import '../game/extras.dart';
@@ -21,6 +22,9 @@ import 'captain_cam.dart';
 import 'effects.dart';
 import 'enemy_energy_balls.dart';
 import 'hud.dart';
+import 'kamikaze_ufo_enemies.dart';
+import 'kamikaze_ufo_enemy.dart';
+import 'rocks.dart';
 import 'ufo_enemies.dart';
 import 'ufo_enemy.dart';
 
@@ -63,6 +67,54 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     at(0.0, () => fadeIn(textXY('Did I sign up for THIS?', xCenter, yCenter + lineHeight, scale: 1)));
     at(2.0, () => fadeOutByType<BitmapText>());
     at(0.0, () => captain.state = CaptainState.playing);
-    at(0.0, () => add(UfoEnemies(captain)));
+    at(0.0, () => nextWave());
+
+    onMessage<EnemiesDefeated>((_) {
+      if (_waves.isEmpty) {
+        clearScript();
+        at(0.0, () => fadeIn(textXY('STAGE COMPLETE', xCenter, yCenter, scale: 2)));
+        at(1.0, () => pressFireToStart());
+        executeScript();
+      } else {
+        switch (_waves[0]) {
+          case _EnemyWaves.kamikaze:
+            add(KamikazeUfoEnemies(captain));
+          case _EnemyWaves.ufos:
+            add(UfoEnemies(captain));
+          case _EnemyWaves.obstacles:
+            add(Rocks());
+        }
+        _waves.removeAt(0);
+      }
+    });
+
+    if (debug.value) {
+      onKey('<C-n>', () => nextWave());
+      onKey('<C-p>', () => add(KamikazeUfoEnemies(captain)));
+      onKey('<C-o>', () => add(UfoEnemies(captain)));
+      onKey('<C-r>', () => add(Rocks()));
+    }
   }
+
+  void nextWave() {
+    children
+        .where((it) =>
+            it is KamikazeUfoEnemies ||
+            it is KamikazeUfoEnemy ||
+            it is UfoEnemies ||
+            it is UfoEnemy ||
+            it is Rocks ||
+            it is Rock)
+        .forEach((it) => it.removeFromParent());
+
+    sendMessage(EnemiesDefeated());
+  }
+
+  final _waves = [_EnemyWaves.kamikaze, _EnemyWaves.ufos, _EnemyWaves.obstacles];
+}
+
+enum _EnemyWaves {
+  kamikaze,
+  ufos,
+  obstacles,
 }
