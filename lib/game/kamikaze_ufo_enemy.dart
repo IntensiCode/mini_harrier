@@ -11,6 +11,7 @@ import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
 import 'damage_target.dart';
+import 'extras.dart';
 import 'fragment.dart';
 
 enum _State {
@@ -136,6 +137,8 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
         ));
       }
     }
+
+    spawnExtra(worldPosition);
   }
 
   @override
