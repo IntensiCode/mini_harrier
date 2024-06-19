@@ -68,8 +68,8 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
     }
   }
 
-  final steerAcceleration = 1000.0;
-  final maxAcceleration = 1000.0;
+  final steerAcceleration = maxStrafe / 2 * 10;
+  final maxAcceleration = maxStrafe / 2 * 10;
   final velocity = Vector3(0, 0, baseSpeed);
   final autoDecelerate = 200;
 

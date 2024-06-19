@@ -18,9 +18,10 @@ final Vector2 gameSize = Vector2(gameWidth, gameHeight);
 const baseSpeed = -500.0;
 const minHeight = 0.0;
 const maxHeight = 500.0;
-const midHeight = minHeight + (maxHeight - minHeight) / 2;
-const maxLeft = -200.0;
-const maxRight = 200.0;
+const midHeight = (minHeight + maxHeight) / 2 + 100;
+const maxStrafe = 400.0;
+const maxLeft = -maxStrafe;
+const maxRight = maxStrafe;
 
 const fontScale = gameHeight / 500;
 const xCenter = gameWidth / 2;
