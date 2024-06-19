@@ -59,8 +59,6 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
 
     add(UfoEnemies(captain));
 
-    onMessage<EnemiesDefeated>((_) => showScreen(Screen.title));
-
     soundboard.play(Sound.game_on);
 
     fontSelect(fancyFont, scale: 1.0);
