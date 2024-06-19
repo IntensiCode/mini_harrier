@@ -25,6 +25,7 @@ enum Sound {
   shot,
   strangeness,
   warning,
+  warning_obstacles,
 }
 
 final soundboard = Soundboard();
