@@ -7,6 +7,7 @@ import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
+import 'rocks.dart';
 
 class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
   SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);
@@ -101,9 +102,15 @@ class SwirlProjectile extends Component3D {
 
     for (final it in check) {
       if (it == origin) continue;
-      if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
-      if ((it.worldPosition.z - worldPosition.z).abs() > 25) continue;
-      if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
+      if (it is Rock) {
+        if ((it.worldPosition.x - worldPosition.x).abs() > 200) continue;
+        if ((it.worldPosition.z - worldPosition.z).abs() > 55) continue;
+        // if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
+      } else {
+        if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
+        if ((it.worldPosition.z - worldPosition.z).abs() > 25) continue;
+        if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
+      }
       it.applyDamage(plasma: _firePower);
       _recycle(this);
       break;
