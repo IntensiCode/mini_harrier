@@ -11,7 +11,7 @@ class CaptainCam extends Component {
 
   final currentPosition = Vector3(0, 10, 50);
 
-  double slowDownSpeed = 40;
+  double slowDownSpeed = baseSpeed;
 
   @override
   void update(double dt) {
@@ -32,9 +32,12 @@ class CaptainCam extends Component {
         currentPosition.y += cos(f.shakeTime * 23) * 3;
       }
     } else {
-      currentPosition.z -= slowDownSpeed * dt;
-      slowDownSpeed -= slowDownSpeed * 0.9 * dt;
-      if (slowDownSpeed < 10) removeFromParent();
+      currentPosition.z += slowDownSpeed * dt;
+      if (slowDownSpeed < 0) {
+        slowDownSpeed -= baseSpeed / 3 * dt;
+      } else {
+        removeFromParent();
+      }
     }
   }
 }
