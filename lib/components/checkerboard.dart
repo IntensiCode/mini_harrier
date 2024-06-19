@@ -26,7 +26,7 @@ class Checkerboard extends PositionComponent with HasPaint, AutoDispose, GameScr
     shader.setVec4(4, const Color(0xFFc0a050));
     shader.setFloat(8, rect.width);
     shader.setFloat(9, rect.height);
-    shader.setFloat(10, 64);
+    shader.setFloat(10, 48);
     shader.setFloat(11, world.d);
   }
 

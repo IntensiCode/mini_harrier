@@ -29,7 +29,7 @@ void main() {
     float z_world = y_world * d / y / 4;
     float x_world = x / d * z_world + x_off;
 
-    float x_tile = do_mod(floor(x_world / size / 2), 2);
+    float x_tile = do_mod(floor(x_world / size / 4), 2);
     float z_tile = do_mod(floor((z_world - z_off / 8) / size), 2);
     // why the 8 for it to look square?
 
