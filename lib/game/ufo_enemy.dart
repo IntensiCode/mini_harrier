@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 
+import '../core/common.dart';
 import '../core/mini_3d.dart';
 import '../game/extras.dart';
 import '../game/fragment.dart';
@@ -140,7 +141,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
         if (random.nextBool()) targetVelocity.z *= -1;
       }
 
-      velocity.lerp(targetVelocity, 0.01);
+      velocity.lerp(targetVelocity, 1 / tps);
 
       final buddies = parent?.children.whereType<UfoEnemy>();
       if (buddies == null) return;

@@ -18,7 +18,7 @@ import 'util/performance.dart';
 class MiniHarrier extends FlameGame<GameWorld>
     with HasKeyboardHandlerComponents, Messaging, MiniShortcuts, HasPerformanceTracker {
   //
-  final _ticker = Ticker(ticks: 240);
+  final _ticker = Ticker(ticks: tps);
 
   void _showInitialScreen() {
     if (kIsWeb) {

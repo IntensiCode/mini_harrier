@@ -9,6 +9,8 @@ import 'package:signals_core/signals_core.dart';
 final debug = signal(kDebugMode);
 bool dev = kDebugMode;
 
+const tps = 240;
+
 const double gameWidth = 320;
 const double gameHeight = 256;
 final Vector2 gameSize = Vector2(gameWidth, gameHeight);
