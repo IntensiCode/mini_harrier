@@ -56,7 +56,7 @@ class VShmupHudMeter extends SpriteComponent with HasVisibility {
       warnTime += dt;
       if (warnTime > 1) {
         warnTime -= 1;
-        soundboard.play(Sound.warning);
+        soundboard.play(Sound.warning, volume: 0.3);
       }
     }
   }
