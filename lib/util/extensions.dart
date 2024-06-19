@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
+import '../core/messaging.dart';
 import '../core/mini_common.dart';
-import '../core/mini_messaging.dart';
 
 extension ComponentExtension on Component {
   void nextLevel() => messaging.send(NextLevel());

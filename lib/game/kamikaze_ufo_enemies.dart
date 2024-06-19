@@ -1,5 +1,5 @@
+import '../core/messaging.dart';
 import '../core/mini_3d.dart';
-import '../core/mini_messaging.dart';
 import '../scripting/mini_script.dart';
 import 'kamikaze_ufo_enemy.dart';
 import 'ufo_enemy.dart';

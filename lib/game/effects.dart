@@ -1,9 +1,9 @@
 import 'package:flame/components.dart';
 
 import '../components/delayed.dart';
+import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/mini_common.dart';
-import '../core/mini_messaging.dart';
 import '../core/mini_soundboard.dart';
 import '../scripting/mini_script.dart';
 import '../scripting/mini_script_functions.dart';

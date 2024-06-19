@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'components/web_play_screen.dart';
+import 'core/messaging.dart';
 import 'core/mini_common.dart';
-import 'core/mini_messaging.dart';
 import 'core/mini_soundboard.dart';
 import 'input/mini_shortcuts.dart';
 import 'mini_world.dart';
@@ -17,7 +17,7 @@ import 'util/fonts.dart';
 import 'util/performance.dart';
 
 class MiniHarrier extends FlameGame<MiniWorld>
-    with HasKeyboardHandlerComponents, MiniMessaging, MiniShortcuts, HasPerformanceTracker {
+    with HasKeyboardHandlerComponents, Messaging, MiniShortcuts, HasPerformanceTracker {
   //
   final _ticker = Ticker(ticks: 120);
 

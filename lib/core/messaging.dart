@@ -5,36 +5,36 @@ import '../core/mini_common.dart';
 import '../util/auto_dispose.dart';
 import 'mini_3d.dart';
 
-sealed class MiniMessage {}
+sealed class Message {}
 
-class ChallengeComplete extends MiniMessage {}
+class ChallengeComplete extends Message {}
 
-class EnemiesDefeated extends MiniMessage {}
+class EnemiesDefeated extends Message {}
 
-class GetClosestEnemyPosition extends MiniMessage {
+class GetClosestEnemyPosition extends Message {
   GetClosestEnemyPosition(this.position, this.onResult);
 
   final Vector2 position;
   final void Function(Vector2) onResult;
 }
 
-class NextLevel extends MiniMessage {}
+class NextLevel extends Message {}
 
-class PlayerDestroyed extends MiniMessage {}
+class PlayerDestroyed extends Message {}
 
-class ShowScreen extends MiniMessage {
+class ShowScreen extends Message {
   ShowScreen(this.screen);
 
   final Screen screen;
 }
 
-class SpawnBall extends MiniMessage {
+class SpawnBall extends Message {
   SpawnBall(this.position);
 
   final Vector2 position;
 }
 
-class SpawnEffect extends MiniMessage {
+class SpawnEffect extends Message {
   SpawnEffect({required this.kind, required this.anchor, this.delaySeconds, this.atHalfTime, this.velocity});
 
   final EffectKind kind;
@@ -44,7 +44,7 @@ class SpawnEffect extends MiniMessage {
   final Vector3? velocity;
 }
 
-class SpawnExtra extends MiniMessage {
+class SpawnExtra extends Message {
   SpawnExtra(this.position, [this.kind]);
 
   final Vector2 position;
@@ -54,9 +54,9 @@ class SpawnExtra extends MiniMessage {
 // simple game demo at hand.
 
 extension ComponentExtension on Component {
-  MiniMessaging get messaging {
+  Messaging get messaging {
     Component? probed = this;
-    while (probed is! MiniMessaging) {
+    while (probed is! Messaging) {
       probed = probed?.parent;
       if (probed == null) throw StateError('no messaging mixin found');
     }
@@ -64,10 +64,10 @@ extension ComponentExtension on Component {
   }
 }
 
-mixin MiniMessaging on Component {
+mixin Messaging on Component {
   final listeners = <Type, List<dynamic>>{};
 
-  Disposable listen<T extends MiniMessage>(void Function(T) callback) {
+  Disposable listen<T extends Message>(void Function(T) callback) {
     listeners[T] ??= [];
     listeners[T]!.add(callback);
     return Disposable.wrap(() {
@@ -75,7 +75,7 @@ mixin MiniMessaging on Component {
     });
   }
 
-  void send<T extends MiniMessage>(T message) {
+  void send<T extends Message>(T message) {
     final listener = listeners[T];
     if (listener == null || listener.isEmpty) {
       logWarn('no listener for $T in $listeners');

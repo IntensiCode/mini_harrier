@@ -10,8 +10,8 @@ import 'package:flutter/animation.dart';
 import 'package:signals_core/signals_core.dart';
 
 import '../components/press_fire_to_start.dart';
+import '../core/messaging.dart';
 import '../core/mini_common.dart';
-import '../core/mini_messaging.dart';
 import '../core/mini_soundboard.dart';
 import '../util/auto_dispose.dart';
 import '../util/bitmap_button.dart';
@@ -46,9 +46,9 @@ mixin MiniScriptFunctions on Component, AutoDispose {
     _autoDisposeCount++;
   }
 
-  void sendMessage<T extends MiniMessage>(T message) => messaging.send(message);
+  void sendMessage<T extends Message>(T message) => messaging.send(message);
 
-  Disposable onMessage<T extends MiniMessage>(void Function(T) callback) {
+  Disposable onMessage<T extends Message>(void Function(T) callback) {
     final listen = messaging.listen<T>(callback);
     autoDispose('listen-$T', listen);
     return listen;
