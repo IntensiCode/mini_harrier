@@ -7,9 +7,9 @@ import '../components/checkerboard.dart';
 import '../components/mountains.dart';
 import '../components/sky.dart';
 import '../core/common.dart';
-import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
+import '../game/extras.dart';
 import '../input/mini_shortcuts.dart';
 import '../scripting/game_script.dart';
 import '../util/bitmap_text.dart';
@@ -38,6 +38,7 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     add(fadeIn(AutoShadows()));
 
     effects();
+    extras();
 
     final captain = Captain(world: world);
 

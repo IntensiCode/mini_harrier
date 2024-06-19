@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
-import 'package:mini_harrier/game/fragment.dart';
 
 import '../core/mini_3d.dart';
+import '../game/extras.dart';
+import '../game/fragment.dart';
 import '../scripting/game_script.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
@@ -205,6 +206,8 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
         ));
       }
     }
+
+    spawnExtra(worldPosition);
   }
 
   @override
