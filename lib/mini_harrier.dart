@@ -10,13 +10,13 @@ import 'components/web_play_screen.dart';
 import 'core/common.dart';
 import 'core/messaging.dart';
 import 'core/soundboard.dart';
+import 'game_world.dart';
 import 'input/mini_shortcuts.dart';
-import 'mini_world.dart';
 import 'util/extensions.dart';
 import 'util/fonts.dart';
 import 'util/performance.dart';
 
-class MiniHarrier extends FlameGame<MiniWorld>
+class MiniHarrier extends FlameGame<GameWorld>
     with HasKeyboardHandlerComponents, Messaging, MiniShortcuts, HasPerformanceTracker {
   //
   final _ticker = Ticker(ticks: 120);
@@ -29,7 +29,7 @@ class MiniHarrier extends FlameGame<MiniWorld>
     }
   }
 
-  MiniHarrier() : super(world: MiniWorld()) {
+  MiniHarrier() : super(world: GameWorld()) {
     game = this;
     images = this.images;
 

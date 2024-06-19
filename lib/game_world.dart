@@ -8,7 +8,7 @@ import 'game/stage_1.dart';
 import 'intro_screen.dart';
 import 'title_screen.dart';
 
-class MiniWorld extends World {
+class GameWorld extends World {
   int level = 1;
 
   @override
