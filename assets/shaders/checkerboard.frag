@@ -25,8 +25,8 @@ void main() {
     float x = FlutterFragCoord().x - resolution.x / 2;
     float y = FlutterFragCoord().y - resolution.y;
 
-    float y_world = y_off;
-    float z_world = y_world * d / y;
+    float y_world = y_off * 4;
+    float z_world = y_world * d / y / 4;
     float x_world = x / d * z_world + x_off;
 
     float x_tile = do_mod(floor(x_world / size / 2), 2);
