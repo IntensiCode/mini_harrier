@@ -41,7 +41,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
     worldPosition.setFrom(world.camera);
     worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
-    life = 10;
+    life = 5;
   }
 
   var stateTime = 0.0;
