@@ -44,11 +44,11 @@ class SpawnEffect extends MiniMessage {
   final Vector3? velocity;
 }
 
-class SpawnItem extends MiniMessage {
-  SpawnItem(this.position, [this.kind]);
+class SpawnExtra extends MiniMessage {
+  SpawnExtra(this.position, [this.kind]);
 
   final Vector2 position;
-  final Set<MiniItemKind>? kind;
+  final Set<ExtraKind>? kind;
 }
 // there are better solutions available than this. but this works for the
 // simple game demo at hand.

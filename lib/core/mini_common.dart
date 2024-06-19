@@ -104,7 +104,7 @@ enum EffectKind {
   sparkle,
 }
 
-enum MiniItemKind {
+enum ExtraKind {
   laserCharge(0, 1),
   shield(1, 1),
   missile(2, 1),
@@ -117,11 +117,11 @@ enum MiniItemKind {
   final int column;
   final double probability;
 
-  const MiniItemKind(this.column, this.probability);
+  const ExtraKind(this.column, this.probability);
 }
 
 mixin Collector {
-  void collect(MiniItemKind kind);
+  void collect(ExtraKind kind);
 }
 
 mixin Defender {

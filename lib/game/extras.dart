@@ -10,15 +10,15 @@ import '../util/extensions.dart';
 import '../util/random.dart';
 
 extension ScriptFunctionsExtension on MiniScriptFunctions {
-  MiniExtraItems items(int level) => added(MiniExtraItems(level));
+  Extras extras(int level) => added(Extras(level));
 }
 
 extension ComponentExtensions on Component {
-  void spawnItem(Vector2 position, [Set<MiniItemKind>? which]) => messaging.send(SpawnItem(position, which));
+  void spawnExtra(Vector2 position, [Set<ExtraKind>? which]) => messaging.send(SpawnExtra(position, which));
 }
 
-class MiniExtraItems extends MiniScriptComponent {
-  MiniExtraItems(this.level);
+class Extras extends MiniScriptComponent {
+  Extras(this.level);
 
   final int level;
 
@@ -27,9 +27,9 @@ class MiniExtraItems extends MiniScriptComponent {
   @override
   void onMount() {
     super.onMount();
-    onMessage<SpawnItem>((it) {
-      final which = it.kind?.toList() ?? MiniItemKind.values;
-      final dist = which.fold(<(double, MiniItemKind)>[], (acc, kind) {
+    onMessage<SpawnExtra>((it) {
+      final which = it.kind?.toList() ?? ExtraKind.values;
+      final dist = which.fold(<(double, ExtraKind)>[], (acc, kind) {
         acc.add(((acc.lastOrNull?.$1 ?? 0) + kind.probability, kind));
         return acc;
       });
@@ -40,8 +40,8 @@ class MiniExtraItems extends MiniScriptComponent {
     });
   }
 
-  void _spawn(Vector2 position, MiniItemKind kind) {
-    final it = _pool.removeLastOrNull() ?? MiniItem(_recycle);
+  void _spawn(Vector2 position, ExtraKind kind) {
+    final it = _pool.removeLastOrNull() ?? SpawnedExtra(_recycle);
     it.sprite.sprite = sprites.getSprite(5, 3 + kind.column);
     it.kind = kind;
     it.speed = (50 + level * 0.25).clamp(50.0, 100.0);
@@ -49,28 +49,28 @@ class MiniExtraItems extends MiniScriptComponent {
     add(it);
   }
 
-  void _recycle(MiniItem it) {
+  void _recycle(SpawnedExtra it) {
     it.removeFromParent();
     _pool.add(it);
   }
 
-  final _pool = <MiniItem>[];
+  final _pool = <SpawnedExtra>[];
 }
 
-class MiniItem extends PositionComponent with CollisionCallbacks {
-  MiniItem(this._recycle) {
+class SpawnedExtra extends PositionComponent with CollisionCallbacks {
+  SpawnedExtra(this._recycle) {
     anchor = Anchor.center;
     add(sprite = SpriteComponent(anchor: Anchor.center));
     add(debug = DebugCircleHitbox(radius: 6, anchor: Anchor.center));
     add(hitbox = CircleHitbox(radius: 6, anchor: Anchor.center));
   }
 
-  final void Function(MiniItem it) _recycle;
+  final void Function(SpawnedExtra it) _recycle;
 
   late SpriteComponent sprite;
   late DebugCircleHitbox debug;
   late CircleHitbox hitbox;
-  late MiniItemKind kind;
+  late ExtraKind kind;
   late double speed;
 
   @override
