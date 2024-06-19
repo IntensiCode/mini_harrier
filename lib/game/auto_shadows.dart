@@ -52,7 +52,11 @@ class AutoShadows extends GameScriptComponent {
 
 class Shadow extends Component3D with HasVisibility {
   Shadow({required super.world}) {
-    it = added(CircleComponent(radius: 20, anchor: Anchor.center, paint: Paint()..color = const Color(0x80000000)));
+    it = added(CircleComponent(
+      radius: 20,
+      anchor: Anchor.centerRight,
+      paint: Paint()..color = const Color(0x80000000),
+    ));
     it.scale.setValues(5, 2);
   }
 
