@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:mini_harrier/core/mini_3d.dart';
 
 import '../core/common.dart';
 import '../core/messaging.dart';
@@ -14,7 +15,7 @@ extension ScriptFunctionsExtension on GameScriptFunctions {
 }
 
 extension ComponentExtensions on Component {
-  void spawnExtra(Vector2 position, [Set<ExtraKind>? which]) => messaging.send(SpawnExtra(position, which));
+  void spawnExtra(Vector3 position, [Set<ExtraKind>? which]) => messaging.send(SpawnExtra(position, which));
 }
 
 class Extras extends GameScriptComponent {
@@ -40,12 +41,12 @@ class Extras extends GameScriptComponent {
     });
   }
 
-  void _spawn(Vector2 position, ExtraKind kind) {
-    final it = _pool.removeLastOrNull() ?? SpawnedExtra(_recycle);
-    it.sprite.sprite = sprites.getSprite(5, 3 + kind.column);
+  void _spawn(Vector3 position, ExtraKind kind) {
+    final it = _pool.removeLastOrNull() ?? SpawnedExtra(_recycle, world: world);
+    // it.anim.sprite = sprites.getSprite(5, 3 + kind.column);
     it.kind = kind;
     it.speed = (50 + level * 0.25).clamp(50.0, 100.0);
-    it.position.setFrom(position);
+    it.worldPosition.setFrom(position);
     add(it);
   }
 
@@ -57,17 +58,15 @@ class Extras extends GameScriptComponent {
   final _pool = <SpawnedExtra>[];
 }
 
-class SpawnedExtra extends PositionComponent with CollisionCallbacks {
-  SpawnedExtra(this._recycle) {
+class SpawnedExtra extends Component3D {
+  SpawnedExtra(this._recycle, {required super.world}) {
     anchor = Anchor.center;
-    add(sprite = SpriteComponent(anchor: Anchor.center));
-    add(debug = DebugCircleHitbox(radius: 6, anchor: Anchor.center));
-    add(hitbox = CircleHitbox(radius: 6, anchor: Anchor.center));
+    add(anim = SpriteAnimationComponent(anchor: Anchor.center));
   }
 
   final void Function(SpawnedExtra it) _recycle;
 
-  late SpriteComponent sprite;
+  late SpriteAnimationComponent anim;
   late DebugCircleHitbox debug;
   late CircleHitbox hitbox;
   late ExtraKind kind;
@@ -86,15 +85,5 @@ class SpawnedExtra extends PositionComponent with CollisionCallbacks {
     super.update(dt);
     position.y += speed * dt;
     if (position.y > gameHeight + size.y) _recycle(this);
-  }
-
-  @override
-  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(intersectionPoints, other);
-    if (other case Collector it) {
-      // spawnEffect(MiniEffectKind.sparkle, other.position);
-      it.collect(kind);
-      _recycle(this);
-    }
   }
 }

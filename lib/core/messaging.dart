@@ -47,7 +47,7 @@ class SpawnEffect extends Message {
 class SpawnExtra extends Message {
   SpawnExtra(this.position, [this.kind]);
 
-  final Vector2 position;
+  final Vector3 position;
   final Set<ExtraKind>? kind;
 }
 // there are better solutions available than this. but this works for the

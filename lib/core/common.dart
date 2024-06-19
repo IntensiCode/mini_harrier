@@ -2,7 +2,6 @@ import 'package:flame/cache.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flame/sprite.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:signals_core/signals_core.dart';
@@ -35,46 +34,6 @@ const transparent = Colors.transparent;
 const black = Colors.black;
 const white = Colors.white;
 
-// for this simple game demo, all sprites will be in here after game's onLoad.
-late SpriteSheet sprites;
-
-SpriteAnimation player() => sprites.createAnimation(row: 0, stepTime: 0.1, from: 3, to: 6);
-
-SpriteAnimation exhaust() => sprites.createAnimation(row: 1, stepTime: 0.1, from: 3, to: 9);
-
-SpriteAnimation bonny() => sprites.createAnimation(row: 2, stepTime: 0.1, from: 3, to: 9);
-
-SpriteAnimation looker() => sprites.createAnimation(row: 3, stepTime: 0.1, from: 3, to: 9);
-
-SpriteAnimation smiley() => sprites.createAnimation(row: 4, stepTime: 0.1, from: 1, to: 9);
-
-SpriteAnimation explosion() => sprites.createAnimation(row: 6, stepTime: 0.1, from: 3, to: 8)..loop = false;
-
-SpriteAnimation sparkle() => sprites.createAnimation(row: 7, stepTime: 0.1, from: 3, to: 7)..loop = false;
-
-SpriteAnimation hit() => sprites.createAnimation(row: 9, stepTime: 0.05, from: 3, to: 9)..loop = false;
-
-SpriteAnimation laser() => sprites.createAnimation(row: 8, stepTime: 1.0, from: 3, to: 6);
-
-SpriteAnimation missile() => sprites.createAnimation(row: 10, stepTime: 0.1, from: 3, to: 7);
-
-SpriteAnimation energyBall() => sprites.createAnimation(row: 11, stepTime: 0.1, from: 3, to: 7);
-
-SpriteAnimation appear() => sprites.createAnimation(row: 12, stepTime: 0.1, from: 0, to: 9)..loop = false;
-
-SpriteAnimation shield() => sprites.createAnimation(row: 13, stepTime: 0.05, from: 0, to: 10);
-
-SpriteAnimation smoke() => sprites.createAnimation(row: 14, stepTime: 0.05, from: 0, to: 11)..loop = false;
-
-Future<SpriteAnimation> explosion32() => game.loadSpriteAnimation(
-    'explosion96.png',
-    SpriteAnimationData.sequenced(
-      amount: 12,
-      stepTime: 0.1,
-      textureSize: Vector2(96, 96),
-      loop: false,
-    ));
-
 Future<SpriteAnimation> energyBalls16() => game.loadSpriteAnimation(
       'energy_balls_alt.png',
       SpriteAnimationData.sequenced(
@@ -97,9 +56,7 @@ enum Screen {
 }
 
 enum EffectKind {
-  appear,
   explosion,
-  hit,
   smoke,
   sparkle,
 }

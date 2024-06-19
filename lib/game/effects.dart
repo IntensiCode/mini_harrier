@@ -36,11 +36,9 @@ class Effects extends GameScriptComponent {
 
   @override
   void onLoad() async {
-    animations[EffectKind.appear] = appear();
-    animations[EffectKind.explosion] = await explosion32();
-    animations[EffectKind.hit] = hit();
-    animations[EffectKind.smoke] = smoke();
-    animations[EffectKind.sparkle] = sparkle();
+    animations[EffectKind.explosion] = await loadAnimWH('explosion96.png', 96, 96, 0.1, false);
+    animations[EffectKind.smoke] = await loadAnimWH('smoke.png', 16, 16, 0.05, false);
+    animations[EffectKind.sparkle] = await loadAnimWH('sparkle.png', 16, 16, 0.1, false);
   }
 
   @override

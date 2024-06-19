@@ -2,7 +2,6 @@ import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/sprite.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -65,9 +64,6 @@ class MiniHarrier extends FlameGame<GameWorld>
 
     await soundboard.preload();
     await loadFonts(assets);
-
-    final spritesImage = await images.load('mini_shooter.png');
-    sprites = SpriteSheet(image: spritesImage, srcSize: Vector2.all(16));
 
     _showInitialScreen();
 
