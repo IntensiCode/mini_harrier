@@ -6,7 +6,6 @@ import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
-import 'game_state.dart';
 
 class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
   SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);
@@ -85,7 +84,7 @@ class SwirlProjectile extends Component3D {
       if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
       if ((it.worldPosition.z - worldPosition.z).abs() > 5) continue;
       if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
-      it.applyDamage(plasma: 1 + state.charge * 0.5);
+      it.applyDamage(plasma: 1);
       _recycle(this);
       break;
     }

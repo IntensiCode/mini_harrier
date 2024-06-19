@@ -11,7 +11,6 @@ import '../util/extensions.dart';
 import '../util/random.dart';
 import 'damage_target.dart';
 import 'effects.dart';
-import 'game_state.dart';
 
 class EnemyEnergyBalls extends Component with AutoDispose, GameScriptFunctions {
   EnemyEnergyBalls(this.container, this.enemies, this.captain);
@@ -128,7 +127,7 @@ class EnergyBall extends Component3D {
       if ((it.worldPosition.x - worldPosition.x).abs() > 30) continue;
       if ((it.worldPosition.z - worldPosition.z).abs() > 5) continue;
       if ((it.worldPosition.y + 25 - worldPosition.y).abs() > 40) continue;
-      it.applyDamage(plasma: 1 + state.charge * 0.5);
+      it.applyDamage(plasma: 1);
       _recycle(this);
       return;
     }

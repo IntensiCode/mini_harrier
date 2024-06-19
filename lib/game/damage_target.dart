@@ -3,7 +3,6 @@ import 'package:mini_harrier/core/mini_3d.dart';
 import '../core/common.dart';
 import '../core/soundboard.dart';
 import 'effects.dart';
-import 'game_state.dart';
 
 mixin DamageTarget on Component3D {
   void whenDefeated();
@@ -24,7 +23,6 @@ mixin DamageTarget on Component3D {
       whenHit();
       spawnEffect(EffectKind.sparkle, this);
       soundboard.play(Sound.asteroid_clash);
-      state.score++;
       return false;
     }
   }
