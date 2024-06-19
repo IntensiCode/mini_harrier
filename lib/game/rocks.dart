@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 
 import '../core/common.dart';
+import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
@@ -34,31 +37,51 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   @override
   void onLoad() async => bush = await game.loadSprite('rock.png');
 
+  int remaining = 80;
+
   @override
   void update(double dt) {
     super.update(dt);
+    if (remaining == 0) {
+      final c = parent?.children.whereType<Rock>().length;
+      if (c == 0) {
+        removeFromParent();
+        sendMessage(EnemiesDefeated());
+      }
+      return;
+    }
+
     lastEmission += dt;
-    const minReleaseInterval = 1; //  / sqrt(maxBushes);
+    const minReleaseInterval = 0.5; //  / sqrt(maxBushes);
     final c = parent!.children.whereType<Rock>();
     if (c.length < maxBushes && lastEmission >= minReleaseInterval) {
       parent!.add(Rock(bush, _onReset, world: world));
       lastEmission = 0;
+      remaining--;
     }
   }
 
   void _onReset(Rock it) {
-    if (children.length > maxBushes) {
+    if (children.length > maxBushes || remaining == 0) {
       it.removeFromParent();
     } else {
       it.reset();
+      remaining--;
     }
   }
 }
+
+final shadow = Paint()..color = const Color(0x40000000);
 
 class Rock extends Component3D with HasPaint {
   Rock(this.bush, this._onReset, {required super.world}) {
     anchor = Anchor.bottomCenter;
     sprite = added(SpriteComponent(sprite: bush, paint: paint, anchor: Anchor.bottomCenter));
+    add(CircleComponent(
+      radius: 100.0,
+      paint: shadow,
+      anchor: Anchor.centerRight,
+    )..scale.setValues(20, 0.5));
     reset();
   }
 
@@ -66,13 +89,27 @@ class Rock extends Component3D with HasPaint {
   final void Function(Rock) _onReset;
   late final SpriteComponent sprite;
 
-  _pickScale() => scale.setAll(3 + random.nextDoubleLimit(3));
+  _pickScale() {
+    sprite.scale.setAll(5 + random.nextDoubleLimit(5));
+  }
+
+  static double lastX = 0;
 
   _pickPosition() {
-    final off = random.nextDoublePM(1000);
+    final off = random.nextDoublePM(2500);
     worldPosition.x = world.camera.x + off;
-    worldPosition.y = 0;
-    worldPosition.z = world.camera.z - 5000;
+    if ((lastX - worldPosition.x).abs() < 500) {
+      if (lastX < 0) {
+        final off = random.nextDoubleLimit(2500);
+        worldPosition.x = world.camera.x + off;
+      } else {
+        final off = random.nextDoubleLimit(2500);
+        worldPosition.x = world.camera.x - off;
+      }
+    }
+    worldPosition.y = 0.0;
+    worldPosition.z = world.camera.z - 4000;
+    lastX = worldPosition.x;
   }
 
   reset() {
@@ -80,15 +117,24 @@ class Rock extends Component3D with HasPaint {
     _pickPosition();
   }
 
+  double fadeInTime = 0;
+
   @override
   void update(double dt) {
     super.update(dt);
 
+    if (fadeInTime < 1.0) {
+      sprite.opacity = fadeInTime.clamp(0.0, 1.0);
+      fadeInTime += dt;
+    } else {
+      sprite.opacity = 1;
+    }
+
     bool remove = false;
-    if (worldPosition.z > world.camera.z - 50) remove = true;
-    if (position.x < -10) remove = true;
-    if (position.x > gameWidth + 10) remove = true;
-    if (position.y > gameHeight + 20) remove = true;
+    if (worldPosition.z > world.camera.z - 30) remove = true;
+    if (position.x < -40) remove = true;
+    if (position.x > gameWidth + 40) remove = true;
+    if (position.y > gameHeight + 100) remove = true;
     if (remove) _onReset(this);
   }
 }
