@@ -11,7 +11,7 @@ import '../util/extensions.dart';
 import '../util/random.dart';
 import 'damage_target.dart';
 import 'effects.dart';
-import 'mini_state.dart';
+import 'game_state.dart';
 
 class EnemyEnergyBalls extends Component with AutoDispose, MiniScriptFunctions {
   EnemyEnergyBalls(this.container, this.enemies, this.captain);

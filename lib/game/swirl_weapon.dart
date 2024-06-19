@@ -6,7 +6,7 @@ import '../core/mini_soundboard.dart';
 import '../scripting/mini_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
-import 'mini_state.dart';
+import 'game_state.dart';
 
 class SwirlWeapon extends Component with AutoDispose, MiniScriptFunctions {
   SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);
