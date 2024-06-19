@@ -37,12 +37,11 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     add(fadeIn(Mountains()));
     add(fadeIn(AutoShadows()));
 
-    effects();
-    extras();
-
     final captain = Captain(world: world);
-
     add(fadeIn(captain));
+
+    effects();
+    extras(captain);
 
     final camera = added(CaptainCam());
     camera.follow = captain;

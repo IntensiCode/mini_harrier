@@ -1,16 +1,17 @@
+import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
-import 'package:mini_harrier/core/mini_3d.dart';
-import 'package:mini_harrier/game/effects.dart';
 
 import '../core/common.dart';
 import '../core/messaging.dart';
+import '../core/mini_3d.dart';
+import '../game/effects.dart';
 import '../scripting/game_script.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
 
 extension ScriptFunctionsExtension on GameScriptFunctions {
-  Extras extras() => added(Extras());
+  Extras extras(Component3D captain) => added(Extras(captain));
 }
 
 extension ComponentExtensions on Component {
@@ -18,6 +19,10 @@ extension ComponentExtensions on Component {
 }
 
 class Extras extends GameScriptComponent {
+  Extras(this.captain);
+
+  final Component3D captain;
+
   bool get hasActiveItems => children.isNotEmpty;
 
   late final animations = <ExtraKind, SpriteAnimation>{};
@@ -48,7 +53,7 @@ class Extras extends GameScriptComponent {
   }
 
   void _spawn(Vector3 position, ExtraKind kind) {
-    final it = _pool.removeLastOrNull() ?? SpawnedExtra(_recycle, world: world);
+    final it = _pool.removeLastOrNull() ?? SpawnedExtra(_recycle, captain, world: world);
     it.anim.animation = animations[kind]!;
     it.kind = kind;
     it.worldPosition.setFrom(position);
@@ -64,16 +69,25 @@ class Extras extends GameScriptComponent {
   final _pool = <SpawnedExtra>[];
 }
 
+enum _State {
+  dropping,
+  consuming,
+}
+
 class SpawnedExtra extends Component3D {
-  SpawnedExtra(this._recycle, {required super.world}) {
+  SpawnedExtra(this._recycle, this.captain, {required super.world}) {
     anchor = Anchor.center;
     add(anim = SpriteAnimationComponent(anchor: Anchor.center));
     anim.scale.setAll(10);
   }
 
+  final Component3D captain;
+
   reset() {
     lifetime = 10;
     velocity.setZero();
+    _state = _State.dropping;
+    anim.opacity = 1;
   }
 
   final void Function(SpawnedExtra it) _recycle;
@@ -81,13 +95,28 @@ class SpawnedExtra extends Component3D {
   late SpriteAnimationComponent anim;
   late ExtraKind kind;
 
-  double lifetime = 10;
+  double lifetime = 30;
 
   final velocity = Vector3.zero();
+
+  _State _state = _State.dropping;
 
   @override
   void update(double dt) {
     super.update(dt);
+    if (_state == _State.dropping) onDropping(dt);
+    if (_state == _State.consuming) onConsuming(dt);
+  }
+
+  void onDropping(double dt) {
+    final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 50;
+    final yClose = (captain.worldPosition.y - worldPosition.y).abs() < 50;
+    final zClose = (captain.worldPosition.z - worldPosition.z).abs() < 25;
+    if (xClose && yClose && zClose) {
+      startConsume();
+      return;
+    }
+
     lifetime -= dt;
     if (lifetime <= 0) {
       _expire();
@@ -121,4 +150,37 @@ class SpawnedExtra extends Component3D {
     spawnEffect(EffectKind.smoke, this);
     _recycle(this);
   }
+
+  void startConsume() {
+    logWarn('consuming');
+    logWarn('consuming');
+    logWarn('consuming');
+    _state = _State.consuming;
+    velocity.setZero();
+    _consumed = consumeTime;
+    consumeStart.setFrom(captain.worldPosition);
+    consumeStart.sub(worldPosition);
+  }
+
+  void onConsuming(double dt) {
+    _consumed -= dt;
+    if (_consumed <= 0) {
+      _recycle(this);
+      return;
+    }
+
+    final d = 1 - _consumed / consumeTime;
+
+    targetPos.setFrom(captain.worldPosition);
+    targetPos.y += 50;
+
+    worldPosition.lerp(targetPos, d);
+    anim.opacity = 1 - d;
+  }
+
+  static const double consumeTime = 0.5;
+  double _consumed = consumeTime;
+  final consumeStart = Vector3.zero();
+
+  final targetPos = Vector3.zero();
 }
