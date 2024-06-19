@@ -10,14 +10,17 @@ enum Sound {
   challenge,
   death,
   drop,
+  energy_boost,
   explosion,
   game_on,
   game_over,
   hit,
   incoming,
+  increased_fire_power,
   laser,
   launch,
   missile,
+  missile_available,
   shot,
   strangeness,
   warning,
@@ -31,7 +34,7 @@ class Soundboard {
   double master = 0.3;
   double music = 0.5;
   double voice = 0.8;
-  double sound = 0.8;
+  double sound = 0.6;
 
   bool muted = false;
 

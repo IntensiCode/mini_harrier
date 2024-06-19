@@ -22,6 +22,12 @@ class NextLevel extends Message {}
 
 class PlayerDestroyed extends Message {}
 
+class ReplenishEnergy extends Message {}
+
+class IncreaseFirePower extends Message {}
+
+class AddMissile extends Message {}
+
 class ShowScreen extends Message {
   ShowScreen(this.screen);
 

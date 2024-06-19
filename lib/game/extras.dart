@@ -1,5 +1,6 @@
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
+import 'package:mini_harrier/core/soundboard.dart';
 
 import '../core/common.dart';
 import '../core/messaging.dart';
@@ -109,7 +110,7 @@ class SpawnedExtra extends Component3D {
   }
 
   void onDropping(double dt) {
-    final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 50;
+    final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 125;
     final yClose = (captain.worldPosition.y - worldPosition.y).abs() < 50;
     final zClose = (captain.worldPosition.z - worldPosition.z).abs() < 25;
     if (xClose && yClose && zClose) {
@@ -160,6 +161,18 @@ class SpawnedExtra extends Component3D {
     _consumed = consumeTime;
     consumeStart.setFrom(captain.worldPosition);
     consumeStart.sub(worldPosition);
+
+    switch (kind) {
+      case ExtraKind.energy:
+        messaging.send(ReplenishEnergy());
+        soundboard.play(Sound.energy_boost, volume: 1);
+      case ExtraKind.laserCharge:
+        messaging.send(IncreaseFirePower());
+        soundboard.play(Sound.increased_fire_power, volume: 1);
+      case ExtraKind.missile:
+        messaging.send(AddMissile());
+        soundboard.play(Sound.missile_available, volume: 1);
+    }
   }
 
   void onConsuming(double dt) {

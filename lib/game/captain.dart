@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 
 import '../core/common.dart';
+import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
 import '../input/game_keys.dart';
@@ -35,6 +36,14 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
 
   late final SpriteSheet _sheet;
   late final SpriteComponent _sprite;
+
+  @override
+  void onMount() {
+    super.onMount();
+    onMessage<ReplenishEnergy>((_) => replenishEnergy());
+  }
+
+  void replenishEnergy() => life = (life + 5).clamp(0, maxLife);
 
   @override
   onLoad() async {

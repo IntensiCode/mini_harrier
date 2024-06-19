@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
+import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
@@ -17,6 +18,18 @@ class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
 
   late final SpriteAnimation anim;
 
+  double firePower = 1;
+
+  static const maxFirePower = 5.0;
+
+  void increaseFirePower() => firePower = (firePower + 0.5).clamp(1.0, maxFirePower);
+
+  @override
+  void onMount() {
+    super.onMount();
+    onMessage<IncreaseFirePower>((_) => increaseFirePower());
+  }
+
   @override
   onLoad() async {
     anim = await loadAnimWH('swirl.png', 18, 18);
@@ -30,7 +43,7 @@ class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
     if (_coolDown <= 0 && shouldFire()) {
       final it = _pool.isEmpty ? SwirlProjectile(_recycle, world: world3d) : _pool.removeLast();
       it.visual.animation = anim;
-      it.reset(captain.worldPosition);
+      it.reset(captain.worldPosition, firePower);
       world.add(it);
       soundboard.play(Sound.shot);
       _coolDown = 0.3;
@@ -57,13 +70,17 @@ class SwirlProjectile extends Component3D {
 
   late final SpriteAnimationComponent visual;
 
-  void reset(Vector3 position) {
+  void reset(Vector3 position, double firePower) {
+    _firePower = firePower;
     worldPosition.setFrom(position);
     worldPosition.x -= 5;
     worldPosition.y += 55;
     worldPosition.z -= 10;
     _lifetime = 0;
+    visual.scale.setAll(10 + firePower);
   }
+
+  late double _firePower;
 
   double _lifetime = 0;
 
@@ -84,7 +101,7 @@ class SwirlProjectile extends Component3D {
       if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
       if ((it.worldPosition.z - worldPosition.z).abs() > 5) continue;
       if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
-      it.applyDamage(plasma: 1);
+      it.applyDamage(plasma: _firePower);
       _recycle(this);
       break;
     }
