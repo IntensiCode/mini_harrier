@@ -16,21 +16,19 @@ import 'fragment.dart';
 enum _State {
   incoming,
   attacking,
-  fly_off,
 }
 
 class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameScript, DamageTarget {
-  KamikazeUfoEnemy(this.onDefeated, {required super.world}) {
+  KamikazeUfoEnemy(this.onDefeated, this.captain, {required super.world}) {
     anchor = Anchor.bottomCenter;
   }
 
   final void Function() onDefeated;
+  final Component3D captain;
 
   _State _state = _State.incoming;
 
   bool readyToAttack = false;
-
-  flyOff() => _state = _State.fly_off;
 
   late final SpriteComponent _sprite;
 
@@ -41,7 +39,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     worldPosition.setFrom(world.camera);
     worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
-    life = 10;
+    life = 3;
   }
 
   var stateTime = 0.0;
@@ -82,29 +80,6 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
         readyToAttack = true;
       }
     }
-    if (_state == _State.fly_off) {
-      targetVelocity.setValues(0, 20, 0);
-
-      worldPosition.setFrom(world.camera);
-      worldPosition.add(relativePosition);
-      worldPosition.z -= targetOffsetZ;
-
-      readyToAttack = false;
-
-      relativePosition.add(velocity);
-      relativePosition.z -= 20 * dt;
-
-      velocity.lerp(targetVelocity, 0.01);
-
-      if (relativePosition.y > 10000) {
-        _removeNow();
-        return;
-      }
-      if (position.y < -50) {
-        _removeNow();
-        return;
-      }
-    }
     if (_state == _State.attacking) {
       worldPosition.setFrom(world.camera);
       worldPosition.add(relativePosition);
@@ -119,6 +94,14 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       if (remove) {
         _removeNow();
         return;
+      }
+
+      final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 50;
+      final yClose = (captain.worldPosition.y - worldPosition.y).abs() < 50;
+      final zClose = (captain.worldPosition.z - worldPosition.z).abs() < 20;
+      if (xClose && yClose && zClose) {
+        (captain as DamageTarget).applyDamage(collision: 5);
+        applyDamage(collision: life);
       }
     }
   }

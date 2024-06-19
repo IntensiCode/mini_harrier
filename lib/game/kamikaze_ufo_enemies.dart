@@ -5,7 +5,7 @@ import 'kamikaze_ufo_enemy.dart';
 import 'ufo_enemy.dart';
 
 class KamikazeUfoEnemies extends GameScriptComponent {
-  KamikazeUfoEnemies(this.captain, [this.waveSize = 10, this.spawnInterval = 2.0]);
+  KamikazeUfoEnemies(this.captain, [this.waveSize = 8, this.spawnInterval = 1.0]);
 
   final Component3D captain;
   final int waveSize;
@@ -25,7 +25,7 @@ class KamikazeUfoEnemies extends GameScriptComponent {
     if (remainingEnemies == 0) {
       return;
     } else if (nextSpawnTime <= 0) {
-      parent!.add(KamikazeUfoEnemy(_onDefeated, world: world));
+      parent!.add(KamikazeUfoEnemy(_onDefeated, captain, world: world));
       nextSpawnTime = spawnInterval;
       remainingEnemies--;
     } else {
