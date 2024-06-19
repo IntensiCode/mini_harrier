@@ -110,9 +110,9 @@ class SpawnedExtra extends Component3D {
   }
 
   void onDropping(double dt) {
-    final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 125;
-    final yClose = (captain.worldPosition.y - worldPosition.y).abs() < 50;
-    final zClose = (captain.worldPosition.z - worldPosition.z).abs() < 25;
+    final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 180;
+    final yClose = (captain.worldPosition.y - worldPosition.y).abs() < 100;
+    final zClose = (captain.worldPosition.z - worldPosition.z).abs() < 40;
     if (xClose && yClose && zClose) {
       startConsume();
       return;
@@ -132,7 +132,7 @@ class SpawnedExtra extends Component3D {
       velocity.y = -velocity.y * 0.5;
     }
     if (velocity.z < baseSpeed / 2) {
-      velocity.z -= velocity.z * 0.9 * dt;
+      velocity.z -= velocity.z * 0.2 * dt;
     }
 
     if (position.x < -20 || position.x > gameWidth + 20) {
