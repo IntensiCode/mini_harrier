@@ -23,7 +23,6 @@ extension ScriptFunctionsExtension on GameScriptFunctions {
 }
 
 class Rocks extends AutoDisposeComponent with GameScriptFunctions {
-  int maxBushes = 16;
 
   double lastEmission = 0;
 
@@ -32,7 +31,8 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   @override
   void onLoad() async => bush = await game.loadSprite('rock.png');
 
-  int remaining = 50;
+  int remaining = 500;
+  int maxEntities = 100;
 
   @override
   void update(double dt) {
@@ -47,9 +47,9 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
     }
 
     lastEmission += dt;
-    const minReleaseInterval = 0.5; //  / sqrt(maxBushes);
+    const minReleaseInterval = 0.125; //  / sqrt(maxBushes);
     final c = parent!.children.whereType<Rock>();
-    if (c.length < maxBushes && lastEmission >= minReleaseInterval) {
+    if (c.length < maxEntities && lastEmission >= minReleaseInterval) {
       parent!.add(Rock(bush, _onReset, world: world));
       lastEmission = 0;
       remaining--;
@@ -57,7 +57,7 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   }
 
   void _onReset(Rock it) {
-    if (children.length > maxBushes || remaining == 0) {
+    if (children.length > maxEntities || remaining == 0) {
       it.removeFromParent();
     } else {
       it.reset();
@@ -91,7 +91,7 @@ class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScr
   static double lastX = 0;
 
   _pickPosition() {
-    final off = random.nextDoublePM(2500);
+    final off = random.nextDoublePM(15000);
     worldPosition.x = world.camera.x + off;
     if ((lastX - worldPosition.x).abs() < 500) {
       if (lastX < 0) {
