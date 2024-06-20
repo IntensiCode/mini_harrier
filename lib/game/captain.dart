@@ -140,6 +140,8 @@ class Captain extends Component3D
 
   @override
   void whenDefeated() {
+    sendMessage(CaptainDefeated());
+
     soundboard.play(Sound.explosion, volume: 0.8);
 
     shakeTime += 1.0;

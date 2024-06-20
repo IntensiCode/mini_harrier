@@ -7,6 +7,8 @@ import 'mini_3d.dart';
 
 sealed class Message {}
 
+class CaptainDefeated extends Message {}
+
 class ChallengeComplete extends Message {}
 
 class EnemiesDefeated extends Message {

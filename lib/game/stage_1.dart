@@ -71,6 +71,18 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     at(0.0, () => captain.state = CaptainState.playing);
     at(0.0, () => nextWave());
 
+    onMessage<CaptainDefeated>((_) {
+      clearScript();
+      difficulty *= 0.8;
+      at(0.5, () => fadeIn(textXY('GAME OVER', xCenter, yCenter - lineHeight * 2, scale: 2)));
+      at(0.0, () => fadeIn(textXY('PRESS FIRE TO TRY AGAIN', xCenter, yCenter, scale: 1)));
+      at(0.0, () => fadeIn(textXY('PRESS ESCAPE TO QUIT', xCenter, yCenter + lineHeight , scale: 1)));
+      at(1.0, () => pressFireToStart());
+      at(0.0, () => onKey('<Space>', () => showScreen(Screen.stage1)));
+      at(0.0, () => onKey('<Escape>', () => showScreen(Screen.title)));
+      executeScript();
+    });
+
     onMessage<EnemiesDefeated>((it) {
       if (it.percent >= 0 && it.percent < 25) {
         difficulty *= 0.8;
