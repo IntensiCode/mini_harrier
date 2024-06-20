@@ -1,15 +1,16 @@
 import 'package:dart_minilog/dart_minilog.dart';
-import 'package:mini_harrier/core/common.dart';
 
-import '../core/messaging.dart';
-import '../core/mini_3d.dart';
-import '../scripting/game_script.dart';
+import '../../core/common.dart';
+import '../../core/messaging.dart';
+import '../../core/mini_3d.dart';
+import '../../scripting/game_script.dart';
+import 'kamikaze_ufo_enemy.dart';
 import 'ufo_enemy.dart';
 
-class UfoEnemies extends GameScriptComponent {
-  UfoEnemies(this.captain) {
-    waveSize = (12 * difficulty).toInt();
-    spawnInterval = 3 * (1 / difficulty);
+class KamikazeUfoEnemies extends GameScriptComponent {
+  KamikazeUfoEnemies(this.captain) {
+    waveSize = (8 * difficulty).toInt();
+    spawnInterval = 1.0 * (1 / difficulty);
     logInfo('wave size: $waveSize, spawn interval: $spawnInterval');
   }
 
@@ -20,12 +21,9 @@ class UfoEnemies extends GameScriptComponent {
   late var remainingEnemies = waveSize;
   late var nextSpawnTime = spawnInterval;
 
-  double waveTime = 0;
-
   @override
   void update(double dt) {
     super.update(dt);
-    waveTime += dt;
     if (captain.isMounted == false) {
       parent?.children.whereType<UfoEnemy>().forEach((it) => it.flyOff());
       removeFromParent();
@@ -34,7 +32,7 @@ class UfoEnemies extends GameScriptComponent {
     if (remainingEnemies == 0) {
       return;
     } else if (nextSpawnTime <= 0) {
-      parent!.add(UfoEnemy(_onDefeated, captain, world: world));
+      parent!.add(KamikazeUfoEnemy(_onDefeated, captain, world: world));
       nextSpawnTime = spawnInterval;
       remainingEnemies--;
     } else {
@@ -49,15 +47,7 @@ class UfoEnemies extends GameScriptComponent {
     defeatedEnemies++;
     if (destroyed) destroyedEnemies++;
     if (defeatedEnemies == waveSize) {
-      logInfo('wave time: $waveTime seconds');
-      final diff = switch (waveTime) {
-        < 30 => 100,
-        < 45 => 80,
-        < 60 => 50,
-        < 120 => 30,
-        _ => 0,
-      };
-      sendMessage(EnemiesDefeated(diff));
+      sendMessage(EnemiesDefeated(destroyedEnemies * 100 ~/ defeatedEnemies));
       removeFromParent();
     }
   }

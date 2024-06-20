@@ -7,7 +7,7 @@ import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
-import 'rocks.dart';
+import 'stage1/rocks.dart';
 
 class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
   SwirlWeapon(this.captain, this.shouldFire, this.world, this.world3d);

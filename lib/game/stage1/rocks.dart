@@ -3,16 +3,16 @@ import 'dart:ui';
 import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 
-import '../core/common.dart';
-import '../core/messaging.dart';
-import '../core/mini_3d.dart';
-import '../scripting/game_script_functions.dart';
-import '../util/auto_dispose.dart';
-import '../util/extensions.dart';
-import '../util/random.dart';
-import 'captain.dart';
-import 'damage_target.dart';
-import 'fragment.dart';
+import '../../core/common.dart';
+import '../../core/messaging.dart';
+import '../../core/mini_3d.dart';
+import '../../scripting/game_script_functions.dart';
+import '../../util/auto_dispose.dart';
+import '../../util/extensions.dart';
+import '../../util/random.dart';
+import '../captain.dart';
+import '../damage_target.dart';
+import '../fragment.dart';
 
 class Rocks extends AutoDisposeComponent with GameScriptFunctions {
   Rocks(this.captain) {

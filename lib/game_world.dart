@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 
 import 'core/common.dart';
 import 'core/messaging.dart';
-import 'game/stage_1.dart';
+import 'game/stage1/stage_1.dart';
 import 'intro_screen.dart';
 import 'title_screen.dart';
 
