@@ -34,6 +34,12 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
   late final SpriteComponent _sprite;
 
   @override
+  void onMount() {
+    super.onMount();
+    xBase = random.nextDoublePM(300);
+  }
+
+  @override
   onLoad() async {
     _sprite = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
     _sprite.scale.setAll(3.0);
@@ -53,6 +59,8 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
   final relativePosition = Vector3(0, 0, -5000);
   var incomingSpeed = 2500.0;
 
+  double xBase = 0;
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -62,7 +70,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
-      relativePosition.x = sin(stateTime) * 100;
+      relativePosition.x = xBase + sin(stateTime) * 100;
       relativePosition.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
       relativePosition.z += incomingSpeed * dt;
       incomingSpeed = relativePosition.z.abs().clamp(300, 2500);
