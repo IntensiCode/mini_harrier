@@ -19,7 +19,7 @@ const baseSpeed = -500.0;
 const minHeight = 0.0;
 const maxHeight = 500.0;
 const midHeight = (minHeight + maxHeight) / 2 + 100;
-const maxStrafe = 800.0;
+const maxStrafe = 1400.0;
 const maxLeft = -maxStrafe;
 const maxRight = maxStrafe;
 

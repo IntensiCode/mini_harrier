@@ -54,7 +54,7 @@ class CaptainCam extends Component with AutoDispose, GameScriptFunctions {
         follow = null;
       } else {
         currentPosition.setFrom(follow!.worldPosition);
-        currentPosition.x = currentPosition.x / 1.2;
+        currentPosition.x = currentPosition.x / 1.1;
         currentPosition.y = (currentPosition.y - midHeight) / 2 * 1.2 + midHeight;
 
         basePos.setFrom(currentPosition);
