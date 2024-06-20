@@ -1,9 +1,6 @@
-import 'package:mini_harrier/core/soundboard.dart';
-
 import 'core/common.dart';
 import 'input/mini_shortcuts.dart';
 import 'scripting/game_script.dart';
-import 'scripting/subtitles_component.dart';
 import 'util/extensions.dart';
 import 'util/fonts.dart';
 
@@ -50,9 +47,4 @@ class IntroScreen extends GameScriptComponent with HasAutoDisposeShortcuts {
   final _captain = 'Whodunnit?';
   final _woman_2 = 'It was them!';
   final _aliens = 'AKLHJ)DY&G#_%IJKNDSFG()O*H!';
-
-  void subtitles(String text, double? autoClearSeconds, {String? image, String? audio}) {
-    add(SubtitlesComponent(text, autoClearSeconds, image));
-    if (audio != null) soundboard.playAudio(audio);
-  }
 }

@@ -108,7 +108,7 @@ class _FloatingCaptain extends Component3D with AutoDispose, GameScriptFunctions
   }
 
   @override
-  onLoad() async => add(fadeIn(await spriteXY('captain.png', 0, 0)));
+  onLoad() async => add(fadeIn(await spriteXY('captain-title.png', 0, 0)));
 
   double time = 0;
 

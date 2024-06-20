@@ -21,6 +21,7 @@ import '../util/bitmap_text.dart';
 import '../util/debug.dart';
 import '../util/extensions.dart';
 import '../util/fonts.dart';
+import 'subtitles_component.dart';
 
 // don't look here. at least not initially. none of this you should reuse. this
 // is a mess. but the mess works for the case of this demo game. all of this
@@ -104,6 +105,11 @@ mixin GameScriptFunctions on Component, AutoDispose {
     Anchor? anchor,
   }) async =>
       added(await loadSprite(filename, position: position, anchor: anchor));
+
+  SubtitlesComponent subtitles(String text, double? autoClearSeconds, {String? image, String? audio}) {
+    if (audio != null) soundboard.playAudio(audio);
+    return added(SubtitlesComponent(text, autoClearSeconds, image));
+  }
 
   Future<SpriteComponent> loadSprite(
     String filename, {

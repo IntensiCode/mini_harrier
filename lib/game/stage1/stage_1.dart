@@ -64,9 +64,7 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     soundboard.play(Sound.game_on);
 
     fontSelect(fancyFont, scale: 1.0);
-    at(0.0, () => fadeIn(textXY('STAGE 1', xCenter, yCenter - lineHeight, scale: 2)));
-    at(0.0, () => fadeIn(textXY('Did I sign up for THIS?', xCenter, yCenter + lineHeight, scale: 1)));
-    at(0.0, () => playAudio('captain-did-i-sign-up-for-this.mp3'));
+    at(0.0, () => fadeIn(textXY('STAGE 1', xCenter, yCenter, scale: 2)));
     at(2.0, () => fadeOutByType<BitmapText>());
     at(0.0, () => captain.state = CaptainState.playing);
     at(0.0, () => nextWave());
@@ -100,12 +98,16 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
       } else {
         switch (_waves[0]) {
           case _EnemyWaves.kamikaze:
+            const subs = 'Kamikaze UFOs? Seriously?!';
+            subtitles(subs, 3, image: 'dialog-captain.png', audio: 'captain-kamikaze.mp3');
             add(KamikazeUfoEnemies(captain));
             sendMessage(EnemyWaveIncoming());
           case _EnemyWaves.ufos:
             add(UfoEnemies(captain));
             sendMessage(EnemyWaveIncoming());
           case _EnemyWaves.obstacles:
+            const subs = 'So... That\'s the only way forward? Really?!?';
+            subtitles(subs, 3, image: 'dialog-captain.png', audio: 'captain-only-way.mp3');
             add(Rocks(captain));
             sendMessage(WarningObstacles());
         }
