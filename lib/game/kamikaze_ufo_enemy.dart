@@ -38,6 +38,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     _sprite = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
     _sprite.scale.setAll(3.0);
     worldPosition.setFrom(world.camera);
+    worldPosition.x = 0;
     worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
     life = 3;
@@ -57,6 +58,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     super.update(dt);
     if (_state == _State.incoming) {
       worldPosition.setFrom(world.camera);
+      worldPosition.x = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
@@ -83,6 +85,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     }
     if (_state == _State.attacking) {
       worldPosition.setFrom(world.camera);
+      worldPosition.x = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 

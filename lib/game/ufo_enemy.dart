@@ -40,6 +40,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
     _sprite = added(await spriteXY('alien-ufo-front.png', 0, 0, Anchor.bottomCenter));
     _sprite.scale.setAll(3.0);
     worldPosition.setFrom(world.camera);
+    worldPosition.x = 0;
     worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
     life = 5;
@@ -59,6 +60,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
     super.update(dt);
     if (_state == _State.incoming) {
       worldPosition.setFrom(world.camera);
+      worldPosition.x = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
@@ -85,6 +87,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
       targetVelocity.setValues(0, 20, 0);
 
       worldPosition.setFrom(world.camera);
+      worldPosition.x = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
@@ -100,6 +103,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
     }
     if (_state == _State.floating) {
       worldPosition.setFrom(world.camera);
+      worldPosition.x = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 

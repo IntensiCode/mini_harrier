@@ -68,6 +68,7 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
     }
   }
 
+  final xSteerFactor = 0.75;
   final steerAcceleration = maxStrafe / 2 * 10;
   final maxAcceleration = maxStrafe / 2 * 10;
   final velocity = Vector3(0, 0, baseSpeed);
@@ -92,10 +93,10 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
 
     if (right && worldPosition.x < maxRight) {
       if (velocity.x < 0) velocity.x /= 1.2;
-      velocity.x += steerAcceleration * dt;
+      velocity.x += steerAcceleration * xSteerFactor * dt;
     } else if (left && worldPosition.x > maxLeft) {
       if (velocity.x > 0) velocity.x /= 1.2;
-      velocity.x -= steerAcceleration * dt;
+      velocity.x -= steerAcceleration * xSteerFactor * dt;
     } else {
       velocity.x -= velocity.x * 0.8 * autoDecelerate * dt;
     }
@@ -107,7 +108,7 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
     if (worldPosition.y < minHeight) worldPosition.y = minHeight;
     if (worldPosition.y > maxHeight) worldPosition.y = maxHeight;
 
-    final col = 1 + (worldPosition.x ~/ 50).sign;
+    final col = 1 + (worldPosition.x ~/ (maxStrafe / 3)).sign;
     final row = 1 - ((worldPosition.y - midHeight) ~/ 50).sign;
     _sprite.sprite = _sheet.getSprite(row, col);
 

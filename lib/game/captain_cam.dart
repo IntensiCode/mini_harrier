@@ -25,7 +25,7 @@ class CaptainCam extends Component {
 
     if (f.isMounted) {
       currentPosition.setFrom(f.worldPosition);
-      currentPosition.x = currentPosition.x / maxStrafe * xCenter * 1.5;
+      currentPosition.x = currentPosition.x / 1.2;
       currentPosition.y = (currentPosition.y - midHeight) / 2 * 1.2 + midHeight;
       if (f.shakeTime > 0) {
         currentPosition.x += sin(f.shakeTime * 30) * 3;
