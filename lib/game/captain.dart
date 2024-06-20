@@ -31,6 +31,8 @@ class Captain extends Component3D
     life = maxLife;
   }
 
+  bool instantKill = false;
+
   final maxLife = 25.0;
 
   late final weapon = SwirlWeapon(this, () => primaryFire, parent!, world);
@@ -129,6 +131,10 @@ class Captain extends Component3D
 
   @override
   void whenDefeated() {
+    soundboard.play(Sound.explosion, volume: 0.8);
+
+    shakeTime += 1.0;
+
     final i = _sprite.sprite?.image;
     if (i == null) return;
 
@@ -147,7 +153,6 @@ class Captain extends Component3D
         ));
       }
     }
-    soundboard.play(Sound.explosion, volume: 0.8);
   }
 
   @override

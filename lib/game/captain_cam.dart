@@ -27,9 +27,15 @@ class CaptainCam extends Component {
       currentPosition.setFrom(f.worldPosition);
       currentPosition.x = currentPosition.x / 1.2;
       currentPosition.y = (currentPosition.y - midHeight) / 2 * 1.2 + midHeight;
+    } else if (f.instantKill) {
+      world.camera.setFrom(currentPosition);
+      world.camera.z += 50;
+
+      // captain is dead, so we do this here:
       if (f.shakeTime > 0) {
-        currentPosition.x += sin(f.shakeTime * 30) * 3;
-        currentPosition.y += cos(f.shakeTime * 23) * 3;
+        f.shakeTime -= dt;
+      } else {
+        removeFromParent();
       }
     } else {
       currentPosition.z += slowDownSpeed * dt;
@@ -38,6 +44,11 @@ class CaptainCam extends Component {
       } else {
         removeFromParent();
       }
+    }
+
+    if (f.shakeTime > 0) {
+      currentPosition.x += sin(f.shakeTime * 30) * 3;
+      currentPosition.y += cos(f.shakeTime * 23) * 3;
     }
   }
 }

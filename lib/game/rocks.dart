@@ -9,27 +9,21 @@ import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import '../util/extensions.dart';
 import '../util/random.dart';
+import 'captain.dart';
 import 'damage_target.dart';
 import 'fragment.dart';
 
-Rocks? _instance;
-
-extension ScriptFunctionsExtension on GameScriptFunctions {
-  Rocks rocks() {
-    _instance ??= Rocks();
-    if (_instance?.isMounted == true) _instance?.removeFromParent();
-    return added(_instance!);
-  }
-}
-
 class Rocks extends AutoDisposeComponent with GameScriptFunctions {
+  Rocks(this.captain);
+
+  final Captain captain;
 
   double lastEmission = 0;
 
-  late final Sprite bush;
+  late final Sprite _sprite;
 
   @override
-  void onLoad() async => bush = await game.loadSprite('rock.png');
+  void onLoad() async => _sprite = await game.loadSprite('rock.png');
 
   int remaining = 500;
   int maxEntities = 100;
@@ -47,10 +41,10 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
     }
 
     lastEmission += dt;
-    const minReleaseInterval = 0.125; //  / sqrt(maxBushes);
+    const minReleaseInterval = 0.125;
     final c = parent!.children.whereType<Rock>();
     if (c.length < maxEntities && lastEmission >= minReleaseInterval) {
-      parent!.add(Rock(bush, _onReset, world: world));
+      parent!.add(Rock(_sprite, _onReset, captain, world: world));
       lastEmission = 0;
       remaining--;
     }
@@ -69,7 +63,7 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
 final shadow = Paint()..color = const Color(0x80000000);
 
 class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScriptFunctions {
-  Rock(Sprite sprite, this._onReset, {required super.world}) {
+  Rock(Sprite sprite, this._onReset, this.captain, {required super.world}) {
     anchor = Anchor.bottomCenter;
     _sprite = added(SpriteComponent(sprite: sprite, paint: paint, anchor: Anchor.bottomCenter));
     add(CircleComponent(
@@ -81,6 +75,7 @@ class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScr
     life = 100;
   }
 
+  final Captain captain;
   final void Function(Rock) _onReset;
   late final SpriteComponent _sprite;
 
@@ -110,6 +105,8 @@ class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScr
   reset() {
     _pickScale();
     _pickPosition();
+    alreadyCollided = false;
+    fadeInTime = 0;
   }
 
   double fadeInTime = 0;
@@ -133,7 +130,43 @@ class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScr
     if (position.x > gameWidth + 40) remove = true;
     if (position.y > gameHeight + 100) remove = true;
     if (remove) _onReset(this);
+
+    if (alreadyCollided) return;
+
+    final hit = _isCaptainHit();
+    if (hit == _HitType.full) {
+      applyDamage(collision: life);
+      captain.velocity.setZero();
+      captain.instantKill = true;
+      captain.applyDamage(collision: captain.life);
+      alreadyCollided = true;
+    } else if (hit == _HitType.partial) {
+      applyDamage(collision: 1);
+      captain.applyDamage(collision: 5);
+      alreadyCollided = true;
+      if (captain.worldPosition.x < worldPosition.x) {
+        captain.worldPosition.x -= 100;
+        captain.velocity.x = -200;
+      } else {
+        captain.worldPosition.x += 100;
+        captain.velocity.x = 200;
+      }
+    }
   }
+
+  bool alreadyCollided = false;
+
+  _HitType _isCaptainHit() {
+    check.setFrom(captain.worldPosition);
+    check.sub(worldPosition);
+    check.absolute();
+    if (check.z > 20) return _HitType.none;
+    if (check.x > 250) return _HitType.none;
+    if (check.x > 125) return _HitType.partial;
+    return _HitType.full;
+  }
+
+  final check = Vector3.zero();
 
   @override
   void whenHit() {}
@@ -165,4 +198,10 @@ class Rock extends Component3D with HasPaint, DamageTarget, AutoDispose, GameScr
 
     _onReset(this);
   }
+}
+
+enum _HitType {
+  full,
+  none,
+  partial,
 }

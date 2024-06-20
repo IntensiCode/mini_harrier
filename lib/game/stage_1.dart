@@ -85,7 +85,7 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
             add(UfoEnemies(captain));
             sendMessage(EnemyWaveIncoming());
           case _EnemyWaves.obstacles:
-            add(Rocks());
+            add(Rocks(captain));
             sendMessage(WarningObstacles());
         }
         _waves.removeAt(0);
@@ -96,7 +96,7 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
       onKey('<C-n>', () => nextWave());
       onKey('<C-p>', () => add(KamikazeUfoEnemies(captain)));
       onKey('<C-o>', () => add(UfoEnemies(captain)));
-      onKey('<C-r>', () => add(Rocks()));
+      onKey('<C-r>', () => add(Rocks(captain)));
     }
   }
 
