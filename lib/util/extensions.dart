@@ -8,8 +8,6 @@ import '../core/common.dart';
 import '../core/messaging.dart';
 
 extension ComponentExtension on Component {
-  void nextLevel() => messaging.send(NextLevel());
-
   void showScreen(Screen it) => messaging.send(ShowScreen(it));
 
   T added<T extends Component>(T it) {

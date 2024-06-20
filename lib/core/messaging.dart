@@ -25,8 +25,6 @@ class IncreasedFirePower extends Message {}
 
 class MissileAvailable extends Message {}
 
-class NextLevel extends Message {}
-
 class PlayerDestroyed extends Message {}
 
 class StageComplete extends Message {}

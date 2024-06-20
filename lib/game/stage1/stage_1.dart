@@ -91,9 +91,9 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
       if (_waves.isEmpty) {
         clearScript();
         at(0.5, () => fadeIn(textXY('STAGE COMPLETE', xCenter, yCenter, scale: 2)));
-        at(0.5, () => sendMessage(StageComplete()));
+        at(0.0, () => sendMessage(StageComplete()));
         at(1.0, () => pressFireToStart());
-        at(1.0, () => onKey('<Space>', () => showScreen(Screen.title)));
+        at(0.0, () => onKey('<Space>', _leave));
         executeScript();
       } else {
         switch (_waves[0]) {
@@ -121,6 +121,13 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
       onKey('<C-o>', () => add(UfoEnemies(captain)));
       onKey('<C-r>', () => add(Rocks(captain)));
     }
+  }
+
+  void _leave() {
+    fadeOutAll();
+    clearScript();
+    at(1.0, () => showScreen(Screen.stage2));
+    executeScript();
   }
 
   void nextWave() {

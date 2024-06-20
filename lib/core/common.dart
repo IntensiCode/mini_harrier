@@ -59,9 +59,9 @@ Paint pixelPaint() => Paint()
   ..filterQuality = FilterQuality.none;
 
 enum Screen {
-  game,
   intro,
   stage1,
+  stage2,
   title,
 }
 

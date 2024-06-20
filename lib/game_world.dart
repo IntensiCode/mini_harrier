@@ -13,17 +13,12 @@ class GameWorld extends World {
 
   @override
   void onLoad() {
-    messaging.listen<NextLevel>((_) => nextLevel());
     messaging.listen<ShowScreen>((it) => _showScreen(it.screen));
   }
 
   void _showScreen(Screen it) {
     logInfo(it);
     switch (it) {
-      case Screen.game:
-        showGame();
-        break;
-
       case Screen.intro:
         showIntro();
         break;
@@ -32,15 +27,15 @@ class GameWorld extends World {
         showStage1();
         break;
 
+      case Screen.stage2:
+        showStage1();
+        break;
+
       case Screen.title:
         level = 1;
         showTitle();
         break;
     }
-  }
-
-  void showGame() {
-    removeAll(children);
   }
 
   void showIntro() {
@@ -56,16 +51,5 @@ class GameWorld extends World {
   void showTitle() {
     removeAll(children);
     add(TitleScreen());
-  }
-
-  void previousLevel() {
-    if (level > 1) level--;
-    showGame();
-  }
-
-  void nextLevel() {
-    level++;
-    logInfo('next level $level');
-    showGame();
   }
 }
