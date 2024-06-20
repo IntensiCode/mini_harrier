@@ -73,6 +73,10 @@ class Captain extends Component3D
       shakeTime = 0;
     }
     if (state == CaptainState.outro) {
+      velocity.x = 0;
+      velocity.y = 0;
+      worldPosition.y -= worldPosition.y * dt;
+      _sprite.sprite = _sheet.getSprite(1, 1);
       _sprite.opacity = 1;
       outroTime += dt;
       if (outroTime > 10) removeFromParent();
