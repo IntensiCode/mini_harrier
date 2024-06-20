@@ -13,7 +13,9 @@ mixin DamageTarget on Component3D {
 
   /// returns true when destroyed
   bool applyDamage({double? collision, double? plasma, double? laser, double? missile}) {
+    if (isRemoving || isRemoved || isMounted == false) return false;
     life -= (collision ?? 0) + (plasma ?? 0) + (laser ?? 0) + (missile ?? 0);
+    if (life < 0) life = 0;
     if (life <= 0) {
       spawnEffect(EffectKind.explosion, this);
       removeFromParent();
