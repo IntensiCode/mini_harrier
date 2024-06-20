@@ -8,6 +8,7 @@ import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../core/soundboard.dart';
 import '../input/game_keys.dart';
+import '../input/mini_shortcuts.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
 import 'damage_target.dart';
@@ -20,7 +21,9 @@ enum CaptainState {
   playing,
 }
 
-class Captain extends Component3D with AutoDispose, GameScriptFunctions, KeyboardHandler, GameKeys, DamageTarget {
+class Captain extends Component3D
+    with AutoDispose, HasAutoDisposeShortcuts, GameScriptFunctions, KeyboardHandler, GameKeys, DamageTarget {
+  //
   Captain({required super.world}) {
     worldPosition.x = 0;
     worldPosition.y = 50;
@@ -52,12 +55,11 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
     _sprite.scale.setAll(2);
     add(fadeIn(_sprite));
     add(weapon);
+    if (debug.value) onKey('<C-k>', () => applyDamage(collision: life));
   }
 
   @override
   void update(double dt) {
-    if (debug.value && secondaryFire) applyDamage(collision: life);
-
     super.update(dt);
     worldPosition.add(velocity * dt);
     if (state == CaptainState.playing) _playing(dt);
