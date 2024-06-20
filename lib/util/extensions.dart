@@ -20,7 +20,7 @@ extension ComponentExtension on Component {
   void fadeInDeep({double seconds = 0.4, bool restart = true}) {
     if (this case OpacityProvider it) {
       if (it.opacity == 1 && !restart) return;
-      it.opacity = 0;
+      if (it.opacity > 0 && restart) it.opacity = 0;
       add(OpacityEffect.to(1, EffectController(duration: seconds)));
     } else {
       for (final it in children) {
@@ -30,10 +30,10 @@ extension ComponentExtension on Component {
     }
   }
 
-  void fadeOutDeep({double seconds = 0.4, bool restart = true, bool andRemove = true}) {
+  void fadeOutDeep({double seconds = 0.4, bool restart = false, bool andRemove = true}) {
     if (this case OpacityProvider it) {
       if (it.opacity == 0 && !restart) return;
-      it.opacity = 1;
+      if (it.opacity < 1 && restart) it.opacity = 1;
       add(OpacityEffect.to(0, EffectController(duration: seconds)));
     } else {
       for (final it in children) {

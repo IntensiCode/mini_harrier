@@ -128,11 +128,11 @@ mixin GameScriptFunctions on Component, AutoDispose {
   Future<SpriteComponent> spriteXY(String filename, double x, double y, [Anchor anchor = Anchor.center]) async =>
       added(await loadSprite(filename, position: Vector2(x, y), anchor: anchor));
 
-  void fadeInByType<T extends Component>([bool reset = true]) async {
+  void fadeInByType<T extends Component>([bool reset = false]) async {
     children.whereType<T>().forEach((it) => it.fadeInDeep(restart: reset));
   }
 
-  void fadeOutByType<T extends Component>([bool reset = true]) async {
+  void fadeOutByType<T extends Component>([bool reset = false]) async {
     children.whereType<T>().forEach((it) => it.fadeOutDeep(restart: reset));
   }
 
