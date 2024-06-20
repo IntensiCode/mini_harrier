@@ -2,14 +2,14 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_harrier/core/common.dart';
-import 'package:mini_harrier/core/messaging.dart';
-import 'package:mini_harrier/util/bitmap_text.dart';
 
 import '../components/blink_effect.dart';
+import '../core/common.dart';
+import '../core/messaging.dart';
 import '../core/soundboard.dart';
 import '../scripting/game_script_functions.dart';
 import '../util/auto_dispose.dart';
+import '../util/bitmap_text.dart';
 import '../util/fonts.dart';
 import 'captain.dart';
 
@@ -47,9 +47,9 @@ class Hud extends PositionComponent with AutoDispose, GameScriptFunctions {
 
     fontSelect(menuFont, scale: 0.5);
     _blinky = textXY(text, xCenter, 39, anchor: Anchor.center);
-    _blinky?.tint(black);
+    _blinky?.tint(const Color(0xFF000040));
     _blinky?.add(RemoveEffect(delay: 2.0));
-    _blinky?.add(BlinkEffect(duration: 2, interval: 0.2));
+    _blinky?.add(BlinkEffect(duration: 2));
   }
 
   @override

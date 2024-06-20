@@ -28,6 +28,7 @@ class BitmapText extends PositionComponent with HasPaint, HasVisibility {
     final y = anchor.y * h;
     this.position.x -= x;
     this.position.y -= y;
+    size.setValues(w, h);
   }
 
   @override

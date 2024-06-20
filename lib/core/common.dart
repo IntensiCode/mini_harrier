@@ -37,6 +37,10 @@ late CollisionDetection collisions;
 const transparent = Colors.transparent;
 const black = Colors.black;
 const white = Colors.white;
+const red = Colors.red;
+const orange = Colors.orange;
+const yellow = Colors.yellow;
+const blue = Colors.blue;
 
 Future<SpriteAnimation> energyBalls16() => game.loadSpriteAnimation(
       'energy_balls_alt.png',
