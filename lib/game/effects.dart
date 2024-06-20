@@ -37,7 +37,7 @@ class Effects extends GameScriptComponent {
   @override
   void onLoad() async {
     animations[EffectKind.explosion] = await loadAnimWH('explosion96.png', 96, 96, 0.1, false);
-    animations[EffectKind.smoke] = await loadAnimWH('smoke.png', 16, 16, 0.05, false);
+    animations[EffectKind.smoke] = await loadAnimWH('smoke_alt_64.png', 64, 64, 0.05, false);
     animations[EffectKind.sparkle] = await loadAnimWH('sparkle.png', 16, 16, 0.1, false);
   }
 
@@ -48,7 +48,6 @@ class Effects extends GameScriptComponent {
       final it = _pool.removeLastOrNull() ?? Effect(_recycle, world: world);
       it.kind = data.kind;
       it.anim.animation = animations[data.kind]!;
-      it.anim.scale = data.kind == EffectKind.explosion ? Vector2.all(10.0) : Vector2.all(30.0);
       it.atHalfTime = data.atHalfTime;
       it.velocity = data.velocity;
       it.worldPosition.setFrom(data.anchor.worldPosition);
@@ -71,7 +70,6 @@ class Effect extends Component3D {
   Effect(this._recycle, {required super.world}) {
     anchor = Anchor.center;
     add(anim);
-    add(CircleComponent(radius: 10, anchor: Anchor.center));
   }
 
   final anim = SpriteAnimationComponent(anchor: Anchor.center);
@@ -84,10 +82,15 @@ class Effect extends Component3D {
 
   @override
   void onMount() {
-    if (kind == EffectKind.sparkle) {
-      anim.scale.setAll(25);
-    } else {
-      anim.scale.setAll(10);
+    switch (kind) {
+      case EffectKind.explosion:
+        anim.scale = Vector2.all(10.0);
+      case EffectKind.smoke:
+        anim.scale = Vector2.all(5);
+      case EffectKind.sparkle:
+        anim.scale = Vector2.all(25);
+      default:
+        anim.scale = Vector2.all(10.0);
     }
     anim.animationTicker!.reset();
     anim.animationTicker!.onComplete = () => _recycle(this);
