@@ -16,15 +16,16 @@ import 'damage_target.dart';
 
 enum _State {
   incoming,
-  floating,
+  attacking,
   fly_off,
 }
 
 class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameScript, DamageTarget {
-  UfoEnemy(this.onDefeated, {required super.world}) {
+  UfoEnemy(this.onDefeated, this.captain, {required super.world}) {
     anchor = Anchor.bottomCenter;
   }
 
+  final Component3D captain;
   final void Function(bool) onDefeated;
 
   _State _state = _State.incoming;
@@ -77,7 +78,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
       stateTime += dt;
 
       if (worldPosition.z >= world.camera.z - targetOffsetZ) {
-        _state = _State.floating;
+        _state = _State.attacking;
         velocity.x = sin(stateTime) * 100;
         velocity.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
         velocity.z = 250 * dt;
@@ -106,7 +107,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
       if (relativePosition.y > 10000) removeFromParent();
       if (position.y < -50) removeFromParent();
     }
-    if (_state == _State.floating) {
+    if (_state == _State.attacking) {
       worldPosition.setFrom(world.camera);
       worldPosition.x = targetTracking;
       worldPosition.add(relativePosition);
@@ -187,6 +188,14 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
           // final angle = check.angleTo(velocity);
           // logInfo(angle);
         }
+      }
+
+      final xClose = (captain.worldPosition.x - worldPosition.x).abs() < 50;
+      final yClose = (captain.worldPosition.y - worldPosition.y).abs() < 50;
+      final zClose = (captain.worldPosition.z - worldPosition.z).abs() < 20;
+      if (xClose && yClose && zClose) {
+        (captain as DamageTarget).applyDamage(collision: 5);
+        applyDamage(collision: life);
       }
     }
   }

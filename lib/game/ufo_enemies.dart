@@ -34,7 +34,7 @@ class UfoEnemies extends GameScriptComponent {
     if (remainingEnemies == 0) {
       return;
     } else if (nextSpawnTime <= 0) {
-      parent!.add(UfoEnemy(_onDefeated, world: world));
+      parent!.add(UfoEnemy(_onDefeated, captain, world: world));
       nextSpawnTime = spawnInterval;
       remainingEnemies--;
     } else {
