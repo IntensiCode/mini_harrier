@@ -38,6 +38,8 @@ class Hud extends PositionComponent with AutoDispose, GameScriptFunctions {
     onMessage<IncreasedFirePower>((_) => _blinkyBlinky('Increased Fire Power'));
     onMessage<MissileAvailable>((_) => _blinkyBlinky('Missile Available'));
     onMessage<WarningObstacles>((_) => _blinkyBlinky('Warning Obstacles'));
+
+    onMessage<StageComplete>((_) => removeFromParent());
   }
 
   BitmapText? _blinky;
