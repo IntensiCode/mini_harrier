@@ -52,12 +52,12 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
 
   var stateTime = 0.0;
 
-  final targetOffsetZ = 150;
+  final targetOffsetZ = 1000;
 
   final targetVelocity = Vector3(0, 0, 0);
   final velocity = Vector3(0, 0, 0);
   final relativePosition = Vector3(0, 0, -5000);
-  var incomingSpeed = 2500.0;
+  var incomingSpeed = 3500.0;
 
   double xBase = 0;
 
@@ -67,11 +67,12 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     if (_state == _State.incoming) {
       worldPosition.setFrom(world.camera);
       worldPosition.x = 0;
+      worldPosition.y = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
       relativePosition.x = xBase + sin(stateTime) * 100;
-      relativePosition.y = midHeight / 4 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
+      relativePosition.y = midHeight + sin(stateTime * 1.4) * cos(stateTime * 1.8) * midHeight / 2;
       relativePosition.z += incomingSpeed * dt;
       incomingSpeed = relativePosition.z.abs().clamp(300, 2500);
 
@@ -80,11 +81,10 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       if (worldPosition.z >= world.camera.z - targetOffsetZ) {
         _state = _State.attacking;
         velocity.x = sin(stateTime) * 100;
-        velocity.y = midHeight / 4 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
+        velocity.y = midHeight + sin(stateTime * 1.4) * cos(stateTime * 1.8) * midHeight / 2;
         velocity.z = -incomingSpeed;
         velocity.sub(relativePosition);
         velocity.z = -velocity.z;
-        targetVelocity.setFrom(velocity);
         logInfo(relativePosition);
         logInfo(targetVelocity);
 
@@ -94,10 +94,26 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     if (_state == _State.attacking) {
       worldPosition.setFrom(world.camera);
       worldPosition.x = 0;
+      worldPosition.y = 0;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
+      if (captain.distance3D(this) > 500) {
+        targetVelocity.setFrom(captain.worldPosition);
+        targetVelocity.sub(worldPosition);
+        targetVelocity.z = velocity.z;
+      }
+
+      final diff = Vector3.copy(targetVelocity);
+      diff.sub(velocity);
+      diff.normalize();
+      diff.scale(dt * 3000);
+      diff.x *= 0.2;
+      diff.z *= 1.2;
+      velocity.add(diff);
+
       relativePosition.add(velocity * dt);
+      if (relativePosition.y < 10) relativePosition.y = 10;
 
       bool remove = false;
       if (position.x < -20 || position.x > gameWidth + 20) remove = true;
