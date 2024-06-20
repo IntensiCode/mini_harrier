@@ -4,7 +4,11 @@ A Flutter Flame Game Demo
 
 ### To Do
 
-- [ ] player energy/health
+- [x] player energy/health
+- [ ] game over
+- [ ] show missiles and weapon power in hud
+- [ ] collide with rocks
+- [ ] high-flying enemies above rocks
 - [ ] missile weapon
 - [ ] another weapon type?
 - [ ] stage 1 enemy movement and firing some energy weapon
