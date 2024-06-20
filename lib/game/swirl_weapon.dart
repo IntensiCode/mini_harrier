@@ -108,7 +108,7 @@ class SwirlProjectile extends Component3D {
         // if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
       } else {
         if ((it.worldPosition.x - worldPosition.x).abs() > 55) continue;
-        if ((it.worldPosition.z - worldPosition.z).abs() > 25) continue;
+        if ((it.worldPosition.z - worldPosition.z).abs() > 15) continue;
         if ((it.worldPosition.y + 75 - worldPosition.y).abs() > 50) continue;
       }
       it.applyDamage(plasma: _firePower);
