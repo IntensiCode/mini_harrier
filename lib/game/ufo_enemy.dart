@@ -72,7 +72,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
       relativePosition.x = sin(stateTime) * 100;
       relativePosition.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
       relativePosition.z += incomingSpeed * dt;
-      incomingSpeed = relativePosition.z.abs().clamp(300, 2500);
+      incomingSpeed = relativePosition.z.abs().clamp(300, 2500) * 1.5 * difficulty;
 
       stateTime += dt;
 

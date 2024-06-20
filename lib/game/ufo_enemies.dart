@@ -9,7 +9,7 @@ import 'ufo_enemy.dart';
 class UfoEnemies extends GameScriptComponent {
   UfoEnemies(this.captain) {
     waveSize = (12 * difficulty).toInt();
-    spawnInterval = 3.5 * (1 / difficulty);
+    spawnInterval = 3 * (1 / difficulty);
     logInfo('wave size: $waveSize, spawn interval: $spawnInterval');
   }
 
