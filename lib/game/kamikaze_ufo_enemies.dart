@@ -1,6 +1,5 @@
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
-import '../core/soundboard.dart';
 import '../scripting/game_script.dart';
 import 'kamikaze_ufo_enemy.dart';
 import 'ufo_enemy.dart';
@@ -14,12 +13,6 @@ class KamikazeUfoEnemies extends GameScriptComponent {
 
   late var remainingEnemies = waveSize;
   late var nextSpawnTime = spawnInterval;
-
-  @override
-  void onMount() {
-    super.onMount();
-    soundboard.play(Sound.enemy_wave_incoming);
-  }
 
   @override
   void update(double dt) {

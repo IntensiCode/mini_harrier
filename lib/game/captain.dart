@@ -40,7 +40,7 @@ class Captain extends Component3D with AutoDispose, GameScriptFunctions, Keyboar
   @override
   void onMount() {
     super.onMount();
-    onMessage<ReplenishEnergy>((_) => replenishEnergy());
+    onMessage<EnergyBoost>((_) => replenishEnergy());
   }
 
   void replenishEnergy() => life = (life + 5).clamp(0, maxLife);

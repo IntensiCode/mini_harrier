@@ -155,9 +155,6 @@ class SpawnedExtra extends Component3D {
   }
 
   void startConsume() {
-    logWarn('consuming');
-    logWarn('consuming');
-    logWarn('consuming');
     _state = _State.consuming;
     velocity.setZero();
     _consumed = consumeTime;
@@ -166,14 +163,11 @@ class SpawnedExtra extends Component3D {
 
     switch (kind) {
       case ExtraKind.energy:
-        messaging.send(ReplenishEnergy());
-        soundboard.play(Sound.energy_boost, volume: 1);
+        messaging.send(EnergyBoost());
       case ExtraKind.firePower:
-        messaging.send(IncreaseFirePower());
-        soundboard.play(Sound.increased_fire_power, volume: 1);
+        messaging.send(IncreasedFirePower());
       case ExtraKind.missile:
-        messaging.send(AddMissile());
-        soundboard.play(Sound.missile_available, volume: 1);
+        messaging.send(MissileAvailable());
     }
   }
 

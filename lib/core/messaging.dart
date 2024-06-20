@@ -11,22 +11,26 @@ class ChallengeComplete extends Message {}
 
 class EnemiesDefeated extends Message {}
 
+class EnemyWaveIncoming extends Message {}
+
+class EnergyBoost extends Message {}
+
+class IncreasedFirePower extends Message {}
+
+class MissileAvailable extends Message {}
+
+class NextLevel extends Message {}
+
+class PlayerDestroyed extends Message {}
+
+class WarningObstacles extends Message {}
+
 class GetClosestEnemyPosition extends Message {
   GetClosestEnemyPosition(this.position, this.onResult);
 
   final Vector2 position;
   final void Function(Vector2) onResult;
 }
-
-class NextLevel extends Message {}
-
-class PlayerDestroyed extends Message {}
-
-class ReplenishEnergy extends Message {}
-
-class IncreaseFirePower extends Message {}
-
-class AddMissile extends Message {}
 
 class ShowScreen extends Message {
   ShowScreen(this.screen);

@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_harrier/core/common.dart';
+import 'package:mini_harrier/core/messaging.dart';
 import 'package:mini_harrier/util/bitmap_text.dart';
 
 import '../core/soundboard.dart';
@@ -20,6 +21,16 @@ class Hud extends PositionComponent with AutoDispose, GameScriptFunctions {
   final addPos = Vector2(xCenter, 20);
 
   double value() => player.life * 100 / player.maxLife;
+
+  @override
+  void onMount() {
+    super.onMount();
+    onMessage<EnemyWaveIncoming>((_) => soundboard.play(Sound.enemy_wave_incoming));
+    onMessage<EnergyBoost>((_) => soundboard.play(Sound.energy_boost));
+    onMessage<IncreasedFirePower>((_) => soundboard.play(Sound.increased_fire_power));
+    onMessage<MissileAvailable>((_) => soundboard.play(Sound.missile_available));
+    onMessage<WarningObstacles>((_) => soundboard.play(Sound.warning_obstacles));
+  }
 
   @override
   void onLoad() async {

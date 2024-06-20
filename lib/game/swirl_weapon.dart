@@ -28,7 +28,7 @@ class SwirlWeapon extends Component with AutoDispose, GameScriptFunctions {
   @override
   void onMount() {
     super.onMount();
-    onMessage<IncreaseFirePower>((_) => increaseFirePower());
+    onMessage<IncreasedFirePower>((_) => increaseFirePower());
   }
 
   @override

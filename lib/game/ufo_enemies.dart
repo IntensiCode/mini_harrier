@@ -1,5 +1,3 @@
-import 'package:mini_harrier/core/soundboard.dart';
-
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../scripting/game_script.dart';
@@ -14,12 +12,6 @@ class UfoEnemies extends GameScriptComponent {
 
   late var remainingEnemies = waveSize;
   late var nextSpawnTime = spawnInterval;
-
-  @override
-  void onMount() {
-    super.onMount();
-    soundboard.play(Sound.enemy_wave_incoming);
-  }
 
   @override
   void update(double dt) {
