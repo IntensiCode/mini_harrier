@@ -13,6 +13,8 @@ class CaptainCam extends Component {
 
   double slowDownSpeed = baseSpeed * 0.75;
 
+  final basePos = Vector3.zero();
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -27,6 +29,8 @@ class CaptainCam extends Component {
       currentPosition.setFrom(f.worldPosition);
       currentPosition.x = currentPosition.x / 1.2;
       currentPosition.y = (currentPosition.y - midHeight) / 2 * 1.2 + midHeight;
+
+      basePos.setFrom(currentPosition);
     } else if (f.instantKill) {
       world.camera.setFrom(currentPosition);
       world.camera.z += 50;
@@ -47,6 +51,7 @@ class CaptainCam extends Component {
     }
 
     if (f.shakeTime > 0) {
+      currentPosition.setFrom(basePos);
       currentPosition.x += sin(f.shakeTime * 30) * 3;
       currentPosition.y += cos(f.shakeTime * 23) * 3;
     }
