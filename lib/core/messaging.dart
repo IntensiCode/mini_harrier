@@ -23,6 +23,8 @@ class NextLevel extends Message {}
 
 class PlayerDestroyed extends Message {}
 
+class StageComplete extends Message {}
+
 class WarningObstacles extends Message {}
 
 class GetClosestEnemyPosition extends Message {

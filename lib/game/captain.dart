@@ -18,6 +18,7 @@ import 'swirl_weapon.dart';
 enum CaptainState {
   defeated,
   intro,
+  outro,
   playing,
 }
 
@@ -46,6 +47,7 @@ class Captain extends Component3D
   void onMount() {
     super.onMount();
     onMessage<EnergyBoost>((_) => replenishEnergy());
+    onMessage<StageComplete>((_) => state = CaptainState.outro);
   }
 
   void replenishEnergy() => life = (life + 5).clamp(0, maxLife);
@@ -70,7 +72,14 @@ class Captain extends Component3D
     } else {
       shakeTime = 0;
     }
+    if (state == CaptainState.outro) {
+      _sprite.opacity = 1;
+      outroTime += dt;
+      if (outroTime > 10) removeFromParent();
+    }
   }
+
+  double outroTime = 0;
 
   final xSteerFactor = 0.75;
   final steerAcceleration = maxStrafe / 2 * 10;

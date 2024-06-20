@@ -73,8 +73,10 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     onMessage<EnemiesDefeated>((_) {
       if (_waves.isEmpty) {
         clearScript();
-        at(0.0, () => fadeIn(textXY('STAGE COMPLETE', xCenter, yCenter, scale: 2)));
+        at(0.5, () => fadeIn(textXY('STAGE COMPLETE', xCenter, yCenter, scale: 2)));
+        at(0.5, () => sendMessage(StageComplete()));
         at(1.0, () => pressFireToStart());
+        at(1.0, () => onKey('<Space>', () => showScreen(Screen.title)));
         executeScript();
       } else {
         switch (_waves[0]) {

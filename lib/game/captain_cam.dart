@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:mini_harrier/core/messaging.dart';
+import 'package:mini_harrier/scripting/game_script_functions.dart';
+import 'package:mini_harrier/util/auto_dispose.dart';
 
 import '../core/common.dart';
 import '../core/mini_3d.dart';
@@ -13,7 +16,7 @@ enum _State {
   slow_down,
 }
 
-class CaptainCam extends Component {
+class CaptainCam extends Component with AutoDispose, GameScriptFunctions {
   Captain? follow;
 
   final currentPosition = Vector3(0, 10, 50);
@@ -23,6 +26,12 @@ class CaptainCam extends Component {
   final basePos = Vector3.zero();
 
   _State _state = _State.waiting;
+
+  @override
+  void onMount() {
+    super.onMount();
+    onMessage<StageComplete>((_) => _state = _State.slow_down);
+  }
 
   @override
   void update(double dt) {
@@ -62,6 +71,7 @@ class CaptainCam extends Component {
 
     if (_state == _State.slow_down) {
       currentPosition.z += slowDownSpeed * dt;
+      currentPosition.y += 300 * dt;
       basePos.setFrom(currentPosition);
       if (slowDownSpeed < 0) {
         slowDownSpeed -= baseSpeed / 3 * dt;
