@@ -51,6 +51,7 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     camera.follow = captain;
     add(Hud(captain));
 
+    debugXY(() => 'Difficulty: $difficulty', 0, gameHeight - debugHeight * 2, Anchor.bottomLeft);
     debugXY(() => 'Captain VX: ${captain.velocity.x}', 0, gameHeight - debugHeight, Anchor.bottomLeft);
     debugXY(() => 'Captain VY: ${captain.velocity.y}', 0, gameHeight, Anchor.bottomLeft);
 
@@ -70,7 +71,13 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
     at(0.0, () => captain.state = CaptainState.playing);
     at(0.0, () => nextWave());
 
-    onMessage<EnemiesDefeated>((_) {
+    onMessage<EnemiesDefeated>((it) {
+      if (it.percent >= 0 && it.percent < 25) {
+        difficulty *= 0.8;
+      } else if (it.percent > 75) {
+        difficulty *= 1.2;
+      }
+
       if (_waves.isEmpty) {
         clearScript();
         at(0.5, () => fadeIn(textXY('STAGE COMPLETE', xCenter, yCenter, scale: 2)));
@@ -113,7 +120,7 @@ class Stage1 extends GameScriptComponent with HasAutoDisposeShortcuts {
             it is Rock)
         .forEach((it) => it.removeFromParent());
 
-    sendMessage(EnemiesDefeated());
+    sendMessage(EnemiesDefeated(-1));
   }
 
   final _waves = [_EnemyWaves.kamikaze, _EnemyWaves.ufos, _EnemyWaves.obstacles];

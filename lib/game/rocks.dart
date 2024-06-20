@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dart_minilog/dart_minilog.dart';
 import 'package:flame/components.dart';
 
 import '../core/common.dart';
@@ -14,7 +15,11 @@ import 'damage_target.dart';
 import 'fragment.dart';
 
 class Rocks extends AutoDisposeComponent with GameScriptFunctions {
-  Rocks(this.captain);
+  Rocks(this.captain) {
+    remaining = (500 * difficulty).toInt();
+    maxEntities = (100 * difficulty).toInt();
+    logInfo('remaining: $remaining, max entities: $maxEntities');
+  }
 
   final Captain captain;
 
@@ -35,7 +40,7 @@ class Rocks extends AutoDisposeComponent with GameScriptFunctions {
       final c = parent?.children.whereType<Rock>().length;
       if (c == 0) {
         removeFromParent();
-        sendMessage(EnemiesDefeated());
+        sendMessage(EnemiesDefeated(-1));
       }
       return;
     }

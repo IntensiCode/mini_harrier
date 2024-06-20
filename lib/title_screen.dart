@@ -21,6 +21,9 @@ class TitleScreen extends GameScriptComponent with HasAutoDisposeShortcuts {
   void onMount() {
     super.onMount();
     onKey('<Space>', () => _leave());
+
+    // reset cross-stage state
+    difficulty = 1.0;
   }
 
   void _leave() {

@@ -9,7 +9,11 @@ sealed class Message {}
 
 class ChallengeComplete extends Message {}
 
-class EnemiesDefeated extends Message {}
+class EnemiesDefeated extends Message {
+  EnemiesDefeated(this.percent);
+
+  final int percent;
+}
 
 class EnemyWaveIncoming extends Message {}
 

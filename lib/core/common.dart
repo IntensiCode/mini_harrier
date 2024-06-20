@@ -29,6 +29,8 @@ const yCenter = gameHeight / 2;
 const lineHeight = 24 * fontScale;
 const debugHeight = 12 * fontScale;
 
+double difficulty = 1;
+
 late Game game;
 late Images images;
 late CollisionDetection collisions;

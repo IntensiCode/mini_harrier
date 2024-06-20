@@ -1,3 +1,6 @@
+import 'package:dart_minilog/dart_minilog.dart';
+
+import '../core/common.dart';
 import '../core/messaging.dart';
 import '../core/mini_3d.dart';
 import '../scripting/game_script.dart';
@@ -5,11 +8,15 @@ import 'kamikaze_ufo_enemy.dart';
 import 'ufo_enemy.dart';
 
 class KamikazeUfoEnemies extends GameScriptComponent {
-  KamikazeUfoEnemies(this.captain, [this.waveSize = 8, this.spawnInterval = 1.0]);
+  KamikazeUfoEnemies(this.captain) {
+    waveSize = (8 * difficulty).toInt();
+    spawnInterval = 1.0 * (1 / difficulty);
+    logInfo('wave size: $waveSize, spawn interval: $spawnInterval');
+  }
 
   final Component3D captain;
-  final int waveSize;
-  final double spawnInterval;
+  late final int waveSize;
+  late final double spawnInterval;
 
   late var remainingEnemies = waveSize;
   late var nextSpawnTime = spawnInterval;
@@ -34,11 +41,13 @@ class KamikazeUfoEnemies extends GameScriptComponent {
   }
 
   var defeatedEnemies = 0;
+  var destroyedEnemies = 0;
 
-  void _onDefeated() {
+  void _onDefeated(bool destroyed) {
     defeatedEnemies++;
+    if (destroyed) destroyedEnemies++;
     if (defeatedEnemies == waveSize) {
-      sendMessage(EnemiesDefeated());
+      sendMessage(EnemiesDefeated(destroyedEnemies * 100 ~/ defeatedEnemies));
       removeFromParent();
     }
   }

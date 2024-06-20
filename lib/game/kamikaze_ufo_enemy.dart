@@ -24,7 +24,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     anchor = Anchor.bottomCenter;
   }
 
-  final void Function() onDefeated;
+  final void Function(bool) onDefeated;
   final Component3D captain;
 
   _State _state = _State.incoming;
@@ -104,7 +104,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       if (position.y > gameHeight + 20) remove = true;
       if (worldPosition.z > world.camera.z - 20) remove = true;
       if (remove) {
-        _removeNow();
+        _removeNow(false);
         return;
       }
 
@@ -118,16 +118,16 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     }
   }
 
-  void _removeNow() {
+  void _removeNow(bool destroyed) {
     removeFromParent();
-    onDefeated();
+    onDefeated(destroyed);
   }
 
   final check = Vector3.zero();
 
   @override
   void whenDefeated() {
-    onDefeated();
+    onDefeated(true);
 
     final i = _sprite.sprite?.image;
     if (i == null) return;

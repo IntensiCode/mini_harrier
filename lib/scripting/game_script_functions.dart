@@ -7,6 +7,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:signals_core/signals_core.dart';
 
 import '../components/press_fire_to_start.dart';
@@ -64,8 +65,10 @@ mixin GameScriptFunctions on Component, AutoDispose {
     await Stream.periodic(Duration(milliseconds: millis)).first;
   }
 
-  DebugText debugXY(String Function() text, double x, double y, [Anchor? anchor, double? scale]) =>
-      added(DebugText(text: text, position: Vector2(x, y), anchor: anchor, scale: scale));
+  DebugText? debugXY(String Function() text, double x, double y, [Anchor? anchor, double? scale]) {
+    if (kReleaseMode) return null;
+    return added(DebugText(text: text, position: Vector2(x, y), anchor: anchor, scale: scale));
+  }
 
   T fadeIn<T extends Component>(T it, {double duration = 1}) {
     it.fadeInDeep(seconds: duration);

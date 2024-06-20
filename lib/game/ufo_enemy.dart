@@ -25,7 +25,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
     anchor = Anchor.bottomCenter;
   }
 
-  final void Function() onDefeated;
+  final void Function(bool) onDefeated;
 
   _State _state = _State.incoming;
 
@@ -195,7 +195,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
 
   @override
   void whenDefeated() {
-    onDefeated();
+    onDefeated(true);
 
     final i = _sprite.sprite?.image;
     if (i == null) return;
