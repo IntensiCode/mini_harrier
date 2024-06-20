@@ -64,7 +64,8 @@ mixin MiniShortcuts<T extends World> on HasKeyboardHandlerComponents<T> {
       }
 
       bool handled = false;
-      for (final it in handlers) {
+      final cloned = [...handlers];
+      for (final it in cloned) {
         if (it.$1 == pattern) {
           it.$2();
           handled = true;
