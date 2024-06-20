@@ -107,7 +107,7 @@ class VShmupHudMeter extends Component with HasPaint, HasVisibility {
 
     if (v == 0) v = 100;
     if (v != currentRect.width) {
-      currentRect = RRect.fromLTRBR(xCenter - 50, 5, xCenter - 50 + value(), 15, const Radius.circular(5));
+      currentRect = RRect.fromLTRBR(xCenter - 50, 5, xCenter - 50 + v, 15, const Radius.circular(5));
     }
   }
 
