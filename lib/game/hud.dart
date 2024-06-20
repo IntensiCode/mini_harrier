@@ -67,6 +67,7 @@ class Hud extends PositionComponent with AutoDispose, GameScriptFunctions {
     super.update(dt);
     if (value() == 0 && _suit.text == 'Suit Integrity') {
       _suit.removeFromParent();
+      fontSelect(menuFont, scale: 0.25);
       _suit = textXY('Suit Destroyed', xCenter, 19, anchor: Anchor.center);
     }
   }
