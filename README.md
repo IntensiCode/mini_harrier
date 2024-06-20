@@ -5,7 +5,7 @@ A Flutter Flame Game Demo
 ### To Do
 
 - [x] player energy/health
-- [ ] game over
+- [x] game over
 - [ ] show missiles and weapon power in hud
 - [x] collide with rocks
 - [ ] high-flying enemies above rocks
@@ -24,6 +24,10 @@ https://intensicode.github.io/mini_harrier/
 
 ### Screenshots
 
+![Demo](images/demo.gif)
+
 ![Title](images/title.png)
 
-![Demo](images/demo.gif)
+![Screenshot 1](images/snap1.png)
+![Screenshot 2](images/snap2.png)
+![Screenshot 3](images/snap3.png)
