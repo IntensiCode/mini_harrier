@@ -55,12 +55,17 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
   final relativePosition = Vector3(0, 0, -3000);
   var incomingSpeed = 2500.0;
 
+  double targetTracking = 0;
+
   @override
   void update(double dt) {
     super.update(dt);
+
+    targetTracking = targetTracking + (world.camera.x - targetTracking) * 0.5 * dt;
+
     if (_state == _State.incoming) {
       worldPosition.setFrom(world.camera);
-      worldPosition.x = 0;
+      worldPosition.x = targetTracking;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
@@ -103,7 +108,7 @@ class UfoEnemy extends Component3D with AutoDispose, GameScriptFunctions, GameSc
     }
     if (_state == _State.floating) {
       worldPosition.setFrom(world.camera);
-      worldPosition.x = 0;
+      worldPosition.x = targetTracking;
       worldPosition.add(relativePosition);
       worldPosition.z -= targetOffsetZ;
 
