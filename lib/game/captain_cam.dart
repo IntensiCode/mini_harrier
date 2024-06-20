@@ -6,6 +6,13 @@ import '../core/common.dart';
 import '../core/mini_3d.dart';
 import 'captain.dart';
 
+enum _State {
+  waiting,
+  following,
+  instant_kill,
+  slow_down,
+}
+
 class CaptainCam extends Component {
   Captain? follow;
 
@@ -15,6 +22,8 @@ class CaptainCam extends Component {
 
   final basePos = Vector3.zero();
 
+  _State _state = _State.waiting;
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -22,27 +31,38 @@ class CaptainCam extends Component {
     world.camera.setFrom(currentPosition);
     world.camera.z += 25;
 
-    final f = follow;
-    if (f == null) return;
+    if (_state == _State.waiting) {
+      final f = follow;
+      if (f == null) return;
+      _state = _State.following;
+    }
 
-    if (f.isMounted) {
-      currentPosition.setFrom(f.worldPosition);
-      currentPosition.x = currentPosition.x / 1.2;
-      currentPosition.y = (currentPosition.y - midHeight) / 2 * 1.2 + midHeight;
+    if (_state == _State.following) {
+      if (follow!.instantKill) {
+        _state = _State.instant_kill;
+      } else if (follow!.isMounted == false) {
+        _state = _State.slow_down;
+        follow = null;
+      } else {
+        currentPosition.setFrom(follow!.worldPosition);
+        currentPosition.x = currentPosition.x / 1.2;
+        currentPosition.y = (currentPosition.y - midHeight) / 2 * 1.2 + midHeight;
 
-      basePos.setFrom(currentPosition);
-    } else if (f.instantKill) {
-      world.camera.setFrom(currentPosition);
-      world.camera.z += 50;
+        basePos.setFrom(currentPosition);
+      }
+    }
 
-      // captain is dead, so we do this here:
-      if (f.shakeTime > 0) {
-        f.shakeTime -= dt;
+    if (_state == _State.instant_kill) {
+      if (follow!.shakeTime > 0) {
+        follow!.shakeTime -= dt;
       } else {
         removeFromParent();
       }
-    } else {
+    }
+
+    if (_state == _State.slow_down) {
       currentPosition.z += slowDownSpeed * dt;
+      basePos.setFrom(currentPosition);
       if (slowDownSpeed < 0) {
         slowDownSpeed -= baseSpeed / 3 * dt;
       } else {
@@ -50,10 +70,10 @@ class CaptainCam extends Component {
       }
     }
 
-    if (f.shakeTime > 0) {
+    if (follow != null && follow!.shakeTime > 0) {
       currentPosition.setFrom(basePos);
-      currentPosition.x += sin(f.shakeTime * 30) * 3;
-      currentPosition.y += cos(f.shakeTime * 23) * 3;
+      currentPosition.x += sin(follow!.shakeTime * 30) * 3;
+      currentPosition.y += cos(follow!.shakeTime * 23) * 3;
     }
   }
 }
