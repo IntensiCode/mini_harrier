@@ -71,7 +71,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       worldPosition.z -= targetOffsetZ;
 
       relativePosition.x = xBase + sin(stateTime) * 100;
-      relativePosition.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
+      relativePosition.y = midHeight / 4 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
       relativePosition.z += incomingSpeed * dt;
       incomingSpeed = relativePosition.z.abs().clamp(300, 2500);
 
@@ -80,7 +80,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
       if (worldPosition.z >= world.camera.z - targetOffsetZ) {
         _state = _State.attacking;
         velocity.x = sin(stateTime) * 100;
-        velocity.y = 100 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
+        velocity.y = midHeight / 4 + sin(stateTime * 1.4) * cos(stateTime * 1.8) * 75;
         velocity.z = -incomingSpeed;
         velocity.sub(relativePosition);
         velocity.z = -velocity.z;
