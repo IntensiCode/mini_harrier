@@ -68,7 +68,15 @@ extension ComponentExtension on Component {
     Component? probed = this;
     while (probed is! Messaging) {
       probed = probed?.parent;
-      if (probed == null) throw StateError('no messaging mixin found');
+      if (probed == null) {
+        Component? log = this;
+        while (log != null) {
+          logWarn('no messaging mixin found in $log');
+          log = log.parent;
+        }
+        logWarn('=> no messaging mixin found in $this');
+        throw 'no messaging mixin found';
+      }
     }
     return probed;
   }
