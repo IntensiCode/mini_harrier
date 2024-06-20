@@ -4,7 +4,7 @@ import '../scripting/game_script.dart';
 import 'ufo_enemy.dart';
 
 class UfoEnemies extends GameScriptComponent {
-  UfoEnemies(this.captain, [this.waveSize = 6, this.spawnInterval = 4.0]);
+  UfoEnemies(this.captain, [this.waveSize = 12, this.spawnInterval = 3.0]);
 
   final Component3D captain;
   final int waveSize;

@@ -41,7 +41,7 @@ class KamikazeUfoEnemy extends Component3D with AutoDispose, GameScriptFunctions
     worldPosition.x = 0;
     worldPosition.z -= 5000;
     stateTime = random.nextDoubleLimit(4.0);
-    life = 3;
+    life = 5;
   }
 
   var stateTime = 0.0;
